@@ -1,5 +1,11 @@
 const express = require('express');
+
+const path = require('path');
+
+const PORT = process.env.PORT || 5000
+
 const app = express();
+app.set('port', (process.env.PORT || 5000));
 
 const bodyParser = require('body-parser');
 
@@ -21,6 +27,19 @@ app.use((request, response, next) =>
   next();
 }); 
 
+///////////////////////////////////////////////////
+// For Heroku deployment
+// Server static assets if in production
+if (process.env.NODE_ENV === 'production') 
+{
+  // Set static folder
+  app.use(express.static('frontend/build'));
+  app.get('*', (req, res) => 
+ {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+  });
+}
+
 // Take in a request. The / refers to the root. (localhost:5000/)
 app.get("/", function (request, response) {
   response.send("<h1>It's working!</h1><p>This is some HTML</p>");
@@ -31,4 +50,7 @@ app.get("/message", function(request, response) {
   }
 );
 
-app.listen(5000); // start Node + Express server on port 5000
+app.listen(PORT , () =>
+{
+  console.log('Server listening on port' + PORT);
+}); // start Node + Express server
