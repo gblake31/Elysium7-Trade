@@ -79,12 +79,10 @@ exports.setApp = function ( app, client )
       }
       else {
         try {
-          result = db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname});
+          result = await db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname});
         } catch (e) {
           print(e);
         }
-
-        console.log(result._id);
 
         id = result.insertedId;
       }
