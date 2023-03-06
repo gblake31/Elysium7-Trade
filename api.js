@@ -15,7 +15,7 @@ exports.setApp = function ( app, client )
     
       try
       {
-        const db = client.db();
+        const db = client.db('COP4331Cards');
         const result = db.collection('Cards').insertOne(newCard);
       }
       catch(e)
@@ -32,12 +32,12 @@ exports.setApp = function ( app, client )
       // incoming: login, password
       // outgoing: id, firstName, lastName, error
     
-      let error = '';
+      let er = '';
     
       const { login, password } = req.body;
     
-      const db = client.db();
-      const results = await db.collection('Users').find({Login:login,Password:password}).toArray();
+      const db = client.db('COP4331Cards');
+      const results = await db.collection('Users').find({login:login,password:password}).toArray();
     
       let id = -1;
       let fn = '';
@@ -45,12 +45,51 @@ exports.setApp = function ( app, client )
     
       if( results.length > 0 )
       {
-        id = results[0].UserId;
-        fn = results[0].FirstName;
-        ln = results[0].LastName;
+        id = results[0]._id;
+        fn = results[0].firstname;
+        ln = results[0].lastname;
+      }
+      else {
+        er = 'User not found'
       }
     
-      let ret = { id:id, firstName:fn, lastName:ln, error:''};
+      let ret = { id:id, firstName:fn, lastName:ln, error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/register', async (req, res, next) => 
+    {
+      // incoming: login, password, firstname, lastname
+      // outgoing: id, error
+    
+      let er = '';
+      let result;
+    
+      const { login, password, firstname, lastname } = req.body;
+    
+      const db = client.db('COP4331Cards');
+      const results = await db.collection('Users').find({login:login}).toArray();
+    
+      let id;
+    
+      if( results.length > 0 )
+      {
+        id = '-1';
+        er = 'Login is taken';
+      }
+      else {
+        try {
+          result = db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname});
+        } catch (e) {
+          print(e);
+        }
+
+        console.log(result._id);
+
+        id = result.insertedId;
+      }
+    
+      let ret = { id:id, error:er};
       res.status(200).json(ret);
     });
     
@@ -65,7 +104,7 @@ exports.setApp = function ( app, client )
     
       let _search = search.trim();
       
-      const db = client.db();
+      const db = client.db('COP4331Cards');
       const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', 
                             $options:'r'}}).toArray();
       

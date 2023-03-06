@@ -2,20 +2,11 @@ import React, { useState } from 'react';
 
 function CardUI()
 {
-  const app_name = 'paradise-7'
-  function buildPath(route)
-  {
-      if (process.env.NODE_ENV === 'production') 
-      {
-          return 'https://' + app_name +  '.herokuapp.com/' + route;
-      }
-      else
-      {        
-          return 'http://localhost:5000/' + route;
-      }
-  }  
+    const app_name = 'paradise-7'
+
+    let bp = require('./Path.js');
   
-  let card = '';
+    let card = '';
     let search = '';
 
     const [message,setMessage] = useState('');
@@ -35,7 +26,7 @@ function CardUI()
         let js = JSON.stringify(obj);
         try
         {
-            const response = fetch(buildPath('api/addcard'),
+            const response = fetch(bp.buildPath('api/addcard'),
             {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
             let txt = await response.text();
@@ -64,7 +55,7 @@ function CardUI()
         let js = JSON.stringify(obj);
         try
         {
-            const response = await fetch(buildPath('api/searchcards'),
+            const response = await fetch(bp.buildPath('api/searchcards'),
             {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
             let txt = await response.text();

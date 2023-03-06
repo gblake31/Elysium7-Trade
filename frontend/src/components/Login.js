@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
+
 function Login()
 {
-  const app_name = 'paradise-7'
-  function buildPath(route)
-  {
-      if (process.env.NODE_ENV === 'production') 
-      {
-          return 'https://' + app_name +  '.herokuapp.com/' + route;
-      }
-      else
-      {        
-          return 'http://localhost:5000/' + route;
-      }
-  }
+    const app_name = 'paradise-7'
 
+    let bp = require('./Path.js');
+  
     let loginName;
     let loginPassword;
 
@@ -26,9 +18,9 @@ function Login()
         let js = JSON.stringify(obj);
         try
         {    
-            const response = await fetch(buildPath('api/login'),
+            const response = await fetch(bp.buildPath('api/login'),
                 {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-            var res = JSON.parse(await response.text());
+            let res = JSON.parse(await response.text());
             if( res.id <= 0 )
             {
                 setMessage('User/Password combination incorrect');
