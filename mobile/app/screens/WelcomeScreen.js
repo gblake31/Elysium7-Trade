@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Link } from "expo-router";
 
 function WelcomeScreen(props) {
     return (
@@ -8,9 +9,9 @@ function WelcomeScreen(props) {
                 <Text style={styles.title}>Welcome to Elysium7 Trade!</Text>
             </View>
             <View style={styles.loginButton}>
-                <Pressable onPress={() => console.log("login button")}>
+                <Link href="LoginScreen">
                     <Text style={styles.buttonText}>LOGIN</Text>
-                </Pressable>
+                </Link>
             </View>
             <View style={styles.registerButton}>
                 <Pressable onPress={() => console.log("register button")}>
