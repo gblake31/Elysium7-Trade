@@ -1,7 +1,7 @@
 import React from 'react';
 import dragonImage from './dragonLogo.png';
 
-function TopBar(){
+function TopBar(props){
 	return(
 		<div className="topBar">
 			<img id="logo" src={dragonImage} alt="Dragon Logo"></img>
@@ -9,7 +9,7 @@ function TopBar(){
 			<div className="searchBox">
 				<input type="text" placeholder="Search for products" />
 			</div>
-			<button type="button">Login/Register</button>
+			<button type="button" onClick = {props.callback}>Login/Register</button>
 			<button type="button">Cart</button>
 		</div>
 	);

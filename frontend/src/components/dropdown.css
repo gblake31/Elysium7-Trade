@@ -1,0 +1,32 @@
+#outer {
+    position: absolute;
+    right: 10%;
+    top: -50%;
+    transition: top 2s;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    background-color: bisque;
+    padding: 20px;
+}
+
+#footer {
+    display: flex;
+    flex-direction: row;
+}
+
+.field {
+    font-size: 24px;
+    width: 20em;
+    padding: 5px;
+    margin: 10px 0px
+    
+}
+
+label {
+    align-self: flex-start;
+    font-size: 20px;
+}
