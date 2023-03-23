@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PageTitle from '../components/PageTitle';
-import Login from '../components/Login';
+import PageTitle from '../../components/Leinecker/PageTitle';
+import Login from '../../components/Leinecker/Login';
 
 const LoginPage = () =>
 {

@@ -1,19 +1,23 @@
-import React from "react";
+import React from 'react';
+
+import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/Leinecker/LoginPage';
+import CardPage from './pages/Leinecker/CardPage';
 
 function App() {
-    let [text, setText] = React.useState("Not working");
-
-    fetch('http://localhost:5000/message')
-    .then((response) => response.text()) // deciding which type we'll parse the response into
-    .then((data) => {
-        console.log(text = data);
-        setText(data);
-    })
-    .catch(e => alert(e.toString()));
-
-    return (<h1>{text}</h1>);
+  return (
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" index element={<LandingPage />} />
+      // <Route path="/" index element={<LoginPage />} />
+      {
+      // <Route path="/cards" index element={<CardPage />} />
+      }
+    </Routes>
+  </BrowserRouter>
+);
 }
 
 export default App;
-
-

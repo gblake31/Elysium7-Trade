@@ -1,5 +1,5 @@
 import React from 'react';
-import dragonImage from './dragonLogo.png';
+import dragonImage from './Pictures/dragonLogo.png';
 
 function TopBar(props){
 	return(
@@ -9,8 +9,8 @@ function TopBar(props){
 			<div className="searchBox">
 				<input type="text" placeholder="Search for products" />
 			</div>
-			<button type="button" onClick = {props.callback}>Login/Register</button>
-			<button type="button">Cart</button>
+			{props.greeting === "" ? <button type="button" onClick = {props.callback}>Login/Register</button>:<h1>{props.greeting}</h1>}
+			<button type="button" >Cart</button>
 		</div>
 	);
 }

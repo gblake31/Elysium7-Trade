@@ -4,9 +4,10 @@ import './dropdown.css';
 function LoginDropdown(props) {
 
     let css = {};
+    // Moves the position of the props (login box), css handles transition
     css.top = props.visible ? "20%" : "-50%";
 
-    let bp = require('./Path.js');
+    let bp = require('../Leinecker/Path.js');
   
     let loginName;
     let loginPassword;
@@ -30,7 +31,7 @@ function LoginDropdown(props) {
                 var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
                 localStorage.setItem('user_data', JSON.stringify(user));
                 console.log('Login Successful');
-                window.location.href = '/cards';
+                props.onLogin(res.firstName);
             }
         }
         catch(e)

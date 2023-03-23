@@ -4,7 +4,8 @@ import './dropdown.css'
 function RegisterDropdown(props) {
 
     let css = {};
-    css.top = props.visible ? "20%" : "-50%";
+    // Moves the position of the props (login box), css handles transition
+    css.top = props.visible ? "20%" : "-100%";
 
     return (
         <div id = "outer" style = {css}>

@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import './Landing.css';
 import TopBar from './TopBar.js';
 import CategoryBar from './CategoryBar.js';
-import LoginDropdown from '../components/LoginDropdown';
-import RegisterDropdown from '../components/RegisterDropdown';
+import LoginDropdown from '../components/Login/LoginDropdown';
+import RegisterDropdown from '../components/Login/RegisterDropdown';
 
 function LandingPage(){
+	// Getter and setter for visibility, by default invisible
 	let [loginIsVisible, setLoginVisibility] = useState(false);
 	let [registerIsVisible, setRegisterVisibility] = useState(false);
+	let [getGreeting, setGreeting] = useState("");
 
 	let toggleLogin = () => {
 		setRegisterVisibility(false);
@@ -19,15 +21,23 @@ function LandingPage(){
 		setRegisterVisibility(true);
 	};
 
+	let displayAccount = (login) => {
+		setLoginVisibility(false);
+		setGreeting(login);
+	};
+
 	return (
 		<div>
-			<TopBar callback = {toggleLogin} />
+			{// When greeting is empty for callback, login button appears
+			}
+			<TopBar callback = {toggleLogin} greeting = {getGreeting}/>
 			<CategoryBar />
-			<LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible}/>
+			<h1>{getGreeting}</h1>
+			<LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount}/>
 			<RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible}/>
 			
 			<main>
-			<div className="sectionContatiner">
+			<div className="sectionContainer">
 				<div className="section section1">
 					<h2>This week's bargain</h2>
 					<ul>
