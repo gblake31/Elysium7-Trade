@@ -5,7 +5,7 @@ function LoginDropdown(props) {
 
     let css = {};
     // Moves the position of the props (login box), css handles transition
-    css.top = props.visible ? "20%" : "-50%";
+    css.top = props.visible ? "-4%" : "-200%";
 
     let bp = require('../Leinecker/Path.js');
   
@@ -42,14 +42,14 @@ function LoginDropdown(props) {
   };
 
     return (
-        <div id = "outer" style = {css}>
+        <div id = "login-box" style = {css}>
             <h1>Welcome back</h1>
-            <label id = "username" >Username</label>
-            <input className = "field" type = "text" ref={(c) => loginName = c}></input>
-            <label id = "password">Password</label>
-            <input className = "field" type = "password" ref={(c) => loginPassword = c}></input>
+            {/* <label id = "username" >Username</label> */}
+            <input className = "field" type = "text" ref={(c) => loginName = c}  placeholder = "Username"></input>
+            {/* <label id = "password">Password</label> */}
+            <input className = "field" type = "password" ref={(c) => loginPassword = c} placeholder = "Password"></input>
             <button onClick = {doLogin}>Login</button>
-            <div id = "footer">
+            <div className = "horizontal">
                 <h3>Don't have an account?</h3>
                 <button onClick={props.switchToRegister}>Register</button>
             </div>

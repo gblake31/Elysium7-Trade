@@ -5,7 +5,7 @@ function RegisterDropdown(props) {
 
     let css = {};
     // Moves the position of the props (login box), css handles transition
-    css.top = props.visible ? "20%" : "-1000px";
+    css.top = props.visible ? "-20%" : "-200%";
 
     let bp = require('../Leinecker/Path.js');
   
@@ -56,23 +56,25 @@ function RegisterDropdown(props) {
   };
 
     return (
-        <div id = "outer" style = {css}>
-            <h1>Create an Account</h1>
-            <label id = "firstname">First Name</label>
-            <input className = "field" type = "text" ref={(c) => loginFirstName = c}></input>
-            <label id = "lastname">Last Name</label>
-            <input className = "field" type = "text" ref={(c) => loginLastName = c}></input>
-            <label id = "email">Email</label>
-            <input className = "field" type = "text" ref={(c) => loginEmail = c}></input>
-            <label id = "username">Username</label>
-            <input className = "field" type = "text" ref={(c) => loginUsername = c}></input>
-            <label id = "password">Password</label>
-            <input className = "field" type = "password" ref={(c) => loginPassword = c}></input>
-            <label id = "confirmPassword">Confirm Password</label>
-            <input className = "field" type = "password" ref={(c) => loginConfirmPassword = c}></input>
+        <div id = "register-box" style = {css}>
+            <h2>Create an Account</h2>
+            {/* <label id = "firstname">First Name</label> */}
+            <div className = "horizontal">
+                <input className = "field" type = "text" ref={(c) => loginFirstName = c} placeholder = "First Name"></input>
+                <input className = "field" type = "text" ref={(c) => loginLastName = c} placeholder = "Last Name"></input>
+            </div>
+           
+            {/* <label id = "email">Email</label> */}
+            <input className = "field" type = "text" ref={(c) => loginEmail = c} placeholder = "Email"></input>
+            {/* <label id = "username">Username</label> */}
+            <input className = "field" type = "text" ref={(c) => loginUsername = c} placeholder = "Username"></input>
+            {/* <label id = "password">Password</label> */}
+            <input className = "field" type = "password" ref={(c) => loginPassword = c} placeholder = "Password"></input>
+            {/* <label id = "confirmPassword">Confirm Password</label> */}
+            <input className = "field" type = "password" ref={(c) => loginConfirmPassword = c} placeholder = "Confirm Password"></input>
             <button onClick = {doRegister}>Register</button>
             <p>{message}</p>
-            <div id = "footer">
+            <div className = "horizontal">
                 <h3>Already have an account?</h3>
                 <button onClick = {props.switchToLogin}>Login</button>
             </div>
