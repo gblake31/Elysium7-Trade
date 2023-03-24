@@ -37,7 +37,7 @@ function LoginScreen(props)
                 var user = {firstName:res.firstName, lastName:res.lastName, id:res.id}
                 console.log('Login Successful');
                 console.log(user.firstName);
-                router.replace('./home.js');
+                router.replace('./Home');
             }
         }
         catch(e)

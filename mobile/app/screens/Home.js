@@ -1,10 +1,12 @@
 import { SafeAreaView, Text, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
+import Product from '../components/Product';
 
 function Home(props) {
     return (
         <SafeAreaView style={styles.home}>
-            <Text>Website Home Page</Text>
+            <Text style={styles.title}>Website Home Page</Text>
+            <Product itemName={'Keyboard'} price={5} />
+            <Product itemName={'Mouse'} price={10} />
         </SafeAreaView>
     );
 }
@@ -18,6 +20,15 @@ const styles = StyleSheet.create
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 'bold'
+    },
+    title: 
+    {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 24,
+        position: 'absolute',
+        top: '33%',
+        alignItems: 'center'
     }
 })
 
