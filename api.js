@@ -36,7 +36,7 @@ exports.setApp = function ( app, client )
     
       const { login, password } = req.body;
     
-      const db = client.db('COP4331Cards');
+      const db = client.db('COP4331');
       const results = await db.collection('Users').find({login:login,password:password}).toArray();
     
       let id = -1;
