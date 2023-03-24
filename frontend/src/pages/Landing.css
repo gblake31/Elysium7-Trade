@@ -1,0 +1,95 @@
+main {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+	position: absolute;
+	top: 130px;
+	width: 100%;
+	z-index: 0;
+}
+
+h1 {
+	font-size: 3em;
+	margin: 0;
+}
+
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	marginBottom: 10px;
+}
+
+.topBar {
+	background-color: #374c37;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 80px;
+	padding: 0 20px;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+}
+
+.searchBox {
+	display: flex;
+	align-items: center;
+}
+
+.searchBox input {
+	height: 50px;
+	font-size: 1em;
+	padding: 0 10px;
+	border: none;
+	border-radius: 3px;
+	margin-right: 10px;
+}
+
+.categoryBar {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+	background-color: #51684a;
+	height: 50px;
+	position: absolute;
+	top: 80px;
+	width: 100%;
+	z-index: 1;
+}
+
+.categoryBar button {
+	height: 40px;
+	padding: 5px 10px;
+	background-color: #51684a;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+.categoryBar button:hover {
+	background-color: #89964c;
+	transition: 0.5s;
+}
+
+#logo {
+	height: 75px;
+	width: auto;
+}
+
+.sectionContatiner {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.section {
+	margin: 0 15px;
+}
