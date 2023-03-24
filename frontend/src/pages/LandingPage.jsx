@@ -23,8 +23,12 @@ function LandingPage(){
 
 	let displayAccount = (login) => {
 		setLoginVisibility(false);
-		setGreeting(login);
+		setGreeting("Hi, " + login);
 	};
+
+	let onRegister = () => {
+		setRegisterVisibility(false);
+	}
 
 	return (
 		<div>
@@ -32,9 +36,9 @@ function LandingPage(){
 			}
 			<TopBar callback = {toggleLogin} greeting = {getGreeting}/>
 			<CategoryBar />
-			<h1>{getGreeting}</h1>
+			<h2>{getGreeting}</h2>
 			<LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount}/>
-			<RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible}/>
+			<RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
 			
 			<main>
 			<div className="sectionContainer">
