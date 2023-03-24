@@ -1,10 +1,53 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text, SafeAreaView, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text, SafeAreaView, TextInput, Alert } from 'react-native';
 import { useRouter, Link } from "expo-router";
 
 function LoginScreen(props) 
 {
     const router = useRouter();
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+
+    let bp = 'https://paradise-7.herokuapp.com/';
+    
+    const handleLogin = async event =>
+    {
+        event.preventDefault();
+        let obj = {login:username, password:password};
+        let js = JSON.stringify(obj);
+        try
+        {
+            console.log(bp + 'api/login');
+            console.log(username + ' ' + password + '\n');
+            const response = await fetch(bp + 'api/login',
+            {
+                method:'POST', 
+                body:js, 
+                headers:{'Content-Type':'application/json'}
+            }
+            );
+            let res = JSON.parse(await response.text());
+            if (res.id <= 0)
+            {
+                console.log('User/Password combination incorrect');
+                // TODO: post message to UI
+            }
+            else
+            {
+                var user = {firstName:res.firstName, lastName:res.lastName, id:res.id}
+                console.log('Login Successful');
+                console.log(user.firstName);
+                router.replace('./home.js');
+            }
+        }
+        catch(e)
+        {
+            alert(e.toString());
+            console.log(e);
+            return;
+        }
+    }
+
     return (
         <SafeAreaView style={styles.home}>
             <TextInput 
@@ -12,6 +55,8 @@ function LoginScreen(props)
                 autoComplete='username' 
                 autoCorrect={false}
                 style={styles.input}
+                value={username}
+                onChangeText={text => setUsername(text)}
             />
             <TextInput 
                 placeholder='Password'
@@ -19,8 +64,10 @@ function LoginScreen(props)
                 autoCorrect={false}
                 secureTextEntry={true}
                 style={styles.input}
+                onChangeText={text => setPassword(text)}
+                value={password}
             />
-            <Pressable style={styles.loginButton}>
+            <Pressable style={styles.loginButton} onPress={handleLogin}>
                 <Text style={styles.buttonText}>LOGIN</Text>
             </Pressable>
         </SafeAreaView>
