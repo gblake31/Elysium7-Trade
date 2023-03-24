@@ -65,9 +65,9 @@ exports.setApp = function ( app, client )
       let er = '';
       let result;
     
-      const { login, password, firstname, lastname } = req.body;
+      const { login, password, firstname, lastname, email } = req.body;
     
-      const db = client.db('COP4331Cards');
+      const db = client.db('COP4331');
       const results = await db.collection('Users').find({login:login}).toArray();
     
       let id;
@@ -79,7 +79,7 @@ exports.setApp = function ( app, client )
       }
       else {
         try {
-          result = await db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname});
+          result = await db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname, email:email});
         } catch (e) {
           print(e);
         }
@@ -90,7 +90,7 @@ exports.setApp = function ( app, client )
       let ret = { id:id, error:er};
       res.status(200).json(ret);
     });
-    
+
     app.post('/api/searchcards', async (req, res, next) => 
     {
       // incoming: userId, search
