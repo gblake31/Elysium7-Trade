@@ -9,7 +9,7 @@ function WelcomeScreen(props) {
                 <Text style={styles.title}>Welcome to Elysium7 Trade!</Text>
             </View>
             <View style={styles.loginButton}>
-                <Link href="LoginScreen">
+                <Link href="screens/LoginScreen">
                     <Text style={styles.buttonText}>LOGIN</Text>
                 </Link>
             </View>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 24,
         position: 'absolute',
-        top: '45%',
+        top: '33%',
         alignItems: 'center'
     }
 })

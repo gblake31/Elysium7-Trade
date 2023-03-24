@@ -5,13 +5,15 @@ const Layout = () =>
     return <Stack
       initialRouteName="home"
       screenOptions={{
+        title: "",
         headerStyle: {
-          backgroundColor: "#374c37",
+          backgroundColor: "#51684a",
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
         },
+        headerShadowVisible: false
       }}
     />
 }
