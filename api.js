@@ -59,7 +59,7 @@ exports.setApp = function ( app, client )
 
     app.post('/api/register', async (req, res, next) => 
     {
-      // incoming: login, password, firstname, lastname
+      // incoming: login, password, firstname, lastname, email
       // outgoing: id, error
     
       let er = '';
