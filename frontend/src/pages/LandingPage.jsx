@@ -30,8 +30,10 @@ function LandingPage(){
 		setRegisterVisibility(false);
 	}
 
+	let isDark = loginIsVisible | registerIsVisible;
+
 	return (
-		<div>
+		<div id = "page">
 			{// When greeting is empty for callback, login button appears
 			}
 			<TopBar callback = {toggleLogin} greeting = {getGreeting}/>
@@ -39,6 +41,7 @@ function LandingPage(){
 			<h2>{getGreeting}</h2>
 			<LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount}/>
 			<RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
+			<div id = "darkScreen" style = {{opacity: isDark ? "70%" : "0%"}}/>
 			
 			<main>
 			<div className="sectionContainer">

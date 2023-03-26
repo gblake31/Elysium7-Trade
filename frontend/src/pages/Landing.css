@@ -85,6 +85,24 @@ li {
 	width: auto;
 }
 
+#darkScreen {
+	opacity: 0%;
+	transition: opacity 0.5s;
+	transition-timing-function: ease-out;
+	background-color: black;
+	width: 100%; height: 100%;
+	position: absolute;
+	top: 0; left: 0;
+	z-index: 8;
+	pointer-events: none;
+}
+
+#page {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
 .sectionContatiner {
 	display: flex;
 	flex-wrap: wrap;
