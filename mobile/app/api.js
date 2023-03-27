@@ -1,5 +1,5 @@
-require('express');
-require('mongodb');
+//require('express');
+//require('mongodb');
 
 exports.setApp = function ( app, client )
 {
@@ -36,7 +36,7 @@ exports.setApp = function ( app, client )
     
       const { login, password } = req.body;
     
-      const db = client.db('COP4331');
+      const db = client.db('COP4331Cards');
       const results = await db.collection('Users').find({login:login,password:password}).toArray();
     
       let id = -1;
@@ -59,15 +59,15 @@ exports.setApp = function ( app, client )
 
     app.post('/api/register', async (req, res, next) => 
     {
-      // incoming: login, password, firstname, lastname, email
+      // incoming: login, password, firstname, lastname
       // outgoing: id, error
     
       let er = '';
       let result;
     
-      const { login, password, firstname, lastname, email } = req.body;
+      const { login, password, firstname, lastname } = req.body;
     
-      const db = client.db('COP4331');
+      const db = client.db('COP4331Cards');
       const results = await db.collection('Users').find({login:login}).toArray();
     
       let id;
@@ -79,7 +79,7 @@ exports.setApp = function ( app, client )
       }
       else {
         try {
-          result = await db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname, email:email});
+          result = await db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname});
         } catch (e) {
           print(e);
         }
@@ -90,7 +90,7 @@ exports.setApp = function ( app, client )
       let ret = { id:id, error:er};
       res.status(200).json(ret);
     });
-
+    
     app.post('/api/searchcards', async (req, res, next) => 
     {
       // incoming: userId, search
