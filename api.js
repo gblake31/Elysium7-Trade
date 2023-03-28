@@ -1,5 +1,11 @@
 require('express');
 require('mongodb');
+require('mongoose');
+
+// load user model
+const User = require("./models/user.js");
+// load card model
+//const Card = require("./models/card.js"); // COMMENT BACK IN IF USING CARD API!!
 
 exports.setApp = function ( app, client )
 {
@@ -8,52 +14,88 @@ exports.setApp = function ( app, client )
       // incoming: userId, color
       // outgoing: error
         
-      const { userId, card } = req.body;
+      let token = require('./createJWT.js');
+      const { userId, card, jwtToken } = req.body;
+
+      try
+      {
+        if( token.isExpired(jwtToken))
+        {
+          var r = {error:'The JWT is no longer valid', jwtToken: ''};
+          res.status(200).json(r);
+          return;
+        }
+      }
+      catch(e)
+      {
+        console.log(e.message);
+      }
     
-      const newCard = {Card:card,UserId:userId};
+      const newCard = new Card({Card:card,UserId:userId});
       let error = '';
     
       try
       {
-        const db = client.db('COP4331Cards');
-        const result = db.collection('Cards').insertOne(newCard);
+        newCard.save();
       }
       catch(e)
       {
         error = e.toString();
       }
     
-      let ret = { error: error };
+      var refreshedToken = null;
+      try
+      {
+        refreshedToken = token.refresh(jwtToken);
+      }
+      catch(e)
+      {
+        console.log(e.message);
+      }
+    
+      var ret = { error: error, jwtToken: refreshedToken };
       res.status(200).json(ret);
+
     });
     
     app.post('/api/login', async (req, res, next) => 
     {
       // incoming: login, password
-      // outgoing: id, firstName, lastName, error
+      // outgoing: accessToken, id, firstName, lastName, error (if successful, no error returned)
     
       let er = '';
     
       const { login, password } = req.body;
     
-      const db = client.db('COP4331');
-      const results = await db.collection('Users').find({login:login,password:password}).toArray();
-    
+      const results = await User.find({ Login: login, Password: password });
+
       let id = -1;
       let fn = '';
       let ln = '';
+
+      let ret;
     
       if( results.length > 0 )
       {
         id = results[0]._id;
-        fn = results[0].firstname;
-        ln = results[0].lastname;
+        fn = results[0].FirstName;
+        ln = results[0].LastName;
+
+        try
+        {
+          const token = require("./createJWT.js");
+          ret = token.createToken( fn, ln, id );
+        }
+        catch(e)
+        {
+          ret = {error:e.message};
+        }
+
       }
       else {
-        er = 'User not found'
+        ret = {error:"Login/Password incorrect"};
       }
     
-      let ret = { id:id, firstName:fn, lastName:ln, error:er};
       res.status(200).json(ret);
     });
 
@@ -66,10 +108,8 @@ exports.setApp = function ( app, client )
       let result;
     
       const { login, password, firstname, lastname, email } = req.body;
-    
-      const db = client.db('COP4331');
-      const results = await db.collection('Users').find({login:login}).toArray();
-    
+
+      const results = await User.find({Login:login});
       let id;
     
       if( results.length > 0 )
@@ -78,13 +118,19 @@ exports.setApp = function ( app, client )
         er = 'Login is taken';
       }
       else {
-        try {
-          result = await db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname, email:email});
-        } catch (e) {
-          print(e);
-        }
 
-        id = result.insertedId;
+      const newUser = new User({UserID:1,FirstName:firstname,LastName:lastname,Login:login,Password:password,Email:email});
+
+      try
+      {
+        newUser.save();
+      }
+      catch(e)
+      {
+        er = e.toString();
+      }
+
+        id = newUser._id
       }
     
       let ret = { id:id, error:er};
@@ -98,13 +144,28 @@ exports.setApp = function ( app, client )
     
       let error = '';
     
-      const { userId, search } = req.body;
+      var token = require('./createJWT.js');
+
+      const { userId, search, jwtToken } = req.body;
+
+      try
+      {
+        if( token.isExpired(jwtToken))
+        {
+          var r = {error:'The JWT is no longer valid', jwtToken: ''};
+          res.status(200).json(r);
+          return;
+        }
+      }
+      catch(e)
+      {
+        console.log(e.message);
+      }
+
     
       let _search = search.trim();
       
-      const db = client.db('COP4331Cards');
-      const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', 
-                            $options:'r'}}).toArray();
+      const results = await Card.find({ "Card": { $regex: _search + '.*', $options: 'r' } });
       
       let _ret = [];
       for( let i=0; i<results.length; i++ )
@@ -112,7 +173,18 @@ exports.setApp = function ( app, client )
         _ret.push( results[i].Card );
       }
       
-      let ret = {results:_ret, error:error};
+      var refreshedToken = null;
+      try
+      {
+        refreshedToken = token.refresh(jwtToken);
+      }
+      catch(e)
+      {
+        console.log(e.message);
+      }
+    
+      var ret = { results:_ret, error: error, jwtToken: refreshedToken };
+
       res.status(200).json(ret);
     });
     
