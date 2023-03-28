@@ -1,162 +1,181 @@
 import React, { Component, useState } from 'react';
-import { Pressable, StyleSheet, Text, SafeAreaView, TextInput } from 'react-native';
+import { Pressable, StyleSheet, Text, SafeAreaView, TextInput, ScrollView } from 'react-native';
 import { useRouter, Link } from "expo-router";
 
 
 //class RegisterScreen extends Component
-const RegisterScreen = (props) =>
-{
+const RegisterScreen = (props) => {
     //console.log("register");
 
-    //render() {
-        //const router = useRouter();
-        const [email, setEmail] = useState("");
-        const [emailValid, setEmailValid] = useState(true);
-        const [first, setFirst] = useState("");
-        const [firstValid, setFirstValid] = useState(true);
-        const [last, setLast] = useState("");
-        const [lastValid, setLastValid] = useState(true);
-        const [password, setPassword] = useState("");
-        const [passwordValid, setPasswordValid] = useState(true);
-        const [repassword, setRepassword] = useState("");
-        const [repasswordValid, setRepasswordValid] = useState(true);
+    const router = useRouter();
 
-        let bp = 'https://paradise-7.herokuapp.com/';
+    const [email, setEmail] = useState("");
+    const [emailValid, setEmailValid] = useState(true);
+    const [first, setFirst] = useState("");
+    const [firstValid, setFirstValid] = useState(true);
+    const [last, setLast] = useState("");
+    const [lastValid, setLastValid] = useState(true);
+    const [password, setPassword] = useState("");
+    const [passwordValid, setPasswordValid] = useState(true);
+    const [repassword, setRepassword] = useState("");
+    const [repasswordValid, setRepasswordValid] = useState();
 
-        //TODO
-        const handleRegister = async event => {
-            if (!validateInfo()) {
-                return;
-            }
+    const REGISTER_ENDPOINT = 'https://paradise-7.herokuapp.com/api/register';
 
-            event.preventDefault();
-            let obj = { firstname: first, lastname: last, login: email, email: email, password: password };
-            let js = JSON.stringify(obj);
-            try {
-                const response = await fetch(bp.buildPath('api/register'),
-                    { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
-                let res = JSON.parse(await response.text());
-                if (res.id <= 0) {
-                    console.log('User already exists.');
-                    setMessage("User already exists in the database");
-                    console.log(res.err);
-                }
-                else {
-                    var user = { firstName: res.firstName, lastName: res.lastName, id: res.id }
-                    console.log('Register Successful');
-                }
-            }
-            catch (e) {
-                alert(e.toString());
-                return;
-            }
+    const handleRegister = async event => {
+        if (!validateInfo()) {
+            return;
+        }
+        console.log("Valid info");
+        console.log("Checking for dupes");
+
+        //event.preventDefault();
+        let obj = {
+            firstname: first,
+            lastname: last,
+            login: email,
+            email: email,
+            password: password
         };
+        console.log(obj);
 
-        const validateInfo = () => {
-            validateEmail();
-            validateFirst();
-            validateLast();
-            validatePassword();
-            checkPasswordsMatch();
-            return emailValid && firstValid && lastValid && passwordValid && repasswordValid;
+        try {
+            const response = await fetch(REGISTER_ENDPOINT, {
+                method: 'POST',
+                body: JSON.stringify(obj),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            let res = JSON.parse(await response.text());
+            if (res.id <= 0) {
+                console.log('User already exists.');
+                //setMessage("User already exists in the database");
+                console.log(res.err);
+            }
+            else {
+                var user = { firstName: res.firstName, lastName: res.lastName, id: res.id }
+                console.log('Register Successful');
+                router.replace('./LoginScreen');
+            }
         }
-
-        const updateEmailText = (input) => {
-            setEmail(input);
+        catch (e) {
+            alert(e.toString());
+            return;
         }
+    };
 
-        const validateEmail = () => { 
-            setEmailValid(email.match(/^[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+$/)); 
-        }
-
-        const validateFirst = () => { setFirstValid(first.match(/^[A-Za-z]+$/)); }
-
-        const validateLast = () => { setLastValid(last.match(/^[A-Za-z]+$/)); }
-
-        const validatePassword = () => {
-            regex = /^(?=.*[0-9])(?=.*[!@#$%^&*()\-_=+:/\\|{}\[\]`~,.?;'"])[a-zA-Z0-9!@#$%^&*()\-_=+:/\\|{}\[\]`~,.?;'"]{7,15}$/;
-            setPasswordValid(password.match(regex));
-        }
-
-        const checkPasswordsMatch = () => { setRepassword(password === repassword); }
-
-
-        return (
-            <SafeAreaView style={styles.home}>
-                <Text id='emailCorrection' style={emailValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                    {`Please enter a valid email address`}
-                </Text>
-                <TextInput
-                    id='email'
-                    placeholder='Email'
-                    autoComplete='email'
-                    autoCorrect={false}
-                    inputMode={'email'}
-                    style={styles.input}
-                    value={email}
-                    editable={true}
-                    onEndEditing={validateEmail}
-                    onChangeText={updateEmailText}
-                />
-
-                <Text id='firstNameCorrection' style={firstValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                    {`Please enter a name`}
-                </Text>
-                <TextInput
-                    id='firstName'
-                    placeholder='First Name'
-                    autoComplete='given-name'
-                    autoCorrect={false}
-                    style={styles.input}
-                    value={first}
-                    onChangeText={text => setFirst(text)}
-                />
-
-                <Text id='lastNameCorrection' style={lastValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                    {`Please enter a name`}
-                </Text>
-                <TextInput
-                    //id='lastName'
-                    placeholder='Last Name'
-                    autoComplete='family-name'
-                    autoCorrect={false}
-                    style={styles.input}
-                    onChangeText={text => setLast(text)}
-                />
-
-                <Text id='passCorrection' style={passwordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                    {`Passwords must contain between 8 and 14 characters.\nPassword must contain at least one uppercase, one lowercase, one number, one special character.`}
-                </Text>
-                <TextInput
-                    id='password'
-                    placeholder='Password'
-                    autoComplete='new-password'
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    style={styles.input}
-                    onChangeText={text => setPassword(text)}
-                />
-                <Text id='repasswordCorrection' style={repasswordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                    {`Passwords must match.`}
-                </Text>
-                <TextInput
-                    id='repassword'
-                    placeholder='Retype Password'
-                    autoComplete='new-password'
-                    autoCorrect={false}
-                    secureTextEntry={true}
-                    style={styles.input}
-                    onTextChange={text => setRepassword(text)}
-                />
-                <Pressable
-                    style={styles.loginButton}
-                    onPress={handleRegister}
-                >
-                    <Text style={styles.buttonText}>REGISTER</Text>
-                </Pressable>
-            </SafeAreaView>
-        );
+    const validateInfo = () => {
+        validateEmail();
+        validateFirst();
+        validateLast();
+        validatePassword();
+        checkPasswordsMatch();
+        return emailValid && firstValid && lastValid && passwordValid && repasswordValid;
     }
+
+    const validateEmail = () => {
+        setEmailValid(email.match(/^[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+$/));
+    }
+
+    const validateFirst = () => { setFirstValid(first.match(/^[A-Za-z]+$/)); }
+
+    const validateLast = () => { setLastValid(last.match(/^[A-Za-z]+$/)); }
+
+    const validatePassword = () => {
+        regex = /^(?=.*[0-9])(?=.*[!@#$%^&*_])[a-zA-Z0-9!@#$%^&*_]{7,15}$/;
+        setPasswordValid(password.match(regex));
+    }
+
+    const checkPasswordsMatch = () => { 
+        setRepasswordValid(password.normalize() === repassword.normalize());
+        console.log("Password: " + password + "\nRetyped Password: " + repassword);
+        console.log("Passwords Match: " + repasswordValid);
+    }
+
+
+    return (
+        <ScrollView contentContainerStyle={styles.home}>
+            <Text id='emailCorrection' style={emailValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                {`Please enter a valid email address`}
+            </Text>
+            <TextInput
+                placeholder='Email'
+                autoComplete='email'
+                autoCorrect={false}
+                inputMode={'email'}
+                style={styles.input}
+                value={email}
+                onEndEditing={validateEmail}
+                onChangeText={setEmail}
+            />
+
+            <Text style={firstValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                {`Please enter a name`}
+            </Text>
+            <TextInput
+                placeholder='First Name'
+                autoComplete='given-name'
+                autoCorrect={false}
+                style={styles.input}
+                value={first}
+                onEndEditing={validateFirst}
+                onChangeText={setFirst}
+            />
+
+            <Text style={lastValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                {`Please enter a name`}
+            </Text>
+            <TextInput
+                placeholder='Last Name'
+                autoComplete='family-name'
+                autoCorrect={false}
+                style={styles.input}
+                value={last}
+                onEndEditing={validateLast}
+                onChangeText={setLast}
+            />
+
+            <Text style={passwordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                {
+                    `Passwords must contain between 8 and 14 characters.\n` +
+                    `Password must contain at least one uppercase letter.\n` +
+                    `Password must contain at least one lowercase letter.\n` +
+                    `Password must contain at least one number.\n` +
+                    `Password must contain at least one of the following characters: ` +
+                    `!, @, #, $, %, ^, &, *, _.`
+                }
+            </Text>
+            <TextInput
+                placeholder='Password'
+                autoComplete='new-password'
+                autoCorrect={false}
+                secureTextEntry={true}
+                style={styles.input}
+                values={password}
+                onEndEditing={validatePassword}
+                onChangeText={setPassword}
+            />
+            <Text style={repasswordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                {`Passwords must match.`}
+            </Text>
+            <TextInput
+                placeholder='Retype Password'
+                autoComplete='new-password'
+                autoCorrect={false}
+                secureTextEntry={true}
+                style={styles.input}
+                value={repassword}
+                onEndEditing={checkPasswordsMatch}
+                onChangeText={setRepassword}
+            />
+            <Pressable
+                style={styles.loginButton}
+                onPress={handleRegister}
+            >
+                <Text style={styles.buttonText}>REGISTER</Text>
+            </Pressable>
+        </ScrollView>
+    );
+}
 //}
 
 const styles = StyleSheet.create
