@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import './Landing.css';
 import TopBar from './TopBar.js';
 import CategoryBar from './CategoryBar.js';
 import LoginDropdown from '../components/Login/LoginDropdown';
 import RegisterDropdown from '../components/Login/RegisterDropdown';
+import ItemList from '../components/ItemList';
 
 function LandingPage(){
 	// Getter and setter for visibility, by default invisible
 	let [loginIsVisible, setLoginVisibility] = useState(false);
 	let [registerIsVisible, setRegisterVisibility] = useState(false);
+	let [loggedIn, setLoggedIn] = useState(false);
 	let [getGreeting, setGreeting] = useState("");
 
 	let toggleLogin = () => {
@@ -23,6 +25,7 @@ function LandingPage(){
 
 	let displayAccount = (login) => {
 		setLoginVisibility(false);
+		setLoggedIn(true);
 		setGreeting("Hi, " + login);
 	};
 
@@ -44,31 +47,7 @@ function LandingPage(){
 			<div id = "darkScreen" style = {{opacity: isDark ? "70%" : "0%"}}/>
 			
 			<main>
-			<div className="sectionContainer">
-				<div className="section section1">
-					<h2>This week's bargain</h2>
-					<ul>
-						<li>Product 1</li>
-						<li>Product 2</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-						<li>Product 3</li>
-					</ul>
-				</div>
+				{loggedIn ? <ItemList/> : <div/>}
 				<div className="section section2">
 					<h2>Recommended for you</h2>
 					<ul>
@@ -77,7 +56,6 @@ function LandingPage(){
 						<li>Product 3</li>
 					</ul>
 				</div>
-			</div>
 			</main>
 		</div>
 	);

@@ -4,7 +4,6 @@ main {
 	padding: 20px;
 	position: absolute;
 	top: 130px;
-	width: 100%;
 	z-index: 0;
 }
 
@@ -17,10 +16,6 @@ ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-}
-
-li {
-	marginBottom: 10px;
 }
 
 .topBar {
