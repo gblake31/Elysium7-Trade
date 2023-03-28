@@ -2,8 +2,12 @@ require('express');
 require('mongodb');
 require('mongoose');
 
-// load user model
+// load models
 const User = require("./models/user.js");
+const Item = require("./models/item.js");
+const Order = require("./models/order.js");
+const Message = require("./models/message.js");
+
 // load card model
 //const Card = require("./models/card.js"); // COMMENT BACK IN IF USING CARD API!!
 
