@@ -4,6 +4,9 @@
 .pnp.js
 package-lock.json
 
+# exception to the rule to fix MERN C bug
+!/node_modules/react-scripts/config/webpack.config.js
+
 # testing
 /coverage
 
