@@ -23,7 +23,7 @@ const ItemSchema = new Schema({
     required: true
   },
   Picture: {
-    required: true
+    //required: true
   },
   ListedTime: {
     type: Date,
