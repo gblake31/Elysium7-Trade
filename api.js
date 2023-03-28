@@ -119,7 +119,8 @@ exports.setApp = function ( app, client )
       }
       else {
 
-      const newUser = new User({UserID:1,FirstName:firstname,LastName:lastname,Login:login,Password:password,Email:email});
+      const newUser = new User({FirstName:firstname,LastName:lastname,Login:login,
+        Password:password,Email:email,OrderedList:[],ListedList:[],FavoritedList:[]});
 
       try
       {
