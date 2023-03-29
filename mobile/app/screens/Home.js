@@ -3,11 +3,11 @@ import Product from '../components/Product';
 
 function Home(props) {
     return (
-        <SafeAreaView style={styles.home}>
+        <View style={styles.home}>
             <Text style={styles.title}>Website Home Page</Text>
             <Product itemName={'Keyboard'} price={5} />
             <Product itemName={'Mouse'} price={10} />
-        </SafeAreaView>
+        </View>
     );
 }
 
