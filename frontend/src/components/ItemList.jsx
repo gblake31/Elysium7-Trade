@@ -15,11 +15,11 @@ function ItemList() {
                 {`
                     #outer {
                         display: flex;
-                        flex-direction: column;
+                        flex-direction: row;
+                        flex-wrap: wrap;
                     }
                 `}
             </style>
-            <h2>Check out these new offers!</h2>
             {items.map(x => createCard(x))}
         </div>
 

@@ -11,6 +11,7 @@ function ListItem(props) {
                         border-style: solid;
                         border-width: medium;
                         cursor: pointer;
+                        width: 500px;
                     }
                     #card:hover {
                         background-color: rgb(230,230,230);
