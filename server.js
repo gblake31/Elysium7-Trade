@@ -16,15 +16,13 @@ app.use(bodyParser.json());
 // MongoDB
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
-const mongoose = require("mongoose");
-mongoose.connect(url, {dbName:"COP4331"})
-  .then(() => console.log("Mongo DB connected"))
-  .catch(err => console.log(err));
-
+const MongoClient = require('mongodb').MongoClient;
+const client = new MongoClient(url);
+client.connect(console.log("MongoDB Connected"));
 
 // API
 let api = require('./api.js');
-api.setApp(app, mongoose);
+api.setApp(app, client);
 
 ///////////////////////////////////////////////////
 // For Heroku deployment
