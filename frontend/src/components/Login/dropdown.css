@@ -2,7 +2,8 @@
     position: absolute;
     right: 10%;
     top: -50%;
-    transition: top 2s;
+    transition: top 1s;
+    transition-timing-function: ease-out;
     background-image: url("../../pages/Pictures/loginreg-wooden-sign.png");
     background-position: center;
     background-repeat: no-repeat;
