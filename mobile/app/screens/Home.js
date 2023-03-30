@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Product from '../components/Product';
 
 function Home(props) {
