@@ -1,16 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import './Landing.css';
-import TopBar from './TopBar.js';
+import TopBar from '../components/TopBar.js';
 import CategoryBar from './CategoryBar.js';
 import LoginDropdown from '../components/Login/LoginDropdown';
 import RegisterDropdown from '../components/Login/RegisterDropdown';
 import ItemList from '../components/ItemList';
+import {UserContext} from '../App'
 
 function LandingPage(){
 	// Getter and setter for visibility, by default invisible
 	let [loginIsVisible, setLoginVisibility] = useState(false);
 	let [registerIsVisible, setRegisterVisibility] = useState(false);
-	let [loggedIn, setLoggedIn] = useState(false);
+
+	let {loggedIn, setLoggedIn} = useContext(UserContext);
 
 	// Toggles login display
 	let toggleLogin = () => {
@@ -24,7 +26,7 @@ function LandingPage(){
 		setRegisterVisibility(true);
 	};
 
-	let displayAccount = (login) => {
+	let displayAccount = () => {
 		setLoginVisibility(false);
 		setLoggedIn(true);
 	};
@@ -39,12 +41,7 @@ function LandingPage(){
 	};
 
 	let isDark = loginIsVisible | registerIsVisible;
-	useEffect(() => {
-		const loggedInUser = localStorage.getItem('user_data');
-		if (loggedInUser) {
-		  setLoggedIn(true);
-		}
-	  }, []);
+	
 	
 	return (
 		<div id = "page">

@@ -1,10 +1,14 @@
-import React from 'react';
-import dragonImage from './Pictures/dragonLogo.png';
+import React, {useContext} from 'react';
+import dragonImage from '../pages/Pictures/dragonLogo.png';
+import ProfilePic from './ProfilePic';
+
+import {UserContext} from '../App'
 
 function TopBar(props){
+	let {loggedIn, setLoggedIn} = useContext(UserContext);
 	function renderUserData()
 	{
-		if (!props.loggedIn)
+		if (!loggedIn)
 		{
 			console.log("not logged in: "+ localStorage.getItem('user_data'));
 			return (<button type="button" onClick = {props.callback}>Login/Register</button>);
@@ -31,7 +35,7 @@ function TopBar(props){
 					<input type="text" placeholder="Search for products" />
 				</div>
 				{renderUserData()}
-
+				<ProfilePic></ProfilePic>
 			</div>
 			
 		</div>
