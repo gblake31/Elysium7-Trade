@@ -31,6 +31,8 @@ function LoginDropdown(props) {
                 var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
                 localStorage.setItem('user_data', JSON.stringify(user));
                 console.log('Login Successful');
+                loginName.value = "";
+                loginPassword.value = "";
                 props.onLogin(res.firstName);
             }
         }
