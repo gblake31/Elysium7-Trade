@@ -3,30 +3,6 @@ require('mongodb');
 
 exports.setApp = function ( app, client )
 {
-    app.post('/api/addcard', async (req, res, next) =>
-    {
-      // incoming: userId, color
-      // outgoing: error
-        
-      const { userId, card } = req.body;
-    
-      const newCard = {Card:card,UserId:userId};
-      let error = '';
-    
-      try
-      {
-        const db = client.db('COP4331Cards');
-        const result = db.collection('Cards').insertOne(newCard);
-      }
-      catch(e)
-      {
-        error = e.toString();
-      }
-    
-      let ret = { error: error };
-      res.status(200).json(ret);
-    });
-    
     app.post('/api/login', async (req, res, next) => 
     {
       // incoming: login, password
@@ -197,6 +173,97 @@ exports.setApp = function ( app, client )
       res.status(200).json(ret);
     });
 
+    app.post('/api/updateItem', async (req, res, next) => 
+    {
+      // incoming: itemid, sellerid, itemname, price, description, condition, picture
+      // outgoing: result, error
+    
+      let er = '';
+      let result;
+      const { ObjectId } = require('mongodb');
+      const db = client.db('COP4331');
+    
+      const { itemid, sellerid, itemname, price, description, condition, picture } = req.body;
+
+      let id = new ObjectId(itemid);
+
+      try
+        {
+          result = await db.collection('Items').updateOne(
+            {_id:id,sellerid:sellerid},
+            {
+              $set: {itemname:itemname,price:price,description:description,
+                      condition:condition,picture:picture} 
+            }
+          );
+
+          if( result.matchedCount == 0)
+          {
+            er = "Item could not be found";
+          }
+        }
+        catch(e)
+        {
+          er = e.toString();
+        }     
+      
+      let ret = { result:result, error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/retrieveItemInfo', async (req, res, next) => 
+    {
+      // incoming: itemid
+      // outgoing: result, error
+    
+      let er = '';
+      let result;
+      const { ObjectId } = require('mongodb');
+      const db = client.db('COP4331');
+    
+      const { itemid } = req.body;
+
+      let id = new ObjectId(itemid);
+      
+      const results = await db.collection('Items').find({_id:id}).toArray();
+
+      if( results.length > 0 )
+      {
+        result = results[0]
+      }
+      else
+      {
+        er = "Item was not found";
+      }
+      
+      let ret = { result:result, error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/addcard', async (req, res, next) =>
+    {
+      // incoming: userId, color
+      // outgoing: error
+        
+      const { userId, card } = req.body;
+    
+      const newCard = {Card:card,UserId:userId};
+      let error = '';
+    
+      try
+      {
+        const db = client.db('COP4331Cards');
+        const result = db.collection('Cards').insertOne(newCard);
+      }
+      catch(e)
+      {
+        error = e.toString();
+      }
+    
+      let ret = { error: error };
+      res.status(200).json(ret);
+    });
+
     app.post('/api/searchcards', async (req, res, next) => 
     {
       // incoming: userId, search
@@ -225,5 +292,4 @@ exports.setApp = function ( app, client )
       let ret = {results:_ret, error:error};
       res.status(200).json(ret);
     });
-    
 }
