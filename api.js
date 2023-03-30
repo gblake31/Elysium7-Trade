@@ -1,6 +1,8 @@
 require('express');
 require('mongodb');
 
+const { ObjectId } = require('mongodb');
+
 exports.setApp = function ( app, client )
 {
     app.post('/api/login', async (req, res, next) => 
@@ -41,7 +43,7 @@ exports.setApp = function ( app, client )
       let er = '';
       let result;
     
-      const { login, password, firstname, lastname } = req.body;
+      const { login, password, firstname, lastname, email } = req.body;
     
       const db = client.db('COP4331');
       const results = await db.collection('Users').find({login:login}).toArray();
@@ -55,9 +57,11 @@ exports.setApp = function ( app, client )
       }
       else {
         try {
-          result = await db.collection('Users').insertOne({login:login, password:password, firstname:firstname, lastname:lastname});
+          result = await db.collection('Users').insertOne({login:login, 
+            password:password, firstname:firstname, lastname:lastname, email:email,
+            ordered:{}, favorited:{}, listings:{}, profilepicture:0, verified:false});
         } catch (e) {
-          print(e);
+          console.log(e);
         }
 
         id = result.insertedId;
@@ -74,7 +78,7 @@ exports.setApp = function ( app, client )
     
       let er = '';
       let result;
-      const { ObjectId } = require('mongodb');
+      
       const db = client.db('COP4331');
     
       const { itemid, sellerid } = req.body;
@@ -180,7 +184,7 @@ exports.setApp = function ( app, client )
     
       let er = '';
       let result;
-      const { ObjectId } = require('mongodb');
+
       const db = client.db('COP4331');
     
       const { itemid, sellerid, itemname, price, description, condition, picture } = req.body;
@@ -240,56 +244,110 @@ exports.setApp = function ( app, client )
       res.status(200).json(ret);
     });
 
-    app.post('/api/addcard', async (req, res, next) =>
+    app.post('/api/retrieveUserInfo', async (req, res, next) => 
     {
-      // incoming: userId, color
-      // outgoing: error
-        
-      const { userId, card } = req.body;
-    
-      const newCard = {Card:card,UserId:userId};
-      let error = '';
-    
-      try
+      // incoming: userid
+      // outgoing: result, error
+      
+      let er = '';
+
+      const { userid } = req.body;
+
+      let id = new ObjectId(userid);
+
+      // Select the COP4331 database
+      const db = client.db('COP4331');
+      // Find the userID in the Users collection
+      const results = await db.collection('Users').find({_id:id}).toArray();
+
+      let result;
+
+      // If there was a find
+      if (results.length > 0) 
       {
-        const db = client.db('COP4331Cards');
-        const result = db.collection('Cards').insertOne(newCard);
+        result=results[0];
       }
-      catch(e)
-      {
-        error = e.toString();
+      else {
+        er = 'User not found';
       }
-    
-      let ret = { error: error };
+
+      // Return a JSON object
+      let ret = {result:result, error:er}
       res.status(200).json(ret);
     });
 
-    app.post('/api/searchcards', async (req, res, next) => 
+    app.post('/api/deleteAccount', async(req, res, next) =>
     {
-      // incoming: userId, search
-      // outgoing: results[], error
-    
-      let error = '';
-    
-      const { userId, search } = req.body;
-    
-      let _search = search.trim();
-      console.log(search) //
-      console.log(_search) //
-      
-      const db = client.db('COP4331Cards');
-      const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*', 
-                            $options:'r'}}).toArray();
+      // incoming: login, password
+      // outgoing: error
 
-      console.log(results) //
-      
-      let _ret = [];
-      for( let i=0; i<results.length; i++ )
+      let er = '';
+
+      // Get the body
+      const { login, password } = req.body;
+
+      // Select the COP4331 database
+      const db = client.db('COP4331');
+
+      try 
       {
-        _ret.push( results[i].Card );
+        // Delete the account and acquire the results
+        const results = await db.collection('Users').deleteOne({login:login,password:password});
+        
+        // If the deletion was not acknowledged
+        if (results.acknowledged === false) 
+        {
+          er += 'Write concern disabled\n';
+        }
+        // If the account was not deleted
+        else if (results.deletedCount !== 1) 
+        {
+          er += 'Account deletion failed\n';
+        }
+      } catch(e) 
+      {
+        console.log(e);
       }
+
+      // Return a JSON object
+      let ret = { error:er };
+      res.status(200).json(ret);
+
+    });
+
+    app.post('/api/updateAccount', async(req, res, next) => {
+      // incoming: userid, login, password, firstname, lastname, email, profilepicture, verified
+      // outgoing: result, error
+    
+      let er = '';
+      let result;
+    
+      const db = client.db('COP4331');
+
+      const { userid, login, password, firstname, lastname, email, profilepicture, verified } = req.body;
+      let id = new ObjectId(userid);
       
-      let ret = {results:_ret, error:error};
+      try
+      {
+        result = await db.collection('Users').updateOne(
+          {_id:id},
+          {
+            $set: {login:login,password:password,firstname:firstname,lastname:lastname,
+              email:email,profilepicture:profilepicture,verified:verified} 
+          }
+        );
+
+        if( result.matchedCount == 0)
+        {
+          er = "User could not be found";
+        }
+      }
+      catch(e)
+      {
+        er = e.toString();
+      }
+    
+      let ret = {result:result, error:er};
       res.status(200).json(ret);
     });
 }
