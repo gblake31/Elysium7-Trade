@@ -9,6 +9,7 @@ function ProfilePic()
     const loggedIn = useContext(UserContext);
     return(
         <div>
+            <button type="button" onClick = {() => {window.location.href = '/profile'}}>Profile</button>
             {/* <img src={data.profilepic}> </img> */}
         </div>
     );

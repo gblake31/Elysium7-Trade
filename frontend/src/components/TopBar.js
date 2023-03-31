@@ -20,6 +20,7 @@ function TopBar(props){
 			return (
 			<div id = "right">
 				<h1>Hi, {obj.firstName}</h1>
+				<ProfilePic></ProfilePic>
 				<button type="button" onClick={props.logout}>Logout</button>	
 			</div>);
 		}
@@ -35,7 +36,6 @@ function TopBar(props){
 					<input type="text" placeholder="Search for products" />
 				</div>
 				{renderUserData()}
-				<ProfilePic></ProfilePic>
 			</div>
 			
 		</div>
