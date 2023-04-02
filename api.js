@@ -179,9 +179,11 @@ exports.setApp = function ( app, client )
 
     app.post('/api/updateItem', async (req, res, next) => 
     {
-      // incoming: itemid, sellerid, itemname, price, description, condition, picture
+      // incoming: itemid, sellerid, itemname, price, description, condition, image
       // outgoing: result, error
-    
+      
+      let fs = require('fs');
+      
       let er = '';
       let result;
 
@@ -197,7 +199,7 @@ exports.setApp = function ( app, client )
             {_id:id,sellerid:sellerid},
             {
               $set: {itemname:itemname,price:price,description:description,
-                      condition:condition,picture:picture} 
+                      condition:condition,image:fs.readFileSync(image)} 
             }
           );
 
@@ -348,6 +350,39 @@ exports.setApp = function ( app, client )
       }
     
       let ret = {result:result, error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/createItem', async(req, res, next) => {
+      // incoming: sellerid, itemname, price, description, condition, image, listedtime
+      // outgoing: itemid, error
+
+      let fs = require('fs');
+
+      let er = '';
+      let result;
+    
+      let id;
+
+      const { sellerid:sellerid, itemname:itemname, price:price, 
+        description:description, condition:condition, image:image, 
+        listedtime:listedtime } = req.body;
+    
+      const db = client.db('COP4331');
+
+      try {
+        result = await db.collection('Items').insertOne({sellerid:sellerid,
+          itemname:itemname, price:price, description:description,
+          condition:condition, listedtime:listedtime, image:fs.readFileSync(image)
+        });
+
+        id = result.insertedId;
+      } catch(e) {
+        er = 'Insert failed';
+        console.log(e);
+      }
+
+      let ret = { itemid:id, error:er};
       res.status(200).json(ret);
     });
 }
