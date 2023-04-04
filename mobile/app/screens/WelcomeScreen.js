@@ -1,9 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { Link } from "expo-router";
+import { useFonts } from 'expo-font';
 import RegisterScreen from './RegisterScreen';
 
+const bg = require('./images/map.jpg');
+
 function WelcomeScreen(props) {
+    const [fontsLoaded] = useFonts({
+        'Abibas': require('../assets/fonts/Abibas.otf')
+      });
+    
     console.log("welcome");
     return (
         <View style={styles.home}>
@@ -37,24 +44,32 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#51684a',
         alignItems: 'center',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         fontWeight: 'bold'
     },
     loginButton:
     {
-        width: '100%',
+        width: '80%',
         height: 80,
         backgroundColor: '#f8a313',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 40,
+        marginVertical: 10
+    },
+    mapBg:
+    {
+
     },
     registerButton:
     {
-        width: '100%',
+        width: '80%',
         height: 80,
         backgroundColor: '#852827',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 40,
+        marginVertical: 10
     },
     title: 
     {
@@ -63,7 +78,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         position: 'absolute',
         top: '33%',
-        alignItems: 'center'
+        alignItems: 'center',
+        fontFamily: 'Abibas'
     }
 })
 

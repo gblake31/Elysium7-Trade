@@ -1,10 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 
+// prevents autohiding splash screen during font loading
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
+  // load fonts with expo-font
+  const [fontsLoaded] = useFonts({
+    'Abibas': require('./assets/fonts/Abibas.otf')
+  });
+
+  // keeps splash screen open until fonts are loaded
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  // displays welcome screen, allows login and register
   return (
-    <WelcomeScreen />
+    <WelcomeScreen onLayout={onLayoutRootView}/>
   );
 }
 
