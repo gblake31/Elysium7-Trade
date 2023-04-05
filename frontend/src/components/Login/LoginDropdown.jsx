@@ -28,12 +28,13 @@ function LoginDropdown(props) {
             }
             else
             {
-                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
+                var user = {id:res.id,username: loginName.value, email: res.email};
                 localStorage.setItem('user_data', JSON.stringify(user));
                 console.log('Login Successful');
+                props.onLogin();
                 loginName.value = "";
                 loginPassword.value = "";
-                props.onLogin(res.firstName);
+                
             }
         }
         catch(e)

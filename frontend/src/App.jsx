@@ -45,7 +45,7 @@ function App() {
 	let logOut = () => {
 		setLoggedIn(false);
 		localStorage.clear();
-    window.location.href = '/';
+    	window.location.href = '/';
 	};
 
 	let isDark = loginIsVisible | registerIsVisible;

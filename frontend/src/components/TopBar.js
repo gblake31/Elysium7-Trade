@@ -19,7 +19,7 @@ function TopBar(props){
 			let obj = JSON.parse(localStorage.getItem('user_data'));
 			return (
 			<div id = "right">
-				<h1>Hi, {obj.firstName}</h1>
+				<h1>Hi, {obj.username}</h1>
 				<ProfilePic></ProfilePic>
 				<button type="button" onClick={props.logout}>Logout</button>	
 			</div>);
