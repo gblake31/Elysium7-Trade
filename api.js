@@ -8,7 +8,7 @@ exports.setApp = function ( app, client )
     app.post('/api/login', async (req, res, next) => 
     {
       // incoming: login, password
-      // outgoing: id, firstName, lastName, error
+      // outgoing: id, email, error
     
       let er = '';
     
@@ -18,32 +18,30 @@ exports.setApp = function ( app, client )
       const results = await db.collection('Users').find({login:login,password:password}).toArray();
     
       let id = -1;
-      let fn = '';
-      let ln = '';
+      let email = '';
     
       if( results.length > 0 )
       {
         id = results[0]._id;
-        fn = results[0].firstname;
-        ln = results[0].lastname;
+        email = results[0].email;
       }
       else {
         er = 'User not found'
       }
     
-      let ret = { id:id, firstName:fn, lastName:ln, error:er};
+      let ret = { id:id, login:login, email:email, error:er};
       res.status(200).json(ret);
     });
 
     app.post('/api/register', async (req, res, next) => 
     {
-      // incoming: login, password, firstname, lastname
+      // incoming: login, password, email
       // outgoing: id, error
     
       let er = '';
       let result;
     
-      const { login, password, firstname, lastname, email } = req.body;
+      const { login, password, email } = req.body;
     
       const db = client.db('COP4331');
       const results = await db.collection('Users').find({login:login}).toArray();
@@ -57,9 +55,9 @@ exports.setApp = function ( app, client )
       }
       else {
         try {
-          result = await db.collection('Users').insertOne({login:login, 
-            password:password, firstname:firstname, lastname:lastname, email:email,
-            ordered:{}, favorited:{}, listings:{}, profilepicture:0, verified:false});
+          result = await db.collection('Users').insertOne({login:login, password:password, 
+            email:email, ordered:{}, favorited:{}, listings:{}, 
+            profilepicture:0, verified:false});
         } catch (e) {
           console.log(e);
         }
@@ -318,7 +316,7 @@ exports.setApp = function ( app, client )
     });
 
     app.post('/api/updateAccount', async(req, res, next) => {
-      // incoming: userid, login, password, firstname, lastname, email, profilepicture, verified
+      // incoming: userid, login, password, email, profilepicture, verified
       // outgoing: result, error
     
       let er = '';
@@ -326,7 +324,7 @@ exports.setApp = function ( app, client )
     
       const db = client.db('COP4331');
 
-      const { userid, login, password, firstname, lastname, email, profilepicture, verified } = req.body;
+      const { userid, login, password, email, profilepicture, verified } = req.body;
       let id = new ObjectId(userid);
       
       try
@@ -334,8 +332,8 @@ exports.setApp = function ( app, client )
         result = await db.collection('Users').updateOne(
           {_id:id},
           {
-            $set: {login:login,password:password,firstname:firstname,lastname:lastname,
-              email:email,profilepicture:profilepicture,verified:verified} 
+            $set: {login:login,password:password,email:email,
+              profilepicture:profilepicture,verified:verified} 
           }
         );
 
