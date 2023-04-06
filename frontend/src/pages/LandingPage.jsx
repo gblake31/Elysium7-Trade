@@ -3,7 +3,6 @@ import './Landing.css';
 
 import ItemList from '../components/ItemList';
 import {UserContext} from '../App'
-import {FilePicker} from 'react-file-picker'
 
 function LandingPage(){
 	let {loggedIn, setLoggedIn} = useContext(UserContext);

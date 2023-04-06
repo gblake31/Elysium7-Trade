@@ -56,7 +56,6 @@ function RegisterDropdown(props) {
     return (
         <div id = "register-box" style = {css}>
             <h2>Create an Account</h2>
-            <input className = "field" type = "text" ref={(c) => loginUsername = c} placeholder = "Username"></input>
             {/* <label id = "email">Email</label> */}
             <input className = "field" type = "text" ref={(c) => loginEmail = c} placeholder = "Email"></input>
             {/* <label id = "username">Username</label> */}

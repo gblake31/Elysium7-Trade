@@ -80,8 +80,6 @@ ul {
 	align-items: center;
 	background-color: #51684a;
 	height: 50px;
-	position: absolute;
-	top: 80px;
 	width: 100%;
 	z-index: 1;
 }
