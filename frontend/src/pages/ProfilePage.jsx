@@ -63,11 +63,7 @@ function ProfilePage()
         }
         catch(e)
         {
-          //setMessage('Res: ' + res);
-          //console.log("LOCAL STORAGE ID: "+localStorage.getItem('user_data').id);
-          
-          //console.log("LOCAL STORAGE: "+ temp.id);
-          console.log('Something Went Wrong');
+          console.log('Something Went Wrong Trying to get UserInfo');
         }
         
       }
@@ -83,8 +79,7 @@ function ProfilePage()
 
     const update = async (event) => 
     {
-      console.log("OLD PASS: "+ oldPassword);
-      console.log("USERID: "+ userID);
+
       let obj = {
         userid: userID,
         login: oldLogin, 
@@ -99,10 +94,18 @@ function ProfilePage()
       }
       else if(event.target.innerHTML == "Change Password")
       {
+        if (curPassword != oldPassword)
+        {
+          setPasswordMessage("Your current password is incorrect!");
+          return;
+        }
         if (newPassword.value !== confirmNewPass.value) {
-          console.log("Your passwords don't match!");
           setPasswordMessage("Your passwords don't match!");
           return;
+        }
+        else
+        {
+          setPasswordMessage("");
         }
         obj.password = newPassword.value;
       }

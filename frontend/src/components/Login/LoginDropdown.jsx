@@ -11,6 +11,7 @@ function LoginDropdown(props) {
   
     let loginName;
     let loginPassword;
+    let [message, setMessage] = useState("");
 
     const doLogin = async event => 
     {
@@ -25,6 +26,7 @@ function LoginDropdown(props) {
             if( res.id <= 0 )
             {
                 console.log('User/Password combination incorrect');
+                setMessage('User/Password combination incorrect');
             }
             else
             {
@@ -52,6 +54,7 @@ function LoginDropdown(props) {
             {/* <label id = "password">Password</label> */}
             <input className = "field" type = "password" ref={(c) => loginPassword = c} placeholder = "Password"></input>
             <button onClick = {doLogin}>Login</button>
+            <p>{message}</p>
             <div className = "horizontal">
                 <h3>Don't have an account?</h3>
                 <button onClick={props.switchToRegister}>Register</button>

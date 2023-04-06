@@ -1,6 +1,5 @@
 import React, {useState, useContext} from 'react';
 import './Landing.css';
-
 import ItemList from '../components/ItemList';
 import {UserContext} from '../App'
 
@@ -19,21 +18,22 @@ function LandingPage(){
     let cond;
 	let f;
 
-	function display(image) {
-		console.log(image);
-		console.log(URL.createObjectURL(image));
-		setmyimg(URL.createObjectURL(image));
-	}
+	const toBase64 = file => new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => resolve(reader.result);
+		reader.onerror = error => reject(error);
+	});
+	 
 
 	const callAPI = async event =>
 	{
 		event.preventDefault();
-		console.log(URL.createObjectURL(f.files[0]));
-		let obj = {sellerid: sid.value, itemname: item.value, price: pr.value, description: desc.value, condition: cond.value, image:f.files[0].text(), listedtime: "0"}
+		let imgstr = await toBase64(f.files[0]);
+		let obj = {sellerid: sid.value, itemname: item.value, price: pr.value, description: desc.value, condition: cond.value, image:imgstr, listedtime: "0"}
 		let js = JSON.stringify(obj);
-		let luckyString = f.files[0].text();
-		let myblob = new Blob([luckyString]);
-		display(myblob);
+		// DISPLAYS BASE64 IMAGE
+		setmyimg(imgstr);
 		try {
 			const response = await fetch(bp.buildPath('api/createItem'),
 			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
