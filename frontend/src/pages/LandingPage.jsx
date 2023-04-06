@@ -19,41 +19,21 @@ function LandingPage(){
     let cond;
 	let f;
 
-	function getThing(image) {
+	function display(image) {
 		console.log(image);
-		setmyimg(URL.createObjectURL(image.blob()));
-	}
-
-	const callAPI2 = async event =>
-	{
-		event.preventDefault();
-		let obj = {itemid: "642b95272948dc5a29dc3c1c"}
-		let js = JSON.stringify(obj);
-		try {
-			const response = await fetch(bp.buildPath('api/retrieveItemInfo'),
-			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
-			let res = JSON.parse(await response.text());
-			if (res.error == '') {
-				console.log("success");
-				console.log(res.result);
-				getThing(res.result.image);
-			}
-			else {
-				console.log(res.error);
-			}
-		}
-		catch(e) {
-			alert(e.toString());
-			return;
-		}
+		console.log(URL.createObjectURL(image));
+		setmyimg(URL.createObjectURL(image));
 	}
 
 	const callAPI = async event =>
 	{
 		event.preventDefault();
-		let obj = {sellerid: sid.value, itemname: item.value, price: pr.value, description: desc.value, condition: cond.value, image: f.files[0].blob(), listedtime: "0"}
+		console.log(URL.createObjectURL(f.files[0]));
+		let obj = {sellerid: sid.value, itemname: item.value, price: pr.value, description: desc.value, condition: cond.value, image:f.files[0].text(), listedtime: "0"}
 		let js = JSON.stringify(obj);
-		console.log(js);
+		let luckyString = f.files[0].text();
+		let myblob = new Blob([luckyString]);
+		display(myblob);
 		try {
 			const response = await fetch(bp.buildPath('api/createItem'),
 			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
@@ -97,7 +77,6 @@ function LandingPage(){
 					<input type = "file" ref={(c) => f = c }></input>
 					<img src = {myimg}></img>
 					<button onClick= {callAPI}>Send it!</button>
-					<button onClick= {callAPI2}>Get Image</button>
 				</div>
 			</main>
 		</div>

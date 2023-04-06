@@ -128,7 +128,7 @@ function ProfilePage()
               var user = {id:userID,username:oldLogin,email:email};
               console.log(user);
               localStorage.setItem('user_data', JSON.stringify(user));
-              // window.location.href = "/profile";
+              window.location.href = "/profile";
           }
       }
       catch(e)
