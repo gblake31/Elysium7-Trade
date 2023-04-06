@@ -40,8 +40,7 @@ function RegisterDropdown(props) {
             }
             else
             {
-                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
-                localStorage.setItem('user_data', JSON.stringify(user));
+                var user = {id:res.id}
                 console.log('Register Successful');
                 props.onRegister();
             }

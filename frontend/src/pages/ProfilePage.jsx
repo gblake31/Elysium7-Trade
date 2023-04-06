@@ -9,7 +9,7 @@ function ProfilePage()
     let [userMessage, setUserMessage] = useState("");
     let [passMessage, setPasswordMessage] = useState("");
 
-    let [oldlogin, setOldLogin] = useState("");
+    let [oldLogin, setOldLogin] = useState("");
     let [oldPassword, setOldPassword] = useState("");
     let login = "";
     let [userID, setUserID] = useState("");
@@ -45,8 +45,6 @@ function ProfilePage()
         {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
         let res = JSON.parse(await response.text());
         let userInfo = res.result;
-        console.log("this is res");
-        console.log(res.result);
         try
         {
           if(res.error.length > 0)
@@ -57,13 +55,11 @@ function ProfilePage()
           /* result format: 
           id, login, password, firstname, lastname, email, ordered, favorited, listings, profilepicture, verified
           */
-          setUserID(userInfo._id);
-          console.log("userinfo.id : "+ userInfo._id);
-          console.log(userID);
-          setOldLogin(userInfo.login);
-          setOldPassword(userInfo.password);
-          setEmail(res.email);
-          setProfilePic(res.profilepicture);
+          await setUserID(userInfo._id);
+          await setOldLogin(userInfo.login);
+          await setOldPassword(userInfo.password);
+          await setEmail(userInfo.email);
+          await setProfilePic(userInfo.profilepicture);
         }
         catch(e)
         {
@@ -85,14 +81,13 @@ function ProfilePage()
     // Check if they are actually logged in and then get user info
     let {loggedIn, setLoggedIn} = useContext(UserContext);
 
-  
     const update = async (event) => 
     {
       console.log("OLD PASS: "+ oldPassword);
       console.log("USERID: "+ userID);
       let obj = {
         userid: userID,
-        login: oldlogin, 
+        login: oldLogin, 
         password: oldPassword,
         email: email,
         profilepicture: profilepic,
@@ -100,10 +95,11 @@ function ProfilePage()
       if(event.target.innerHTML == "Change Username")
       {
         obj.login = login.value;
+        oldLogin = login.value;
       }
       else if(event.target.innerHTML == "Change Password")
       {
-        if (newPassword !== confirmNewPass) {
+        if (newPassword.value !== confirmNewPass.value) {
           console.log("Your passwords don't match!");
           setPasswordMessage("Your passwords don't match!");
           return;
@@ -116,7 +112,6 @@ function ProfilePage()
       // incoming: userid, login, password, firstname, lastname, email, profilepicture, verified
       // outgoing: result, error
       
-
       let js = JSON.stringify(obj);
       try
       {    
@@ -130,9 +125,10 @@ function ProfilePage()
           }
           else
           {
-              var user = {id:res.result.id,login:res.result.login,email:res.result.email};
+              var user = {id:userID,username:oldLogin,email:email};
+              console.log(user);
               localStorage.setItem('user_data', JSON.stringify(user));
-              setUserMessage('Update Successful');
+              // window.location.href = "/profile";
           }
       }
       catch(e)
@@ -149,7 +145,7 @@ function ProfilePage()
               <div className='input-box'>
                 <label id = "username" >Change Username</label>
                 <input className = "field" type = "text"  
-                defaultValue = {oldlogin} ref={(c) => login = c} ></input>
+                defaultValue = {oldLogin} ref={(c) => login = c} ></input>
                 <p>{userMessage}</p>
                 <button onClick = {update}>Change Username</button>  
               </div>
