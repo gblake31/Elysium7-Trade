@@ -30,7 +30,8 @@ function LandingPage(){
 	{
 		event.preventDefault();
 		let imgstr = await toBase64(f.files[0]);
-		let obj = {sellerid: sid.value, itemname: item.value, price: pr.value, description: desc.value, condition: cond.value, image:imgstr, listedtime: "0"}
+		let local = JSON.parse(localStorage.getItem('user_data'));
+		let obj = {sellerid: local.id, itemname: item.value, price: pr.value, description: desc.value, condition: cond.value, image:imgstr, listedtime: "0"}
 		let js = JSON.stringify(obj);
 		// DISPLAYS BASE64 IMAGE
 		setmyimg(imgstr);
@@ -63,8 +64,6 @@ function LandingPage(){
 						<li>Product 3</li>
 					</ul>
 
-					<label>sellerid:</label>
-					<input type = "text" ref={(c) => sid = c}></input>
 					<label>itemname:</label>
 					<input type = "text" ref={(c) => item = c}></input>
 					<label>price:</label>

@@ -371,7 +371,7 @@ exports.setApp = function ( app, client )
       try {
         result = await db.collection('Items').insertOne({sellerid:sellerid,
           itemname:itemname, price:price, description:description,
-          condition:condition, listedtime:listedtime, image:fs.readFileSync(image)
+          condition:condition, listedtime:listedtime, image:image
         });
 
         id = result.insertedId;
