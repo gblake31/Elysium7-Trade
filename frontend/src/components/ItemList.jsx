@@ -3,12 +3,13 @@ import jsonData from './data'
 import ListItem from './ListItem';
 
 function createCard(obj) {
-    return <ListItem name = {obj.name} price = {obj.price} image = {obj.image} desc = {obj.desc}/>
+    return <ListItem name = {obj.itemname} price = {obj.price} image = {obj.image} desc = {obj.description}/>
 }
 
-function ItemList() {
+function ItemList(props) {
     // This data will eventually come from the API, not a json file.
-    let items = jsonData.list;
+    let items = props.arr;
+    console.log(items);
     return (
         <div id = 'outer'>
             <style>

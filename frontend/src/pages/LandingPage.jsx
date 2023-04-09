@@ -3,7 +3,7 @@ import './Landing.css';
 import ItemList from '../components/ItemList';
 import {UserContext} from '../App'
 
-function LandingPage(){
+function LandingPage(props){
 	let {loggedIn, setLoggedIn} = useContext(UserContext);
 
 	let [ready, setReady] = useState(false);
@@ -51,11 +51,13 @@ function LandingPage(){
 			return;
 		}
 	}
+	console.log("no");
+	console.log(props.itemList);
 
 	return (
 		<div id = "page">
 			<main>
-				{loggedIn ? <ItemList/> : <div/>}
+				{loggedIn ? <ItemList arr = {props.itemList}/> : <div/>}
 				<div className="section section2">
 					<h2>Recommended for you</h2>
 					<ul>
@@ -64,6 +66,7 @@ function LandingPage(){
 						<li>Product 3</li>
 					</ul>
 
+					<h1>Add an Item to the Database (This is very Temporary)</h1>
 					<label>itemname:</label>
 					<input type = "text" ref={(c) => item = c}></input>
 					<label>price:</label>
@@ -75,7 +78,7 @@ function LandingPage(){
 					<label>file</label>
 					<input type = "file" ref={(c) => f = c }></input>
 					<img src = {myimg}></img>
-					<button onClick= {callAPI}>Send it!</button>
+					<button onClick= {callAPI}>Add to Database</button>
 				</div>
 			</main>
 		</div>

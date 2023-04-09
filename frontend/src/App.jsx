@@ -21,6 +21,8 @@ function App() {
 	let [loginIsVisible, setLoginVisibility] = useState(false);
 	let [registerIsVisible, setRegisterVisibility] = useState(false);
 
+	let [itemList, setItemList] = useState([]);
+
 	// Toggles login display
 	let toggleLogin = () => {
 		setRegisterVisibility(false);
@@ -61,23 +63,21 @@ function App() {
   return (
     <div>
       <UserContext.Provider value={{loggedIn, setLoggedIn}}>
-        <TopBar callback = {toggleLogin} logout = {logOut}/>
+        <TopBar callback = {toggleLogin} logout = {logOut} updateList = {(arr) => setItemList(arr)}/>
         <CategoryBar />
         <LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount}/>
 			  <RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
 			  <div id = "darkScreen" style = {{opacity: isDark ? "70%" : "0%"}}/>
         <BrowserRouter>
           <Routes>
-            <Route path="/" index element={<LandingPage />} />
+            <Route path="/" index element={<LandingPage itemList = {itemList}/>} />
             <Route path="/profile" index element={<ProfilePage />}/>
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
-
-   
     </div>
     
-);
+	);
 }
 
 export default App;

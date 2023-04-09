@@ -1,11 +1,15 @@
 import React, {useContext} from 'react';
 import dragonImage from '../pages/Pictures/dragonLogo.png';
+import searchImage from '../pages/Pictures/search.png';
 import ProfilePic from './ProfilePic';
 
 import {UserContext} from '../App'
 
+
 function TopBar(props){
 	let {loggedIn, setLoggedIn} = useContext(UserContext);
+	let bp = require('./Leinecker/Path.js');
+	let searchInput;
 	function renderUserData()
 	{
 		if (!loggedIn)
@@ -25,6 +29,32 @@ function TopBar(props){
 			</div>);
 		}
 	}
+
+
+	const doSearch = async (str) =>
+	{
+		let local = JSON.parse(localStorage.getItem('user_data'));
+		let obj = {search: str}
+		let js = JSON.stringify(obj);
+		try {
+			const response = await fetch(bp.buildPath('api/searchItems'),
+			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
+			let res = JSON.parse(await response.text());
+			if (res.error == '') {
+				console.log("success");
+				console.log(res.results);
+				props.updateList(res.results);
+			}
+			else {
+				console.log(res.error);
+			}
+		}
+		catch(e) {
+			alert(e.toString());
+			return;
+		}
+	}
+
 	return(
 		<div className="topBar">
 			<div id = "left">
@@ -33,11 +63,11 @@ function TopBar(props){
 			</div>
 			<div id = "right">
 				<div className="searchBox">
-					<input type="text" placeholder="Search for products" />
+					<input type="text" placeholder="Search for products" ref={(c) => searchInput = c}/>
+					<img id = "searchImg" src = {searchImage} onClick = {() => doSearch(searchInput.value)}></img>
 				</div>
 				{renderUserData()}
 			</div>
-			
 		</div>
 	);
 }
