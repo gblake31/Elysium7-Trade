@@ -383,4 +383,89 @@ exports.setApp = function ( app, client )
       let ret = { itemid:id, error:er};
       res.status(200).json(ret);
     });
+
+    app.post('/api/sendEmail/', async(req, res, next) => {
+      // incoming: receiver, subject, text, html
+      // outgoing: error
+      
+      let er = '';
+
+      const nodemailer = require('nodemailer');
+
+      const { receiver:receiver, subject:subject, text:text, html:html } = req.body;
+
+      /*
+      let testAccount = await nodemailer.createTestAccount();
+
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        secure: false,
+        auth: {
+          user: testAccount.user,
+          pass: testAccount.pass
+        }
+      });
+      */
+
+      let transporter = nodemailer.createTransport({
+        service: "Hotmail",
+        auth: {
+          user: "elysiumtrade7@outlook.com",
+          pass: "DkzMTtfd46enG3M",
+        }
+      })
+
+      let mailOptions = {
+        from: 'elysiumtrade7@outlook.com',
+        to: receiver,
+        subject: subject,
+        text: text,
+        html: html
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          er = error;
+        } else {
+          console.log('Message sent: %s', info.messageId);
+        }
+        transporter.close();
+      });
+
+      //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+      let ret = {error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/verify/:id', async(req, res, next) => {
+      let result;
+      let er = '';
+
+      const db = client.db('COP4331');
+      const id = new ObjectId(req.params.id);
+
+      try
+      {
+        result = await db.collection('Users').updateOne(
+          {_id:id},
+          {
+            $set: {verified:true} 
+          }
+        );
+
+        if( result.matchedCount == 0)
+        {
+          er = "User could not be found";
+        }
+      }
+      catch(e)
+      {
+        er = e.toString();
+      }
+    
+      let ret = {result:result, error:er};
+      res.status(200).json(ret);
+    });
 }
