@@ -56,7 +56,7 @@ exports.setApp = function ( app, client )
       else {
         try {
           result = await db.collection('Users').insertOne({login:login, password:password, 
-            email:email, ordered:{}, favorited:{}, listings:{}, 
+            email:email, ordered:[], favorited:[], listings:[], 
             profilepicture:0, verified:false});
         } catch (e) {
           console.log(e);
@@ -440,6 +440,8 @@ exports.setApp = function ( app, client )
     });
 
     app.post('/api/verify/:id', async(req, res, next) => {
+      // outgoing: result, error
+
       let result;
       let er = '';
 
@@ -466,6 +468,54 @@ exports.setApp = function ( app, client )
       }
     
       let ret = {result:result, error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/addItemToUser', async(req, res, next) => {
+      // incoming: userid, itemid
+      // outoging: result, error
+      
+      let result;
+      let er = '';
+
+      const {userid, itemid} = req.body;
+
+      const db = client.db('COP4331');
+      const id = new ObjectId(userid);
+
+      const results = await db.collection('Users').find({_id:id}).toArray();
+
+      // If there was a find
+      if (results.length > 0) 
+      {
+        itemlist = results[0].listings;
+        itemlist.push(itemid);
+
+        try
+        {
+          result = await db.collection('Users').updateOne(
+            {_id:id},
+            {
+              $set: {listings:itemlist} 
+            }
+          );
+
+          if( result.matchedCount == 0)
+          {
+            er = "User could not be found";
+          }
+        }
+        catch(e)
+        {
+          er = e.toString();
+        }
+      }
+      else {
+        er = 'User not found';
+      }
+
+      // Return a JSON object
+      let ret = {result:result, error:er}
       res.status(200).json(ret);
     });
 }
