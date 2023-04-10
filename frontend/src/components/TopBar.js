@@ -42,7 +42,6 @@ function TopBar(props){
 			let res = JSON.parse(await response.text());
 			if (res.error == '') {
 				console.log("success");
-				console.log(res.results);
 				props.updateList(res.results);
 			}
 			else {

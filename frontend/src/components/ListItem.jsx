@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 
 function ListItem(props) {
+    console.log(props.itemid);
+    console.log(props.sellerid);
     return (
         <div id = 'card'>
             <style>

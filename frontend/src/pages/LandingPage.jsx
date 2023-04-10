@@ -3,6 +3,10 @@ import './Landing.css';
 import ItemList from '../components/ItemList';
 import {UserContext} from '../App'
 
+import imageCompression from 'browser-image-compression';
+
+
+
 function LandingPage(props){
 	let {loggedIn, setLoggedIn} = useContext(UserContext);
 
@@ -29,7 +33,21 @@ function LandingPage(props){
 	const callAPI = async event =>
 	{
 		event.preventDefault();
-		let imgstr = await toBase64(f.files[0]);
+		let imgFile = f.files[0];
+
+		const options = {
+			maxSizeMB: 0.2,
+			maxWidthOrHeight: 800
+		}
+		let compressedFile;
+		try {
+			compressedFile = await imageCompression(imgFile, options);
+		} catch (error) {
+			console.log(error);
+			return;
+		}
+
+		let imgstr = await toBase64(compressedFile);
 		let local = JSON.parse(localStorage.getItem('user_data'));
 		let obj = {sellerid: local.id, itemname: item.value, price: pr.value, description: desc.value, condition: cond.value, image:imgstr, listedtime: "0"}
 		let js = JSON.stringify(obj);
@@ -51,8 +69,6 @@ function LandingPage(props){
 			return;
 		}
 	}
-	console.log("no");
-	console.log(props.itemList);
 
 	return (
 		<div id = "page">
