@@ -3,7 +3,7 @@ import jsonData from './data'
 import ListItem from './ListItem';
 
 function createCard(obj) {
-    return <ListItem name = {obj.itemname} price = {obj.price} image = {obj.image} desc = {obj.description}/>
+    return <ListItem item = {obj}/>
 }
 
 function ItemList(props) {

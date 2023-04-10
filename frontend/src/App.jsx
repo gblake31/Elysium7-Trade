@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LandingPage from './pages/LandingPage';
 import ProfilePage from './pages/ProfilePage';
+import ItemPage from './pages/ItemPage';
 import TopBar from './components/TopBar.js';
 import CategoryBar from './pages/CategoryBar';
 
@@ -72,6 +73,7 @@ function App() {
           <Routes>
             <Route path="/" index element={<LandingPage itemList = {itemList}/>} />
             <Route path="/profile" index element={<ProfilePage />}/>
+			<Route path="/item" index element={<ItemPage/>}/>
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

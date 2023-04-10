@@ -41,6 +41,7 @@ ul {
 #logo {
 	height: 80px;
 	width: auto;
+	cursor: pointer;
 }
 
 #left, #right {

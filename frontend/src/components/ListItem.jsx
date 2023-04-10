@@ -1,10 +1,16 @@
 import React, {useState} from 'react'
 
 function ListItem(props) {
+    
+    function clickItem () {
+        localStorage.setItem('item', JSON.stringify(props.item));
+        window.location.href = "/item";
+    }
+
     console.log(props.itemid);
     console.log(props.sellerid);
     return (
-        <div id = 'card'>
+        <div id = 'card' onClick = {clickItem}>
             <style>
                 {`
                     #card {
@@ -40,11 +46,11 @@ function ListItem(props) {
                 `}
             </style>
             <div id = 'top'>
-                <h3>{props.name}</h3>
-                <h3 id = 'price'>${props.price}</h3>
+                <h3>{props.item.name}</h3>
+                <h3 id = 'price'>${props.item.price}</h3>
             </div>  
-            <img src = {props.image}></img>
-            <p>{props.desc}</p>
+            <img src = {props.item.image}></img>
+            <p>{props.item.desc}</p>
         </div>
     );
 }
