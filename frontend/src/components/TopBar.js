@@ -58,7 +58,7 @@ function TopBar(props){
 		<div className="topBar">
 			<div id = "left">
 				<img id="logo" src={dragonImage} alt="Dragon Logo" onClick = {() => window.location.href = "/"}></img>
-				<h1>Elysium7 Trade</h1>
+				<h1 id="title" onClick = {() => window.location.href = "/"}>Elysium7 Trade</h1>
 			</div>
 			<div id = "right">
 				<div className="searchBox">

@@ -36,11 +36,13 @@ ul {
 	cursor: pointer;
 }
 
-
-
 #logo {
 	height: 80px;
 	width: auto;
+	cursor: pointer;
+}
+
+#title {
 	cursor: pointer;
 }
 
