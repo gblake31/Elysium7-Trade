@@ -107,23 +107,40 @@ exports.setApp = function ( app, client )
     
     app.post('/api/searchItems', async (req, res, next) => 
     {
-      // incoming: search
+      // incoming: search, category
       // outgoing: results[], error
     
       let er = '';
+      let results;
     
-      const { search } = req.body;
+      const { search, category } = req.body;
     
       let _search = search.trim();
       
       const db = client.db('COP4331');
-
-      const results = await db.collection('Items').find({ $or: [
-        {"itemname":{$regex:_search+'.*',$options:'r'} },
-        {"description":{$regex:_search+'.*',$options:'r'} },
-        {"condition":{$regex:_search+'.*',$options:'r'} }
-        ]}).toArray();
       
+      if ( category > 0)
+      {
+        results = await db.collection('Items').find({ 
+          $or: [
+            {"itemname":{$regex:_search+'.*',$options:'i'} },
+            {"description":{$regex:_search+'.*',$options:'i'} },
+            {"condition":{$regex:_search+'.*',$options:'i'} }
+          ],
+          "category":category
+        }).toArray();
+      }
+      else
+      {
+        results = await db.collection('Items').find({ 
+          $or: [
+            {"itemname":{$regex:_search+'.*',$options:'i'} },
+            {"description":{$regex:_search+'.*',$options:'i'} },
+            {"condition":{$regex:_search+'.*',$options:'i'} }
+          ]
+        }).toArray();
+      }
+
       let _ret = [];
       for( let i=0; i<results.length; i++ )
       {
@@ -136,23 +153,40 @@ exports.setApp = function ( app, client )
 
     app.post('/api/loadKItems', async (req, res, next) => 
     {
-      // incoming: search, startindex, numitems
+      // incoming: search, startindex, numitems, category
       // outgoing: results[], error
     
       let er = '';
+      let results;
     
-      const { search, startindex, numitems } = req.body;
+      const { search, startindex, numitems, category } = req.body;
     
       let _search = search.trim();
       
       const db = client.db('COP4331');
 
-      const results = await db.collection('Items').find({ $or: [
-        {"itemname":{$regex:_search+'.*',$options:'r'} },
-        {"description":{$regex:_search+'.*',$options:'r'} },
-        {"condition":{$regex:_search+'.*',$options:'r'} }
-        ]}).toArray();
-      
+      if ( category > 0)
+      {
+        results = await db.collection('Items').find({ 
+          $or: [
+            {"itemname":{$regex:_search+'.*',$options:'i'} },
+            {"description":{$regex:_search+'.*',$options:'i'} },
+            {"condition":{$regex:_search+'.*',$options:'i'} }
+          ],
+          "category":category
+        }).toArray();
+      }
+      else
+      {
+        results = await db.collection('Items').find({ 
+          $or: [
+            {"itemname":{$regex:_search+'.*',$options:'i'} },
+            {"description":{$regex:_search+'.*',$options:'i'} },
+            {"condition":{$regex:_search+'.*',$options:'i'} }
+          ]
+        }).toArray();
+      }
+
       let _ret = [];
 
       if( results.length > startindex )
@@ -177,7 +211,7 @@ exports.setApp = function ( app, client )
 
     app.post('/api/updateItem', async (req, res, next) => 
     {
-      // incoming: itemid, sellerid, itemname, price, description, condition, image
+      // incoming: itemid, sellerid, itemname, price, description, condition, category, image
       // outgoing: result, error
       
       let fs = require('fs');
@@ -187,7 +221,7 @@ exports.setApp = function ( app, client )
 
       const db = client.db('COP4331');
     
-      const { itemid, sellerid, itemname, price, description, condition, picture } = req.body;
+      const { itemid, sellerid, itemname, price, description, condition, category, image } = req.body;
 
       let id = new ObjectId(itemid);
 
@@ -197,7 +231,7 @@ exports.setApp = function ( app, client )
             {_id:id,sellerid:sellerid},
             {
               $set: {itemname:itemname,price:price,description:description,
-                      condition:condition,image:fs.readFileSync(image)} 
+                      condition:condition,category:category,image:image} 
             }
           );
 
@@ -368,7 +402,7 @@ exports.setApp = function ( app, client )
     });
 
     app.post('/api/createItem', async(req, res, next) => {
-      // incoming: sellerid, itemname, price, description, condition, image, listedtime
+      // incoming: sellerid, itemname, price, description, condition, image, category, listedtime
       // outgoing: itemid, error
 
       let fs = require('fs');
@@ -379,15 +413,15 @@ exports.setApp = function ( app, client )
       let id;
 
       const { sellerid:sellerid, itemname:itemname, price:price, 
-        description:description, condition:condition, image:image, 
-        listedtime:listedtime } = req.body;
+        description:description, condition:condition, category:category,
+        image:image, listedtime:listedtime } = req.body;
     
       const db = client.db('COP4331');
 
       try {
         result = await db.collection('Items').insertOne({sellerid:sellerid,
           itemname:itemname, price:price, description:description,
-          condition:condition, listedtime:listedtime, image:image
+          condition:condition, category:category, listedtime:listedtime, image:image
         });
 
         id = result.insertedId;
