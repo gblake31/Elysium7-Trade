@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { Pressable, StyleSheet, Text, SafeAreaView, TextInput, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, KeyboardAvoidingView, Image, ImageBackground } from 'react-native';
 import { useRouter, Link } from "expo-router";
 
 
@@ -11,14 +11,17 @@ const RegisterScreen = (props) => {
 
     const [email, setEmail] = useState("");
     const [emailValid, setEmailValid] = useState(true);
-    const [first, setFirst] = useState("");
-    const [firstValid, setFirstValid] = useState(true);
-    const [last, setLast] = useState("");
-    const [lastValid, setLastValid] = useState(true);
+    const [login, setLogin] = useState("");
+    const [loginValid, setLoginValid] = useState(true);
+    ///DEPRECIATED: No longer using first or last names
+    //const [first, setFirst] = useState("");
+    //const [firstValid, setFirstValid] = useState(true);
+    //const [last, setLast] = useState("");
+    //const [lastValid, setLastValid] = useState(true);
     const [password, setPassword] = useState("");
     const [passwordValid, setPasswordValid] = useState(true);
     const [repassword, setRepassword] = useState("");
-    const [repasswordValid, setRepasswordValid] = useState();
+    const [repasswordValid, setRepasswordValid] = useState(true);
 
     const REGISTER_ENDPOINT = 'https://paradise-7.herokuapp.com/api/register';
 
@@ -31,9 +34,7 @@ const RegisterScreen = (props) => {
 
         //event.preventDefault();
         let obj = {
-            firstname: first,
-            lastname: last,
-            login: email,
+            login: login,
             email: email,
             password: password
         };
@@ -52,7 +53,7 @@ const RegisterScreen = (props) => {
                 console.log(res.err);
             }
             else {
-                var user = { firstName: res.firstName, lastName: res.lastName, id: res.id }
+                var user = { login: res.login, id: res.id }
                 console.log('Register Successful');
                 router.replace('./LoginScreen');
             }
@@ -64,28 +65,33 @@ const RegisterScreen = (props) => {
     };
 
     const validateInfo = () => {
+        setEmailValid(false);
+        setLoginValid(false);
+        setPasswordValid(false);
+        setRepasswordValid(false);
+
         validateEmail();
-        validateFirst();
-        validateLast();
+        validateLogin();
+        //validateFirst();
+        //validateLast();
         validatePassword();
         checkPasswordsMatch();
-        return emailValid && firstValid && lastValid && passwordValid && repasswordValid;
+
+        return emailValid && loginValid && passwordValid && repasswordValid;
     }
 
     const validateEmail = () => {
         setEmailValid(email.match(/^[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+$/));
     }
 
-    const validateFirst = () => { setFirstValid(first.match(/^[A-Za-z]+$/)); }
-
-    const validateLast = () => { setLastValid(last.match(/^[A-Za-z]+$/)); }
+    const validateLogin = () => { setLoginValid(login.match(/^([A-Za-z])[\w\d]+$/)); }
 
     const validatePassword = () => {
         regex = /^(?=.*[0-9])(?=.*[!@#$%^&*_])[a-zA-Z0-9!@#$%^&*_]{7,15}$/;
         setPasswordValid(password.match(regex));
     }
 
-    const checkPasswordsMatch = () => { 
+    const checkPasswordsMatch = () => {
         setRepasswordValid(password.normalize() === repassword.normalize());
         console.log("Password: " + password + "\nRetyped Password: " + repassword);
         console.log("Passwords Match: " + repasswordValid);
@@ -93,87 +99,79 @@ const RegisterScreen = (props) => {
 
 
     return (
-        <ScrollView contentContainerStyle={styles.home}>
-            <Text id='emailCorrection' style={emailValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                {`Please enter a valid email address`}
-            </Text>
-            <TextInput
-                placeholder='Email'
-                autoComplete='email'
-                autoCorrect={false}
-                inputMode={'email'}
-                style={styles.input}
-                value={email}
-                onEndEditing={validateEmail}
-                onChangeText={setEmail}
-            />
-
-            <Text style={firstValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                {`Please enter a name`}
-            </Text>
-            <TextInput
-                placeholder='First Name'
-                autoComplete='given-name'
-                autoCorrect={false}
-                style={styles.input}
-                value={first}
-                onEndEditing={validateFirst}
-                onChangeText={setFirst}
-            />
-
-            <Text style={lastValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                {`Please enter a name`}
-            </Text>
-            <TextInput
-                placeholder='Last Name'
-                autoComplete='family-name'
-                autoCorrect={false}
-                style={styles.input}
-                value={last}
-                onEndEditing={validateLast}
-                onChangeText={setLast}
-            />
-
-            <Text style={passwordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                {
-                    `Passwords must contain between 8 and 14 characters.\n` +
-                    `Password must contain at least one uppercase letter.\n` +
-                    `Password must contain at least one lowercase letter.\n` +
-                    `Password must contain at least one number.\n` +
-                    `Password must contain at least one of the following characters: ` +
-                    `!, @, #, $, %, ^, &, *, _.`
-                }
-            </Text>
-            <TextInput
-                placeholder='Password'
-                autoComplete='new-password'
-                autoCorrect={false}
-                secureTextEntry={true}
-                style={styles.input}
-                values={password}
-                onEndEditing={validatePassword}
-                onChangeText={setPassword}
-            />
-            <Text style={repasswordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
-                {`Passwords must match.`}
-            </Text>
-            <TextInput
-                placeholder='Retype Password'
-                autoComplete='new-password'
-                autoCorrect={false}
-                secureTextEntry={true}
-                style={styles.input}
-                value={repassword}
-                onEndEditing={checkPasswordsMatch}
-                onChangeText={setRepassword}
-            />
-            <Pressable
-                style={styles.loginButton}
-                onPress={handleRegister}
+        <KeyboardAvoidingView contentContainerStyle={styles.home}>
+            <ImageBackground
+                source={require('./images/loginreg-wooden-sign.png')}
+                style={styles.sign}
             >
-                <Text style={styles.buttonText}>REGISTER</Text>
-            </Pressable>
-        </ScrollView>
+                <Text id='emailCorrection' style={emailValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                    {`Please enter a valid email address`}
+                </Text>
+                <TextInput
+                    placeholder='Email'
+                    autoComplete='email'
+                    autoCorrect={false}
+                    inputMode={'email'}
+                    style={styles.input}
+                    value={email}
+                    onEndEditing={validateEmail}
+                    onChangeText={setEmail}
+                />
+
+                <Text style={loginValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                    {`Please enter a valid display name`}
+                </Text>
+                <TextInput
+                    placeholder='Username'
+                    autoComplete='username-new'
+                    autoCorrect={false}
+                    style={styles.input}
+                    value={login}
+                    onEndEditing={validateLogin}
+                    onChangeText={setLogin}
+                />
+
+                <Text style={passwordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                    {
+                        `Passwords must contain between 8 and 14 characters.\n` +
+                        `Password must contain at least one uppercase letter.\n` +
+                        `Password must contain at least one lowercase letter.\n` +
+                        `Password must contain at least one number.\n` +
+                        `Password must contain at least one of the following characters: ` +
+                        `!, @, #, $, %, ^, &, *, _.`
+                    }
+                </Text>
+                <TextInput
+                    placeholder='Password'
+                    autoComplete='password-new'
+                    autoCorrect={false}
+                    secureTextEntry={true}
+                    style={styles.input}
+                    values={password}
+                    onEndEditing={validatePassword}
+                    onChangeText={setPassword}
+                />
+                <Text style={repasswordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                    {`Passwords must match.`}
+                </Text>
+                <TextInput
+                    placeholder='Retype Password'
+                    autoComplete='password-new'
+                    autoCorrect={false}
+                    secureTextEntry={true}
+                    style={styles.input}
+                    value={repassword}
+                    onEndEditing={checkPasswordsMatch}
+                    onChangeText={setRepassword}
+                />
+                <Pressable
+                    style={styles.loginButton}
+                    onPress={handleRegister}
+                >
+                    <Text style={styles.buttonText}>REGISTER</Text>
+                </Pressable>
+            </ImageBackground>
+        </KeyboardAvoidingView>
     );
 }
 //}
@@ -194,6 +192,13 @@ const styles = StyleSheet.create
             alignItems: 'center',
             justifyContent: 'center',
             fontWeight: 'bold'
+        },
+        sign:
+        {
+            resizeMode: 'cover',
+            width: '100%',
+            height: '80%',
+            alignItems: 'center'
         },
         input:
         {

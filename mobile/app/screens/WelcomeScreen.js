@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { Link } from "expo-router";
-import { useFonts } from 'expo-font';
+import { loadAsync, useFonts } from 'expo-font';
 import RegisterScreen from './RegisterScreen';
 
 const bg = require('./images/map.jpg');
@@ -9,9 +9,12 @@ const bg = require('./images/map.jpg');
 function WelcomeScreen(props) {
     const [fontsLoaded] = useFonts({
         'Abibas': require('../assets/fonts/Abibas.otf')
-      });
-    
+    });
+
     console.log("welcome");
+
+    if(!fontsLoaded) return null;
+
     return (
         <View style={styles.home}>
             <View style={styles.title}>
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         marginVertical: 10
     },
-    title: 
+    title:
     {
         color: 'white',
         fontWeight: 'bold',
