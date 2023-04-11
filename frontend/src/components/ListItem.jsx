@@ -1,48 +1,21 @@
 import React, {useState} from 'react'
+import './ListItem.css'
 
 function ListItem(props) {
+    
+    function clickItem () {
+        localStorage.setItem('item', JSON.stringify(props.item));
+        window.location.href = "/item";
+    }
+
+    console.log(props.itemid);
+    console.log(props.sellerid);
     return (
-        <div id = 'card'>
-            <style>
-                {`
-                    #card {
-                        display: flex;
-                        flex-direction: column;
-                        border-style: solid;
-                        border-width: medium;
-                        cursor: pointer;
-                        width: 500px;
-                    }
-                    #card:hover {
-                        background-color: rgb(230,230,230);
-                    }
-                    #card > * {
-                        margin: 10px;
-                    }
-                    #top {
-                        display: flex;
-                        flex-direction: row;
-                    }
-                    #top > * {
-                        margin: 10px;
-                    }
-                    #price {
-                        border-style: solid;
-                        border-width: medium;
-                        padding: 1%;
-                    }
-                    img {
-                        width: 150px;
-                        height: auto;
-                    }
-                `}
-            </style>
-            <div id = 'top'>
-                <h3>{props.name}</h3>
-                <h3 id = 'price'>${props.price}</h3>
-            </div>  
-            <img src = {props.image}></img>
-            <p>{props.desc}</p>
+        <div id = 'card' onClick = {clickItem}>
+            <h3 id='name'>{props.item.itemname}</h3>
+            <img src = {props.item.image}></img>
+            <h3 id = 'price'>${props.item.price}</h3>
+            <p>{props.item.description}</p>
         </div>
     );
 }

@@ -9,8 +9,6 @@ function RegisterDropdown(props) {
 
     let bp = require('../Leinecker/Path.js');
   
-    let loginFirstName;
-    let loginLastName;
     let loginEmail;
     let loginUsername;
     let loginPassword;
@@ -27,7 +25,7 @@ function RegisterDropdown(props) {
         }
 
         event.preventDefault();
-        let obj = {firstname: loginFirstName.value, lastname: loginLastName.value, login: loginUsername.value, email: loginEmail.value, password: loginPassword.value};
+        let obj = {login: loginUsername.value, email: loginEmail.value, password: loginPassword.value};
         let js = JSON.stringify(obj);
         try
         {    
@@ -42,8 +40,7 @@ function RegisterDropdown(props) {
             }
             else
             {
-                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
-                localStorage.setItem('user_data', JSON.stringify(user));
+                var user = {id:res.id}
                 console.log('Register Successful');
                 props.onRegister();
             }
@@ -58,12 +55,6 @@ function RegisterDropdown(props) {
     return (
         <div id = "register-box" style = {css}>
             <h2>Create an Account</h2>
-            {/* <label id = "firstname">First Name</label> */}
-            <div className = "horizontal">
-                <input className = "field" type = "text" ref={(c) => loginFirstName = c} placeholder = "First Name"></input>
-                <input className = "field" type = "text" ref={(c) => loginLastName = c} placeholder = "Last Name"></input>
-            </div>
-           
             {/* <label id = "email">Email</label> */}
             <input className = "field" type = "text" ref={(c) => loginEmail = c} placeholder = "Email"></input>
             {/* <label id = "username">Username</label> */}

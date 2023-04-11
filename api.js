@@ -8,7 +8,7 @@ exports.setApp = function ( app, client )
     app.post('/api/login', async (req, res, next) => 
     {
       // incoming: login, password
-      // outgoing: id, firstName, lastName, error
+      // outgoing: id, email, error
     
       let er = '';
     
@@ -18,32 +18,30 @@ exports.setApp = function ( app, client )
       const results = await db.collection('Users').find({login:login,password:password}).toArray();
     
       let id = -1;
-      let fn = '';
-      let ln = '';
+      let email = '';
     
       if( results.length > 0 )
       {
         id = results[0]._id;
-        fn = results[0].firstname;
-        ln = results[0].lastname;
+        email = results[0].email;
       }
       else {
         er = 'User not found'
       }
     
-      let ret = { id:id, firstName:fn, lastName:ln, error:er};
+      let ret = { id:id, login:login, email:email, error:er};
       res.status(200).json(ret);
     });
 
     app.post('/api/register', async (req, res, next) => 
     {
-      // incoming: login, password, firstname, lastname
+      // incoming: login, password, email
       // outgoing: id, error
     
       let er = '';
       let result;
     
-      const { login, password, firstname, lastname, email } = req.body;
+      const { login, password, email } = req.body;
     
       const db = client.db('COP4331');
       const results = await db.collection('Users').find({login:login}).toArray();
@@ -57,9 +55,9 @@ exports.setApp = function ( app, client )
       }
       else {
         try {
-          result = await db.collection('Users').insertOne({login:login, 
-            password:password, firstname:firstname, lastname:lastname, email:email,
-            ordered:{}, favorited:{}, listings:{}, profilepicture:0, verified:false});
+          result = await db.collection('Users').insertOne({login:login, password:password, 
+            email:email, ordered:[], favorited:[], listings:[], 
+            profilepicture:0, verified:false});
         } catch (e) {
           console.log(e);
         }
@@ -109,23 +107,40 @@ exports.setApp = function ( app, client )
     
     app.post('/api/searchItems', async (req, res, next) => 
     {
-      // incoming: search
+      // incoming: search, category
       // outgoing: results[], error
     
       let er = '';
+      let results;
     
-      const { search } = req.body;
+      const { search, category } = req.body;
     
       let _search = search.trim();
       
       const db = client.db('COP4331');
-
-      const results = await db.collection('Items').find({ $or: [
-        {"itemname":{$regex:_search+'.*',$options:'r'} },
-        {"description":{$regex:_search+'.*',$options:'r'} },
-        {"condition":{$regex:_search+'.*',$options:'r'} }
-        ]}).toArray();
       
+      if ( category > 0)
+      {
+        results = await db.collection('Items').find({ 
+          $or: [
+            {"itemname":{$regex:_search+'.*',$options:'i'} },
+            {"description":{$regex:_search+'.*',$options:'i'} },
+            {"condition":{$regex:_search+'.*',$options:'i'} }
+          ],
+          "category":category
+        }).toArray();
+      }
+      else
+      {
+        results = await db.collection('Items').find({ 
+          $or: [
+            {"itemname":{$regex:_search+'.*',$options:'i'} },
+            {"description":{$regex:_search+'.*',$options:'i'} },
+            {"condition":{$regex:_search+'.*',$options:'i'} }
+          ]
+        }).toArray();
+      }
+
       let _ret = [];
       for( let i=0; i<results.length; i++ )
       {
@@ -138,23 +153,40 @@ exports.setApp = function ( app, client )
 
     app.post('/api/loadKItems', async (req, res, next) => 
     {
-      // incoming: search, startindex, numitems
+      // incoming: search, startindex, numitems, category
       // outgoing: results[], error
     
       let er = '';
+      let results;
     
-      const { search, startindex, numitems } = req.body;
+      const { search, startindex, numitems, category } = req.body;
     
       let _search = search.trim();
       
       const db = client.db('COP4331');
 
-      const results = await db.collection('Items').find({ $or: [
-        {"itemname":{$regex:_search+'.*',$options:'r'} },
-        {"description":{$regex:_search+'.*',$options:'r'} },
-        {"condition":{$regex:_search+'.*',$options:'r'} }
-        ]}).toArray();
-      
+      if ( category > 0)
+      {
+        results = await db.collection('Items').find({ 
+          $or: [
+            {"itemname":{$regex:_search+'.*',$options:'i'} },
+            {"description":{$regex:_search+'.*',$options:'i'} },
+            {"condition":{$regex:_search+'.*',$options:'i'} }
+          ],
+          "category":category
+        }).toArray();
+      }
+      else
+      {
+        results = await db.collection('Items').find({ 
+          $or: [
+            {"itemname":{$regex:_search+'.*',$options:'i'} },
+            {"description":{$regex:_search+'.*',$options:'i'} },
+            {"condition":{$regex:_search+'.*',$options:'i'} }
+          ]
+        }).toArray();
+      }
+
       let _ret = [];
 
       if( results.length > startindex )
@@ -179,15 +211,17 @@ exports.setApp = function ( app, client )
 
     app.post('/api/updateItem', async (req, res, next) => 
     {
-      // incoming: itemid, sellerid, itemname, price, description, condition, picture
+      // incoming: itemid, sellerid, itemname, price, description, condition, category, image
       // outgoing: result, error
-    
+      
+      let fs = require('fs');
+      
       let er = '';
       let result;
 
       const db = client.db('COP4331');
     
-      const { itemid, sellerid, itemname, price, description, condition, picture } = req.body;
+      const { itemid, sellerid, itemname, price, description, condition, category, image } = req.body;
 
       let id = new ObjectId(itemid);
 
@@ -197,7 +231,7 @@ exports.setApp = function ( app, client )
             {_id:id,sellerid:sellerid},
             {
               $set: {itemname:itemname,price:price,description:description,
-                      condition:condition,picture:picture} 
+                      condition:condition,category:category,image:image} 
             }
           );
 
@@ -316,24 +350,160 @@ exports.setApp = function ( app, client )
     });
 
     app.post('/api/updateAccount', async(req, res, next) => {
-      // incoming: userid, login, password, firstname, lastname, email, profilepicture, verified
+      // incoming: userid, login, password, email, profilepicture, verified
       // outgoing: result, error
     
       let er = '';
       let result;
+      let findLogin;
+      let loginFlag = 1;
     
       const db = client.db('COP4331');
 
-      const { userid, login, password, firstname, lastname, email, profilepicture, verified } = req.body;
+      const { userid, login, password, email, profilepicture, verified } = req.body;
       let id = new ObjectId(userid);
       
+      findLogin = await db.collection('Users').find({login:login}).toArray();
+
+      if( findLogin.length > 0 )
+      {
+        if ( findLogin[0]._id != userid)
+        {
+          loginFlag = 0;
+          er = "Username belongs to another user";
+        }
+      }
+      
+      if(loginFlag)
+      {
+        try
+        {
+          result = await db.collection('Users').updateOne(
+           {_id:id},
+           {
+              $set: {login:login,password:password,email:email,
+                profilepicture:profilepicture,verified:verified} 
+           }
+          );
+
+         if( result.matchedCount == 0)
+          {
+            er = "User could not be found";
+          }
+        }
+          catch(e)
+        {
+          er = e.toString();
+        }
+      }
+
+      let ret = {result:result, error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/createItem', async(req, res, next) => {
+      // incoming: sellerid, itemname, price, description, condition, image, category, listedtime
+      // outgoing: itemid, error
+
+      let fs = require('fs');
+
+      let er = '';
+      let result;
+    
+      let id;
+
+      const { sellerid:sellerid, itemname:itemname, price:price, 
+        description:description, condition:condition, category:category,
+        image:image, listedtime:listedtime } = req.body;
+    
+      const db = client.db('COP4331');
+
+      try {
+        result = await db.collection('Items').insertOne({sellerid:sellerid,
+          itemname:itemname, price:price, description:description,
+          condition:condition, category:category, listedtime:listedtime, image:image
+        });
+
+        id = result.insertedId;
+      } catch(e) {
+        er = 'Insert failed';
+        console.log(e);
+      }
+
+      let ret = { itemid:id, error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/sendEmail/', async(req, res, next) => {
+      // incoming: receiver, subject, text, html
+      // outgoing: error
+      
+      let er = '';
+
+      const nodemailer = require('nodemailer');
+
+      const { receiver:receiver, subject:subject, text:text, html:html } = req.body;
+
+      /*
+      let testAccount = await nodemailer.createTestAccount();
+
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
+        port: 587,
+        secure: false,
+        auth: {
+          user: testAccount.user,
+          pass: testAccount.pass
+        }
+      });
+      */
+
+      let transporter = nodemailer.createTransport({
+        service: "Hotmail",
+        auth: {
+          user: "elysiumtrade7@outlook.com",
+          pass: "DkzMTtfd46enG3M",
+        }
+      })
+
+      let mailOptions = {
+        from: 'elysiumtrade7@outlook.com',
+        to: receiver,
+        subject: subject,
+        text: text,
+        html: html
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          er = error;
+        } else {
+          console.log('Message sent: %s', info.messageId);
+        }
+        transporter.close();
+      });
+
+      //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+
+      let ret = {error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/verify/:id', async(req, res, next) => {
+      // outgoing: result, error
+
+      let result;
+      let er = '';
+
+      const db = client.db('COP4331');
+      const id = new ObjectId(req.params.id);
+
       try
       {
         result = await db.collection('Users').updateOne(
           {_id:id},
           {
-            $set: {login:login,password:password,firstname:firstname,lastname:lastname,
-              email:email,profilepicture:profilepicture,verified:verified} 
+            $set: {verified:true} 
           }
         );
 
@@ -348,6 +518,54 @@ exports.setApp = function ( app, client )
       }
     
       let ret = {result:result, error:er};
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/addItemToUser', async(req, res, next) => {
+      // incoming: userid, itemid
+      // outoging: result, error
+      
+      let result;
+      let er = '';
+
+      const {userid, itemid} = req.body;
+
+      const db = client.db('COP4331');
+      const id = new ObjectId(userid);
+
+      const results = await db.collection('Users').find({_id:id}).toArray();
+
+      // If there was a find
+      if (results.length > 0) 
+      {
+        itemlist = results[0].listings;
+        itemlist.push(itemid);
+
+        try
+        {
+          result = await db.collection('Users').updateOne(
+            {_id:id},
+            {
+              $set: {listings:itemlist} 
+            }
+          );
+
+          if( result.matchedCount == 0)
+          {
+            er = "User could not be found";
+          }
+        }
+        catch(e)
+        {
+          er = e.toString();
+        }
+      }
+      else {
+        er = 'User not found';
+      }
+
+      // Return a JSON object
+      let ret = {result:result, error:er}
       res.status(200).json(ret);
     });
 }

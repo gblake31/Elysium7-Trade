@@ -1,0 +1,41 @@
+#card {
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-width: medium;
+    cursor: pointer;
+    width: 300px;
+    border-radius: 10px;
+	align-items: center;
+	justify-content: center;
+}
+
+#card:hover {
+    background-color: #a78f85;
+}
+
+#card > * {
+    margin: 10px;
+}
+
+#top > * {
+    margin: 10px;
+}
+
+#name {
+    border-style: solid;
+    border-width: medium;
+    padding: 1%;
+}
+
+
+#price {
+    border-style: solid;
+    border-width: medium;
+    padding: 1%;
+}
+
+img {
+    max-width: 200px;
+    max-height: 200px;
+}
