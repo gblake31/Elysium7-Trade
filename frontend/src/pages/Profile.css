@@ -1,0 +1,17 @@
+.input-box{
+}
+
+#profile-pic{
+    height: 200px;
+    width: 200px;
+}
+
+#input-fields{
+    display: flex;
+    flex-direction: column;
+}
+
+.field
+{
+    align-self: flex-start;
+}

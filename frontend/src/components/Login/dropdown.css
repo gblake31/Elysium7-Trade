@@ -1,0 +1,62 @@
+#login-box {
+    position: absolute;
+    right: 10%;
+    top: -50%;
+    transition: top 1s;
+    transition-timing-function: ease-out;
+    background-image: url("../../pages/Pictures/loginreg-wooden-sign.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 200px 40px 40px 40px;
+    z-index: 10;
+}
+
+#register-box {
+    position: absolute;
+    right: 10%;
+    top: -50%;
+    transition: top 2s;
+    background-image: url("../../pages/Pictures/loginreg-wooden-sign.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    padding: 300px 50px 40px 50px;
+    z-index: 10;
+}
+
+.horizontal {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+
+.field {
+    font-size: 24px;
+    width: 20em;
+    padding: 5px;
+    margin: 10px 0px
+    
+}
+
+.horizontal > .field{
+    width: 9.4em; 
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+label {
+    align-self: flex-start;
+    font-size: 20px;
+}

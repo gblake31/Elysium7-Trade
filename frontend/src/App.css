@@ -1,38 +1,175 @@
-.App {
-  text-align: center;
+body {
+	background-color: #a08377;
+	overflow-x: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+main {
+	margin: 0 auto;
+	padding: 20px;
+	position: absolute;
+	z-index: 0;
+	background-image: url(/src/pages/Pictures/market-place-background.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: calc(100vw - 40px);
+	overflow-x: hidden;
+	border-radius: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+	font-family: 'Aladin';
+	src: url('./pages/Fonts/Aladin-Regular.ttf') format('truetype');
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h1 {
+	font-size: 3em;
+	font-family: 'Aladin', sans-serif;
+	margin: 0;
 }
 
-.App-link {
-  color: #61dafb;
+h2 {
+	font-family: 'Aladin', cursive;
+	font-size: 2em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
+
+#darkScreen {
+	opacity: 0%;
+	transition: opacity 0.5s;
+	transition-timing-function: ease-out;
+	background-color: black;
+	width: 100%; height: 100%;
+	position: absolute;
+	top: 0; left: 0;
+	z-index: 8;
+	pointer-events: none;
+}
+
+#searchImg{
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+}
+
+#logo {
+	height: 80px;
+	width: auto;
+	cursor: pointer;
+}
+
+#title {
+	cursor: pointer;
+}
+
+#left, #right {
+	display: flex;
+	align-items: center;
+}
+
+#left > *, #right > * {
+	margin-right: 25px;
+}
+
+.topBar {
+	background-color: #374c37;
+	color: #fff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 80px;
+	padding: 0 20px;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+}
+
+.topBar button {
+	background-image: url('./pages/Pictures/button-wooden-sign.png');
+	background-size: cover;
+	background-position: center;
+	height: 80px;
+	width: 150px;
+	border: none;
+	background-color: transparent;
+	font-size: 1.1em;
+	padding-top:30px;
+	
+}
+
+.searchBox {
+	display: flex;
+	align-items: center;
+}
+
+.searchBox input {
+	height: 50px;
+	width: 130%;
+	font-size: 1em;
+	padding: 0 10px;
+	border: none;
+	border-radius: 3px;
+	margin-right: 10px;
+}
+
+.categoryBar {
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	align-items: center;
+	background-color: #51684a;
+	height: 50px;
+	width: 100%;
+	z-index: 1;
+}
+
+.categoryBar button {
+	height: 40px;
+	padding: 5px 10px;
+	background-color: #51684a;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+.categoryBar button:hover {
+	background-color: #89964c;
+	transition: 0.5s;
+}
+
+#page {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+#input-box{
+	width: 80%;
+	height: 300px;
+	background-color:blanchedalmond; 
+}
+.Listing {
+	position: relative;
+	background-image: url(/src/pages/Pictures/woodBackground.png);
+	background-position: left;
+	background-size: 15%;
+	background-repeat: no-repeat;
+	padding: 30px;
+	justify-content: center;
+	top: -40px;
+}
+
+#outer
+{
+	position: relative;
+	top: -40px;
+}
+
