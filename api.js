@@ -321,32 +321,48 @@ exports.setApp = function ( app, client )
     
       let er = '';
       let result;
+      let findLogin;
+      let loginFlag = 1;
     
       const db = client.db('COP4331');
 
       const { userid, login, password, email, profilepicture, verified } = req.body;
       let id = new ObjectId(userid);
       
-      try
-      {
-        result = await db.collection('Users').updateOne(
-          {_id:id},
-          {
-            $set: {login:login,password:password,email:email,
-              profilepicture:profilepicture,verified:verified} 
-          }
-        );
+      findLogin = await db.collection('Users').find({login:login}).toArray();
 
-        if( result.matchedCount == 0)
+      if( findLogin.length > 0 )
+      {
+        if ( findLogin[0]._id != userid)
         {
-          er = "User could not be found";
+          loginFlag = 0;
+          er = "Username belongs to another user";
         }
       }
-      catch(e)
+      
+      if(loginFlag)
       {
-        er = e.toString();
+        try
+        {
+          result = await db.collection('Users').updateOne(
+           {_id:id},
+           {
+              $set: {login:login,password:password,email:email,
+                profilepicture:profilepicture,verified:verified} 
+           }
+          );
+
+         if( result.matchedCount == 0)
+          {
+            er = "User could not be found";
+          }
+        }
+          catch(e)
+        {
+          er = e.toString();
+        }
       }
-    
+
       let ret = {result:result, error:er};
       res.status(200).json(ret);
     });
