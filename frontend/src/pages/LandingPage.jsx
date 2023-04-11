@@ -1,8 +1,6 @@
 import React, {useState, useContext} from 'react';
-import './Landing.css';
 import ItemList from '../components/ItemList';
 import {UserContext} from '../App'
-
 import imageCompression from 'browser-image-compression';
 
 
@@ -73,6 +71,9 @@ function LandingPage(props){
 	return (
 		<div id = "page">
 			<main>
+				<div className="Listing">
+					<h2>Listings:</h2>
+				</div>
 				{loggedIn ? <ItemList arr = {props.itemList}/> : <div/>}
 				<div className="section section2">
 					<h2>Recommended for you</h2>

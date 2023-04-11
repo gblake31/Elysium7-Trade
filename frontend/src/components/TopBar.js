@@ -15,7 +15,7 @@ function TopBar(props){
 		if (!loggedIn)
 		{
 			console.log("not logged in: "+ localStorage.getItem('user_data'));
-			return (<button type="button" onClick = {props.callback}>Login/Register</button>);
+			return (<button type="button" onClick = {props.callback}>Login/<br></br>Register</button>);
 		}
 		else 
 		{
