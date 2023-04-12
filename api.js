@@ -619,4 +619,32 @@ exports.setApp = function ( app, client )
       let ret = {result:result, error:er}
       res.status(200).json(ret);
     });
+
+    app.post('/api/getIDFromEmail', async(req, res, next) => {
+      // incoming: email
+      // outoging: email, userid, error
+      
+      let result;
+      let er = '';
+      let userid;
+
+      const {email} = req.body;
+
+      const db = client.db('COP4331');
+
+      const results = await db.collection('Users').find({email:email}).toArray();
+
+      if ( results.length > 0 )
+      {
+        userid = results[0]._id;
+      }
+      else
+      {
+        er = "Could not find email in database"
+        userid = -1;
+      }
+
+      let ret = {email:email,userid:userid,error:er};
+      res.status(200).json(ret);
+    });
 }
