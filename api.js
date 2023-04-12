@@ -569,4 +569,39 @@ exports.setApp = function ( app, client )
       let ret = {result:result, error:er}
       res.status(200).json(ret);
     });
+
+    app.post('/api/changePassword', async(req, res, next) => {
+      // incoming: userid, newpassword
+      // outoging: result, error
+      
+      let result;
+      let er = '';
+
+      const {userid, newpassword} = req.body;
+
+      const db = client.db('COP4331');
+      const id = new ObjectId(userid);
+
+      try
+      {
+        result = await db.collection('Users').updateOne(
+        {_id:id},
+        {
+          $set: {password:newpassword} 
+        }
+        );
+
+        if( result.matchedCount == 0)
+        {
+          er = "User could not be found";
+        }
+      }
+      catch(e)
+      {
+        er = e.toString();
+      }
+
+      let ret = {result:result, error:er}
+      res.status(200).json(ret);
+    });
 }
