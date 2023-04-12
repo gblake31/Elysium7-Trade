@@ -46,15 +46,21 @@ exports.setApp = function ( app, client )
     
       const db = client.db('COP4331');
       const results = await db.collection('Users').find({login:login}).toArray();
-    
+      const results2 = await db.collection('Users').find({email:email}).toArray();
       let id;
     
       if( results.length > 0 )
       {
         id = '-1';
-        er = 'Login is taken';
+        er = 'Username belongs to another user';
       }
-      else {
+      else if( results2.length > 0)
+      {
+        id = '-1';
+        er = 'Email is already in use';
+      }
+      else 
+      {
         try {
           result = await db.collection('Users').insertOne({login:login, password:password, 
             email:email, ordered:[], favorited:[], listings:[], 
@@ -571,34 +577,43 @@ exports.setApp = function ( app, client )
     });
 
     app.post('/api/changePassword', async(req, res, next) => {
-      // incoming: userid, newpassword
+      // incoming: userid, login, newpassword
       // outoging: result, error
       
       let result;
       let er = '';
 
-      const {userid, newpassword} = req.body;
+      const {userid, login, newpassword} = req.body;
 
       const db = client.db('COP4331');
       const id = new ObjectId(userid);
 
-      try
-      {
-        result = await db.collection('Users').updateOne(
-        {_id:id},
-        {
-          $set: {password:newpassword} 
-        }
-        );
+      const results = await db.collection('Users').find({login:login,_id:id}).toArray();
 
-        if( result.matchedCount == 0)
+      if ( results.length > 0 )
+      {
+        try
         {
-          er = "User could not be found";
+          result = await db.collection('Users').updateOne(
+          {_id:id},
+          {
+            $set: {password:newpassword} 
+          }
+          );
+
+          if( result.matchedCount == 0)
+          {
+            er = "User could not be found";
+          }
+        }
+        catch(e)
+        {
+          er = e.toString();
         }
       }
-      catch(e)
+      else
       {
-        er = e.toString();
+        er = "Username does not match UserID"
       }
 
       let ret = {result:result, error:er}
