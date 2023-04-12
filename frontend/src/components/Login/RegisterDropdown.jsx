@@ -95,8 +95,7 @@ function RegisterDropdown(props) {
             <button onClick = {doRegister}>Register</button>
             <p>{message}</p>
             <div className = "horizontal">
-                <h3>Already have an account?</h3>
-                <button onClick = {props.switchToLogin}>Login</button>
+                <h3 className = "click-text" onClick={props.switchToLogin}>Already have an account?</h3>
             </div>
         </div>
     )
