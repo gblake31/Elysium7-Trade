@@ -12,6 +12,7 @@ import CategoryBar from './pages/CategoryBar';
 import LoginDropdown from './components/Login/LoginDropdown';
 import RegisterDropdown from './components/Login/RegisterDropdown';
 import VerifyEmail from './pages/VerifyEmail';
+import ListingPage from './pages/ListingPage';
 
 const UserContext = createContext(false);
 
@@ -75,6 +76,7 @@ function App() {
             <Route path="/" index element={<LandingPage updateList = {(arr) => setItemList(arr)} itemList = {itemList}/>} />
             <Route path="/profile" index element={<ProfilePage />}/>
 			<Route path="/item" index element={<ItemPage/>}/>
+			<Route path="/listing" index element={<ListingPage/>}/>
 			<Route path={"/verifyemail/:id"} index element={<VerifyEmail/>}/>
           </Routes>
         </BrowserRouter>
