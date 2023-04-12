@@ -3,6 +3,8 @@ import './Profile.css';
 import dragonImage from './Pictures/dragonLogo.png';
 import {UserContext} from '../App'
 
+import imageCompression from 'browser-image-compression';
+
 function ProfilePage()
 {
     let bp = require('../components/Leinecker/Path.js');
@@ -16,8 +18,36 @@ function ProfilePage()
     let curPassword = "";
     let newPassword = "";
     let confirmNewPass = "";
+    let oldProfilePic = "";
+    let profilePicRef;
     let [email, setEmail] = useState("");
-    let [profilepic, setProfilePic] = useState(0);
+    let [profilePic, setProfilePic] = useState("");
+
+    async function uploadImage() {
+      let imgFile = profilePicRef.files[0];
+      const options = {
+        maxSizeMB: 0.2,
+        maxWidthOrHeight: 800
+      }
+      let compressedFile;
+      try {
+        compressedFile = await imageCompression(imgFile, options);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+
+
+      const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+
+      let imgstr = await toBase64(compressedFile);
+      setProfilePic(imgstr);
+    }
 
     // incoming: userid
     // outgoing: result, error
@@ -60,6 +90,7 @@ function ProfilePage()
           await setOldPassword(userInfo.password);
           await setEmail(userInfo.email);
           await setProfilePic(userInfo.profilepicture);
+          profilePic = userInfo.profilepicture;
         }
         catch(e)
         {
@@ -85,7 +116,7 @@ function ProfilePage()
         login: oldLogin, 
         password: oldPassword,
         email: email,
-        profilepicture: profilepic,
+        profilepicture: oldProfilePic,
         verified: true};
       if(event.target.innerHTML == "Change Username")
       {
@@ -108,6 +139,9 @@ function ProfilePage()
           setPasswordMessage("");
         }
         obj.password = newPassword.value;
+      }
+      else if (event.target.innerHTML == "Update Profile Picture") {
+        obj.profilepicture = profilePic;
       }
       
       console.log(obj);
@@ -143,7 +177,9 @@ function ProfilePage()
     
     return(
       <div>
-          <img id = 'profile-pic' src = {dragonImage}></img>
+          <img id = 'profile-pic' src = {profilePic}></img>
+          <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
+          <button onClick = {update}>Update Profile Picture</button>
           <div id = 'input-fields'> 
               <div className='input-box'>
                 <label id = "username" >Change Username</label>

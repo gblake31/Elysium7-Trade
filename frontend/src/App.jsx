@@ -65,7 +65,7 @@ function App() {
     <div>
       <UserContext.Provider value={{loggedIn, setLoggedIn}}>
         <TopBar callback = {toggleLogin} logout = {logOut} updateList = {(arr) => setItemList(arr)}/>
-        <CategoryBar />
+        <CategoryBar updateList = {(arr) => setItemList(arr)}/>
         <LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount}/>
 			  <RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
 			  <div id = "darkScreen" style = {{opacity: isDark ? "70%" : "0%"}}/>
