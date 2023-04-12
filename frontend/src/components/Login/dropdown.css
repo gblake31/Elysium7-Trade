@@ -65,3 +65,14 @@
     align-self: flex-start;
     font-size: 20px;
 }
+
+.click-text{
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
+
+.click-text:hover{
+    opacity: 0.75;
+	cursor: pointer;
+    color:white;
+}
