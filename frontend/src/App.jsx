@@ -82,7 +82,7 @@ function App() {
 			switchToForgot = {toggleForgot}/>
 		<RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
 		<ForgotPassDropdown switchToLogin = {toggleLogin} visible = {forgotIsVisible}/>
-			  <div id = "darkScreen" style = {{opacity: isDark ? "70%" : "0%"}}/>
+			  {isDark ? <div id = "darkScreen"/> : <div/>}
         <BrowserRouter>
           <Routes>
             <Route path="/" index element={<LandingPage updateList = {(arr) => setItemList(arr)} itemList = {itemList}/>} />

@@ -13,7 +13,7 @@ function ListItem(props) {
     return (
         <div id = 'card' onClick = {clickItem}>
             <h3 id='name'>{props.item.itemname}</h3>
-            <img src = {props.item.image}></img>
+            <img className='listItemImg' src = {props.item.image}></img>
             <h3 id = 'price'>${props.item.price}</h3>
             <p>{props.item.description}</p>
         </div>
