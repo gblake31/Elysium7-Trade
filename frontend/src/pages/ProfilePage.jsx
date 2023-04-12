@@ -183,40 +183,49 @@ function ProfilePage()
       }    
     }  
     
-    return(
-      <div>
-          <img id = 'profileImg' src = {profilePic}></img>
-          <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
-          <button onClick = {update}>Update Profile Picture</button>
-          <div id = 'input-fields'> 
-              <div className='input-box'>
-                <label id = "Text" >Username:</label>
-                <input className = "field" type = "text"  
-                defaultValue = {oldLogin} ref={(c) => login = c} ></input>
-                <p>{userMessage}</p>
-                <button onClick = {update}>Change Username</button>  
-              </div>
-              <div className='input-box'>
-                <label id = "Text" >Current Password:</label>
-                <input className = "field" type = "text" ref={(c) => curPassword = c} 
-                placeholder = 'Current Password'></input>
-              </div>
-              <div className='input-box'>
-                <label id = "Text" >New Password:</label>
-                <input className = "field" type = "text" ref={(c) => newPassword = c} 
-                placeholder = 'New Password'></input>
-                <input className = "field" type = "text" ref={(c) => confirmNewPass = c} 
-                placeholder = 'Retype New Password'></input>
-                <p>{passMessage}</p>
-                <button onClick = {update}>Change Password</button>  
-              </div>
+    return(        
+      <main>
+          <div className="Header">
+				    <h2>Account:</h2>
+				  </div>
+          <div className='profile_editor'>
+            <div className='profile_images'>
+              <img id = 'profile-pic' src = {profilePic}></img>
+              <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
+              <button onClick = {update}>Update Profile Picture</button>
+            </div>
+            <div id = 'input-fields'> 
+                <div className='input-box'>
+                  <label id = "Text" >Username:</label>
+                  <input className = "account_field" type = "text"  
+                  defaultValue = {oldLogin} ref={(c) => login = c} ></input>
+                  <p>{userMessage}</p>
+                  <button onClick = {update}>Change Username</button>  
+                </div>
+                <div className='input-box'>
+                  <label id = "Text" >Current Password:</label>
+                  <input className = "account_field" type = "text" ref={(c) => curPassword = c} 
+                  placeholder = 'Current Password'></input>
+                </div>
+                <div className='input-box'>
+                  <label id = "Text" >New Password:</label>
+                  <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
+                  placeholder = 'New Password'></input>
+                  <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
+                  placeholder = 'Retype New Password'></input>
+                  <p>{passMessage}</p>
+                  <button onClick = {update}>Change Password</button>  
+                </div>
+            </div>
           </div>
+          <div className="Header">
+				    <h2>Inventory:</h2>
+				  </div>
           <button onClick = {createListing}>Create a new Listing!</button>
           <button onClick = {editListing}>Edit a Listing!</button>
-          
-             
+
             
-      </div>
+      </main>
     );
     
 }

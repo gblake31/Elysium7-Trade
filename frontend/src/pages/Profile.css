@@ -1,5 +1,5 @@
 .profile {
-    margin: 0 auto;
+	margin: 0 auto;
 	padding: 20px;
 	position: absolute;
 	z-index: 0;
@@ -10,44 +10,52 @@
 	width: calc(100vw - 40px);
 	overflow-x: hidden;
 	border-radius: 20px;
+}
+
+.Header {
+	position: relative;
+	background-image: url(/src/pages/Pictures/woodBackground.png);
+	background-position: left;
+	background-size: 15%;
+	background-repeat: no-repeat;
+	padding: 30px;
+	justify-content: center;
+	top: -40px;
+}
+
+.profile_editor {
+    position: relative;
+    top: -70px;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+}
+
+.profile_images {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    justify-content: center;
+}
+
+.profile_images img {
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.account_field {
+    opacity: 0.8;
+    border-radius: 20px;
+    font-size: 24px;
+    padding: 5px;
+    margin: 10px 0px;
 }
 
 .input-box label {
-    background-color: rgba(154, 126, 179, 0.8);
     border-radius: 20px;
-    width: 40%;
     font-size: 30px;
     margin:40px;
     padding: 10px;
 }
 
-.input-box {
-    flex-direction: row;
-}
-
-.input-box input {
-    opacity: 0.8;
-    border-radius: 20px;
-    
-}
-
-.input-box button {
-    
-}
-
-#input-fields{
-    flex-direction: column;
-}
-
-.field
-{
-    align-self: flex-start;
-}
-
-#profileImg {
-    object-fit: cover;
-    height: 200px;
-    width: 200px;
-}
