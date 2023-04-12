@@ -37,7 +37,6 @@ function ProfilePage()
         return;
       }
 
-
       const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -47,6 +46,15 @@ function ProfilePage()
 
       let imgstr = await toBase64(compressedFile);
       setProfilePic(imgstr);
+    }
+
+    function createListing() {
+      localStorage.setItem('item', "");
+      window.location.href = "/listing";
+    }
+
+    function editListing() {
+      window.location.href = "/listing";
     }
 
     // incoming: userid
@@ -203,6 +211,8 @@ function ProfilePage()
                 <button onClick = {update}>Change Password</button>  
               </div>
           </div>
+          <button onClick = {createListing}>Create a new Listing!</button>
+          <button onClick = {editListing}>Edit a Listing!</button>
           
              
             
