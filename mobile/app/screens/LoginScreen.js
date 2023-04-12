@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View, TextInput, Image, ImageBackground } from 'react-native';
 import { useRouter, Link } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import RegisterScreen from './RegisterScreen';
 
 function LoginScreen(props) 
@@ -9,6 +10,21 @@ function LoginScreen(props)
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [isErrorVisible, setErrorVisible] = useState(false);
+
+    const fetchUser = async () => 
+    {
+        const token = await AsyncStorage.getItem('user_data');
+        if (token != null) 
+        {
+            console.log('Logging in ' + token.username);
+            router.replace('./Home');
+        }
+    }
+
+    useEffect(() => 
+    {
+        fetchUser();
+    }, [])
 
     let bp = 'https://paradise-7.herokuapp.com/';
     var errorMsg = '';
@@ -37,10 +53,16 @@ function LoginScreen(props)
             }
             else
             {
-                var user = {firstName:res.firstName, lastName:res.lastName, id:res.id}
-                console.log('Login Successful');
-                console.log(user.firstName);
-                router.replace('./Home');
+                var user = {id:res.id,username: res.login, email: res.email}
+                try 
+                {
+                    await AsyncStorage.setItem('user_data', JSON.stringify(user));
+                    console.log('Login Successful');
+                    router.replace('./Home');
+                } catch (e)
+                {
+                    console.log(e)
+                }
             }
         }
         catch(e)
@@ -49,9 +71,7 @@ function LoginScreen(props)
             console.log(e);
             return;
         }
-    }
-
-    
+    }    
 
     return (
         <View style={styles.home}>
@@ -90,7 +110,7 @@ function LoginScreen(props)
                 <Text style={styles.registerText}>
                     Don't have an account?
                 </Text>
-                <Pressable style={styles.registerButton} >
+                <Pressable style={styles.registerButton} onPress={() => router.replace('./RegisterScreen')}>
                     <Text style={styles.buttonTextSmall}>Register</Text>
                 </Pressable>
             </ImageBackground>

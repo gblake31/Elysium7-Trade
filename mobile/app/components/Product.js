@@ -29,7 +29,7 @@ const styles = StyleSheet.create
         color: '#000',
         fontWeight: 'bold',
         fontSize: 16,
-        alignItems: 'left'
+        textAlign: 'left'
     }
 })
 
