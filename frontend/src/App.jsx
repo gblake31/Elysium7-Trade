@@ -11,6 +11,7 @@ import CategoryBar from './pages/CategoryBar';
 
 import LoginDropdown from './components/Login/LoginDropdown';
 import RegisterDropdown from './components/Login/RegisterDropdown';
+import VerifyEmail from './pages/VerifyEmail';
 
 const UserContext = createContext(false);
 
@@ -74,6 +75,7 @@ function App() {
             <Route path="/" index element={<LandingPage itemList = {itemList}/>} />
             <Route path="/profile" index element={<ProfilePage />}/>
 			<Route path="/item" index element={<ItemPage/>}/>
+			<Route path={"/verifyemail/:id"} index element={<VerifyEmail/>}/>
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

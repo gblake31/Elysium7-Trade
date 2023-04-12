@@ -8,7 +8,7 @@ exports.setApp = function ( app, client )
     app.post('/api/login', async (req, res, next) => 
     {
       // incoming: login, password
-      // outgoing: id, email, error
+      // outgoing: id, email, verified, error
     
       let er = '';
     
@@ -19,17 +19,18 @@ exports.setApp = function ( app, client )
     
       let id = -1;
       let email = '';
-    
+      let verified = false;
       if( results.length > 0 )
       {
         id = results[0]._id;
         email = results[0].email;
+        verified = results[0].verified;
       }
       else {
         er = 'User not found'
       }
     
-      let ret = { id:id, login:login, email:email, error:er};
+      let ret = { id:id, login:login, email:email, verified:verified, error:er};
       res.status(200).json(ret);
     });
 

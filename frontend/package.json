@@ -9,6 +9,7 @@
     "browser-image-compression": "^2.0.2",
     "file-picker": "^0.1.8",
     "jsonwebtoken": "^9.0.0",
+    "path-to-regexp": "^6.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2",

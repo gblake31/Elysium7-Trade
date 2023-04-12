@@ -6,7 +6,7 @@
     "scripts": {
         "start": "node server.js",
         "heroku-postbuild": " NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
-        },
+    },
     "author": "",
     "license": "ISC",
     "dependencies": {
@@ -15,7 +15,8 @@
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "jsonwebtoken": "^9.0.0",
-        "mongodb": "^5.1.0"
+        "mongodb": "^5.1.0",
+        "nodemailer": "^6.9.1"
     },
     "proxy": "http//localhost:5000"
 }

@@ -31,7 +31,13 @@ function LoginDropdown(props) {
             else
             {
                 var user = {id:res.id,username: loginName.value, email: res.email};
+                if(!res.verified)
+                {
+                    setMessage("Your account needs to be verified. Check your email");
+                    return;
+                }
                 localStorage.setItem('user_data', JSON.stringify(user));
+
                 console.log('Login Successful');
                 props.onLogin();
                 loginName.value = "";
@@ -48,6 +54,7 @@ function LoginDropdown(props) {
 
     return (
         <div id = "login-box" style = {css}>
+            <button onClick={()=>{window.location.href = "/"}}>Exit</button>
             <h1>Welcome back</h1>
             {/* <label id = "username" >Username</label> */}
             <input className = "field" type = "text" ref={(c) => loginName = c}  placeholder = "Username"></input>
