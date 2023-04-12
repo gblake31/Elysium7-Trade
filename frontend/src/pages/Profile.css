@@ -44,6 +44,15 @@
     object-fit: cover;
 }
 
+input[type='radio'] { 
+    transform: scale(2); 
+    margin: 0px;
+}
+
+#categorySelect > label {
+    margin: 10px;
+}
+
 .account_field {
     opacity: 0.8;
     border-radius: 20px;
