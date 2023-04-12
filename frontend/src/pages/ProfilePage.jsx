@@ -185,7 +185,7 @@ function ProfilePage()
     
     return(
       <div>
-          <img id = 'profile-pic' src = {profilePic}></img>
+          <img id = 'profileImg' src = {profilePic}></img>
           <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
           <button onClick = {update}>Update Profile Picture</button>
           <div id = 'input-fields'> 

@@ -37,11 +37,6 @@
     
 }
 
-#profile-pic{
-    height: 200px;
-    width: 200px;
-}
-
 #input-fields{
     flex-direction: column;
 }
@@ -51,6 +46,8 @@
     align-self: flex-start;
 }
 
-img {
+#profileImg {
     object-fit: cover;
+    height: 200px;
+    width: 200px;
 }

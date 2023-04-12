@@ -69,8 +69,8 @@ function App() {
         <TopBar callback = {toggleLogin} logout = {logOut} updateList = {(arr) => setItemList(arr)}/>
         <CategoryBar updateList = {(arr) => setItemList(arr)}/>
         <LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount}/>
-			  <RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
-			  <div id = "darkScreen" style = {{opacity: isDark ? "70%" : "0%"}}/>
+		<RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
+		{isDark ? <div id = "darkScreen"/> : <div/>}
         <BrowserRouter>
           <Routes>
             <Route path="/" index element={<LandingPage updateList = {(arr) => setItemList(arr)} itemList = {itemList}/>} />
