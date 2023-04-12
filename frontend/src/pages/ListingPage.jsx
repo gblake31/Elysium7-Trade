@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import imageCompression from 'browser-image-compression';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -33,7 +33,12 @@ function ListingPage() {
     ];
     const defaultOption = options[0];
 
-    if (listing != null) setItemPic(listing.image);
+
+
+    useEffect(() => {
+        if (listing != null) 
+		setItemPic(listing.image);
+	}, []);
 
     async function uploadImage() {
         let imgFile = imageRef.files[0];
@@ -60,7 +65,7 @@ function ListingPage() {
         setItemPic(imgstr);
     }
 
-    const callAPI = async event =>
+    const createListing = async event =>
 	{
 		event.preventDefault();
         console.log(category);
@@ -70,6 +75,54 @@ function ListingPage() {
 		let js = JSON.stringify(obj);
 		try {
 			const response = await fetch(bp.buildPath('api/createItem'),
+			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
+			let res = JSON.parse(await response.text());
+			if (res.error == '') {
+				console.log("success");
+                addToInventory(res.itemid);
+			}
+			else {
+				console.log(res.error);
+			}
+		}
+		catch(e) {
+			alert(e.toString());
+			return;
+		}
+	}
+
+    const editListing = async event =>
+	{
+		event.preventDefault();
+        console.log(category);
+	
+		let local = JSON.parse(localStorage.getItem('user_data'));
+		let obj = {itemid: listing._id, sellerid: local.id, itemname: nameRef.value, price: priceRef.value, description: descriptionRef.value, condition: conditionRef.value, image:itemPic, category: category, listedtime: "0"}
+		let js = JSON.stringify(obj);
+		try {
+			const response = await fetch(bp.buildPath('api/updateItem'),
+			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
+			let res = JSON.parse(await response.text());
+			if (res.error == '') {
+				console.log("updated item successfully!");
+			}
+			else {
+				console.log(res.error);
+			}
+		}
+		catch(e) {
+			alert(e.toString());
+			return;
+		}
+	}
+
+    const addToInventory = async (itemid) => {
+	
+		let local = JSON.parse(localStorage.getItem('user_data'));
+		let obj = {userid: local.id, itemid: itemid}
+		let js = JSON.stringify(obj);
+		try {
+			const response = await fetch(bp.buildPath('api/addItemToUser'),
 			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
 			let res = JSON.parse(await response.text());
 			if (res.error == '') {
@@ -84,7 +137,7 @@ function ListingPage() {
 			alert(e.toString());
 			return;
 		}
-	}
+    }
 
     return (
         <div>
@@ -115,7 +168,10 @@ function ListingPage() {
                     <label id = "Text" >Select a Category:</label>
                     <Dropdown options={options} onChange={_onSelect} placeholder="Select a Category"/>
                 </div>
-                <button onClick = {callAPI}>Confirm New Listing</button>  
+                {listing == null ? 
+                    <button onClick = {createListing}>Confirm New Listing</button> :
+                    <button onClick = {editListing}>Confirm Changes to Listing</button>}
+                 
             </div>
         </div>
     ) 

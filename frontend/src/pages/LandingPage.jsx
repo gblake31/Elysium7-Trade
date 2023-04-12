@@ -58,7 +58,7 @@ function LandingPage(props){
 				<div className="Listing">
 					<h2>Listings:</h2>
 				</div>
-				<ItemList arr = {props.itemList}/>
+				<ItemList arr = {props.itemList} inventory = {false}/>
 			</main>
 		</div>
 	);

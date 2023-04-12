@@ -2,6 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import './Profile.css';
 import dragonImage from './Pictures/dragonLogo.png';
 import {UserContext} from '../App'
+import ItemList from '../components/ItemList'
 
 import imageCompression from 'browser-image-compression';
 
@@ -22,6 +23,17 @@ function ProfilePage()
     let profilePicRef;
     let [email, setEmail] = useState("");
     let [profilePic, setProfilePic] = useState("");
+    let inventoryArr;
+    let [inventory, setInventory] = useState([]);
+
+    async function fillInventory(idArr) {
+      console.log(idArr);
+      inventoryArr = [];
+      for (let i = 0; i < idArr.length; i++) {
+        await appendInventory(i, idArr[i]);
+      }
+      setInventory(inventoryArr);
+    }
 
     async function uploadImage() {
       let imgFile = profilePicRef.files[0];
@@ -98,6 +110,7 @@ function ProfilePage()
           await setOldPassword(userInfo.password);
           await setEmail(userInfo.email);
           await setProfilePic(userInfo.profilepicture);
+          await fillInventory(userInfo.listings);
           profilePic = userInfo.profilepicture;
         }
         catch(e)
@@ -111,7 +124,41 @@ function ProfilePage()
         alert(e.toString());
         return;
       }  
-    }  
+    }
+
+    const appendInventory = async (i, itemid) => 
+    {
+      try
+      {
+        let obj = {itemid: itemid};
+        let js = JSON.stringify(obj); 
+   
+        const response = await fetch(bp.buildPath('api/retrieveItemInfo'),
+        {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+        let res = JSON.parse(await response.text());
+        let item = res.result;
+        try
+        {
+          if(res.error.length > 0)
+          {
+            console.log(res.error);
+          }
+          inventoryArr[i] = item;
+        }
+        catch(e)
+        {
+          console.log('Something Went Wrong Trying to get UserInfo');
+        }
+        
+      }
+      catch(e)
+      {
+        alert(e.toString());
+        return;
+      }  
+    }
+    
+    
     
     // Check if they are actually logged in and then get user info
     let {loggedIn, setLoggedIn} = useContext(UserContext);
@@ -220,6 +267,7 @@ function ProfilePage()
           </div>
           <div className="Header">
 				    <h2>Inventory:</h2>
+            <ItemList arr = {inventory} inventory = {true}/>
 				  </div>
           <button onClick = {createListing}>Create a new Listing!</button>
           <button onClick = {editListing}>Edit a Listing!</button>
