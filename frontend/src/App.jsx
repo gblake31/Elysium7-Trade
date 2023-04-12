@@ -11,6 +11,7 @@ import CategoryBar from './pages/CategoryBar';
 
 import LoginDropdown from './components/Login/LoginDropdown';
 import RegisterDropdown from './components/Login/RegisterDropdown';
+import ForgotPassDropdown from './components/Login/ForgotPassDropdown';
 import VerifyEmail from './pages/VerifyEmail';
 import ListingPage from './pages/ListingPage';
 
@@ -23,19 +24,28 @@ function App() {
   // Getter and setter for visibility, by default invisible
 	let [loginIsVisible, setLoginVisibility] = useState(false);
 	let [registerIsVisible, setRegisterVisibility] = useState(false);
+	let [forgotIsVisible, setForgotVisibility] = useState(false);
 
 	let [itemList, setItemList] = useState([]);
 
 	// Toggles login display
 	let toggleLogin = () => {
 		setRegisterVisibility(false);
+		setForgotVisibility(false);
 		setLoginVisibility(true);
+		console.log("GOt here");
 	};
 
 	// Toggles register display
 	let toggleRegister = () => {
 		setLoginVisibility(false);
 		setRegisterVisibility(true);
+	};
+
+	// Toggles Forgot Password display
+	let toggleForgot = () => {
+		setLoginVisibility(false);
+		setForgotVisibility(true);
 	};
 
 	let displayAccount = () => {
@@ -53,7 +63,7 @@ function App() {
     	window.location.href = '/';
 	};
 
-	let isDark = loginIsVisible | registerIsVisible;
+	let isDark = loginIsVisible | registerIsVisible | forgotIsVisible;
 
   // This checks if user is logged in on page load
   useEffect(() => {
@@ -68,8 +78,10 @@ function App() {
       <UserContext.Provider value={{loggedIn, setLoggedIn}}>
         <TopBar callback = {toggleLogin} logout = {logOut} updateList = {(arr) => setItemList(arr)}/>
         <CategoryBar updateList = {(arr) => setItemList(arr)}/>
-        <LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount}/>
-			  <RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
+        <LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount} 
+			switchToForgot = {toggleForgot}/>
+		<RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
+		<ForgotPassDropdown switchToLogin = {toggleLogin} visible = {forgotIsVisible}/>
 			  <div id = "darkScreen" style = {{opacity: isDark ? "70%" : "0%"}}/>
         <BrowserRouter>
           <Routes>

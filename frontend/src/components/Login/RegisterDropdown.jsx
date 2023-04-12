@@ -67,6 +67,7 @@ function RegisterDropdown(props) {
             }
             else
             {
+                // CHANGE FOR REAL THING
                 let link = "https://paradise-7.herokuapp.com/verifyemail/" + res.id;
                 let testlink = "localhost:3000/verifyemail/" + res.id;
                 sendEmail(testlink);

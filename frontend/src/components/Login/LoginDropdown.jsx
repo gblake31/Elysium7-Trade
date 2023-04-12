@@ -63,7 +63,7 @@ function LoginDropdown(props) {
             <button onClick = {doLogin}>Login</button>
             <p>{message}</p>
             <h3 className = "click-text" onClick={props.switchToRegister}>Don't have an account?</h3>
-            <h3 className = "click-text"> Forgot Password?</h3>
+            <h3 className = "click-text" onClick={props.switchToForgot}>Forgot Password?</h3>
             
             {/* <div className = "horizontal">
                 <h3>Forgot Password?</h3>
