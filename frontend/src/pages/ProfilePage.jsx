@@ -142,20 +142,23 @@ function ProfilePage()
     }  
     
     return(
-      <div>
+      <div className="profile">
           <img id = 'profile-pic' src = {dragonImage}></img>
           <div id = 'input-fields'> 
               <div className='input-box'>
-                <label id = "username" >Change Username</label>
+                <label id = "Text" >Username:</label>
                 <input className = "field" type = "text"  
                 defaultValue = {oldLogin} ref={(c) => login = c} ></input>
                 <p>{userMessage}</p>
                 <button onClick = {update}>Change Username</button>  
               </div>
               <div className='input-box'>
-                <label id = "username" >Change Password</label>
+                <label id = "Text" >Current Password:</label>
                 <input className = "field" type = "text" ref={(c) => curPassword = c} 
                 placeholder = 'Current Password'></input>
+              </div>
+              <div className='input-box'>
+                <label id = "Text" >New Password:</label>
                 <input className = "field" type = "text" ref={(c) => newPassword = c} 
                 placeholder = 'New Password'></input>
                 <input className = "field" type = "text" ref={(c) => confirmNewPass = c} 
