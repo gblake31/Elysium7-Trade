@@ -56,7 +56,12 @@
     margin-right: 10px;
 }
 
-label {
+.login-box label {
+    align-self: flex-start;
+    font-size: 20px;
+}
+
+.register-box label {
     align-self: flex-start;
     font-size: 20px;
 }

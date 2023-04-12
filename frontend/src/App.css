@@ -95,12 +95,19 @@ ul {
 	background-size: cover;
 	background-position: center;
 	height: 80px;
-	width: 150px;
+	width: 140px;
 	border: none;
 	background-color: transparent;
-	font-size: 1.1em;
-	padding-top:30px;
+	font-size: 1.25em;
+	padding-top: 25px;
+	font-family: 'Aladin', sans-serif;
+	font-weight: 450;
 	
+}
+
+.topBar button:hover {
+	opacity: 0.75;
+	cursor: pointer;
 }
 
 .searchBox {

@@ -66,13 +66,13 @@ function App() {
     <div>
       <UserContext.Provider value={{loggedIn, setLoggedIn}}>
         <TopBar callback = {toggleLogin} logout = {logOut} updateList = {(arr) => setItemList(arr)}/>
-        <CategoryBar />
+        <CategoryBar updateList = {(arr) => setItemList(arr)}/>
         <LoginDropdown switchToRegister = {toggleRegister} visible = {loginIsVisible} onLogin = {displayAccount}/>
 			  <RegisterDropdown switchToLogin = {toggleLogin} visible = {registerIsVisible} onRegister = {onRegister}/>
 			  <div id = "darkScreen" style = {{opacity: isDark ? "70%" : "0%"}}/>
         <BrowserRouter>
           <Routes>
-            <Route path="/" index element={<LandingPage itemList = {itemList}/>} />
+            <Route path="/" index element={<LandingPage updateList = {(arr) => setItemList(arr)} itemList = {itemList}/>} />
             <Route path="/profile" index element={<ProfilePage />}/>
 			<Route path="/item" index element={<ItemPage/>}/>
 			<Route path={"/verifyemail/:id"} index element={<VerifyEmail/>}/>
