@@ -111,7 +111,7 @@ function ProfilePage()
           await setEmail(userInfo.email);
           await setProfilePic(userInfo.profilepicture);
           await fillInventory(userInfo.listings);
-          profilePic = userInfo.profilepicture;
+          oldProfilePic = userInfo.profilepicture;
         }
         catch(e)
         {
@@ -247,7 +247,7 @@ function ProfilePage()
                   <input className = "account_field" type = "text"  
                   defaultValue = {oldLogin} ref={(c) => login = c} ></input>
                   <p>{userMessage}</p>
-                  <button onClick = {update}>Change Username</button>  
+                  <h3 className = "click-text" onClick={update}>Change Username</h3>
                 </div>
                 <div className='input-box'>
                   <label id = "Text" >Current Password:</label>
@@ -261,7 +261,7 @@ function ProfilePage()
                   <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
                   placeholder = 'Retype New Password'></input>
                   <p>{passMessage}</p>
-                  <button onClick = {update}>Change Password</button>  
+                  <h3 className = "click-text" onClick={update}>Change Password</h3>
                 </div>
             </div>
           </div>

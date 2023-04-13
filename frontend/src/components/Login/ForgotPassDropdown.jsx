@@ -11,6 +11,48 @@ function ForgotPassDropdown(props) {
   
     let email;
     let [message, setMessage] = useState("");
+    const getID = async () => 
+    {
+    //   try
+    //   {
+    //     let temp = JSON.parse(localStorage.getItem('user_data'));
+    //     let obj = {userid: temp.id};
+    //     let js = JSON.stringify(obj); 
+   
+    //     const response = await fetch(bp.buildPath('api/retrieveUserInfo'),
+    //     {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+    //     let res = JSON.parse(await response.text());
+    //     let userInfo = res.result;
+    //     try
+    //     {
+    //       if(res.error.length > 0)
+    //       {
+    //         console.log(res.error);
+    //         return;
+    //       }
+    //       /* result format: 
+    //       id, login, password, firstname, lastname, email, ordered, favorited, listings, profilepicture, verified
+    //       */
+    //       await setUserID(userInfo._id);
+    //       await setOldLogin(userInfo.login);
+    //       await setOldPassword(userInfo.password);
+    //       await setEmail(userInfo.email);
+    //       await setProfilePic(userInfo.profilepicture);
+    //       await fillInventory(userInfo.listings);
+    //       profilePic = userInfo.profilepicture;
+    //     }
+    //     catch(e)
+    //     {
+    //       console.log('Something Went Wrong Trying to get UserInfo');
+    //     }
+        
+    //   }
+    //   catch(e)
+    //   {
+    //     alert(e.toString());
+    //     return;
+    //   }  
+    }
 
     const sendEmail = async()  => 
     {   
