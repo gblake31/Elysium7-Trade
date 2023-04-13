@@ -47,7 +47,6 @@ function AccountManagement(props) {
                 /* result format: 
                 id, login, password, firstname, lastname, email, ordered, favorited, listings, profilepicture, verified
                 */
-               console.log("retrieved: " + JSON.stringify(userInfo))
                 await setUserID(userInfo._id);
                 await setLogin(userInfo.login);
                 await setOldPassword(userInfo.password);
@@ -86,13 +85,11 @@ function AccountManagement(props) {
             else {
                 setPasswordMessage("");
             }
-            obj.password = newPassword.value;
+            obj.password = newPassword;
         }
         else {
             obj.password = oldPassword;
         }
-
-        console.log("updating w/ data: " + JSON.stringify(obj));
         event.preventDefault();
         // incoming: userid, login, password, firstname, lastname, email, profilepicture, verified
         // outgoing: result, error
@@ -112,7 +109,6 @@ function AccountManagement(props) {
             }
             else {
                 var user = { id: userID, username: login, email: email };
-                console.log(user);
                 await AsyncStorage.setItem('user_data', JSON.stringify(user));
                 alert("PROFILE UPDATED");
             }
