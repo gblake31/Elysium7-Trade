@@ -108,6 +108,7 @@ input[type='radio'] {
     font-size: 18px;
     align-self: center;
     display: inline-block;
+    margin-right: 10px;
 }
 
 #profilePage .input-box li {
@@ -142,10 +143,10 @@ input[type='radio'] {
 #profilePage #update-password {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
-    width: calc(65vw - 50px);
+    width: calc(65vw - 20px);
     text-align: right;
     background-color: rgba(0,0,0, 0.7);
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 #profilePage #input-field {
@@ -172,7 +173,8 @@ input[type='radio'] {
     font-weight: 400;
     border-radius: 20px;
     font-size: 18px;
-    color: white
+    color: white;
+    margin-right: 10px;
 }
 
 
