@@ -21,6 +21,10 @@ function ForgotPassword() {
     let [inventory, setInventory] = useState([]);
 
     useEffect(() => {
+        const loggedInUser = localStorage.getItem('user_data');
+        if (loggedInUser) {
+          window.location.href = '/'
+        }
         getUserInfo();
     }, []);
 
@@ -101,6 +105,12 @@ function ForgotPassword() {
             setPasswordMessage("Your passwords don't match!");
             return;
         }
+        // Regex for Password
+        if(!(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(newPassword.value)))
+        {
+            setPasswordMessage("Your password does not meet the minimum requirements");
+            return;
+        }
         event.preventDefault();
         // incoming: userid, login, password, firstname, lastname, email, profilepicture, verified
         // outgoing: result, error
@@ -132,19 +142,36 @@ function ForgotPassword() {
                   defaultValue = {login.value} ref={(c) => login = c} ></input> 
             </div>
             <p>{userMessage}</p>
-            <h3 className="click-text" onClick={sendUsername}>Forgot Username?</h3>
+            <div className = "horizontal">
+                <h3 className="click-text" onClick={sendUsername}>Forgot Username?</h3>
+            </div>
             
-            
+
             <div className='input-box'>
             <label id="Text" >New Password:</label>
             <input className="account_field" type="text" ref={(c) => newPassword = c}
                 placeholder='New Password'></input>
+            <h3 className="req-text" style = {{marginRight:4.5+'em'}}>Password Requirements:</h3>
+                <ul className='req-text'>
+                    <div className = "column-list"> 
+                        <li>Minimum 8 characters</li>
+                        <li>At least 1 letter</li>
+                    </div>
+                    <div className = "column-list"> 
+                        <li>At least 1 symbol</li>
+                        <li>At least 1 number</li>
+                    </div>
+                    
+                </ul>
             <input className="account_field" type="text" ref={(c) => confirmNewPass = c}
                 placeholder='Retype New Password'></input>
             
             </div>
             <p>{passMessage}</p>
-            <h3 className="click-text" onClick={update}>Change Password</h3>
+            <div className = "horizontal">
+                <h3 className="click-text" onClick={update}>Change Password</h3>
+            </div>
+            
         </div>
         
     );

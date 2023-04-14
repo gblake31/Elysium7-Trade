@@ -1,4 +1,6 @@
-.profile {
+
+
+#profilePage .profile {
 	margin: 0 auto;
 	padding: 20px;
 	position: absolute;
@@ -12,18 +14,22 @@
 	border-radius: 20px;
 }
 
-.Header {
-	position: relative;
+#profilePage .Header {
+	position:relative;
 	background-image: url(/src/pages/Pictures/woodBackground.png);
 	background-position: left;
-	background-size: 15%;
+	background-size: 12%;
 	background-repeat: no-repeat;
 	padding: 30px;
 	justify-content: center;
 	top: -40px;
 }
 
-.profile_editor {
+#profilePage .Header h2 {
+    padding-left: 30px;
+}
+
+#profilePage .profile_editor {
     position: relative;
     top: -70px;
     display: flex;
@@ -31,7 +37,7 @@
     justify-content: center;
 }
 
-.profile_images {
+#profilePage .profile_images {
     display: flex;
     flex-direction: column;
     justify-content: top;
@@ -39,7 +45,7 @@
     width: 35vw;
 }
 
-.profile_images img {
+#profilePage .profile_images img {
     max-width: 300px;
     max-height: 300px;
     object-fit: cover;
@@ -54,23 +60,56 @@ input[type='radio'] {
     margin: 10px;
 }
 
-.account_field {
+#profilePage .account_field {
     opacity: 0.8;
     border-radius: 20px;
     font-size: 24px;
     padding: 5px;
     margin: 10px 0px;
+    width: 100%;
+    text-align: center;
     
 }
 
-.input-box label {
+
+#profilePage .input-box label {
     font-family: 'Gudea-Bold';
     font-weight: 400;
     border-radius: 20px;
-    font-size: 25px;
+    font-size: 22px;
     margin: 10px;
     align-self: center;
     display: inline-block;
+}
+
+#profilePage .input-box h3 {
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
+    border-radius: 18px;
+    font-size: 18px;
+    align-self: center;
+    display: inline-block;
+}
+
+#profilePage .input-box li {
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
+    font-size: 15px;
+    margin: 8px;
+    list-style-type: disc;
+}
+
+#profilePage .req-text {
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#profilePage #hidden {
+    visibility: hidden;
 }
 
 @font-face {
@@ -78,47 +117,64 @@ input[type='radio'] {
 	src: url('./Fonts/Gudea-Bold.ttf') format('truetype');
 }
 
-#update-password {
+#profilePage #update-password {
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 0.75fr;
-    width: 60vw;
+    grid-template-columns: 1.5fr 1.5fr;
+    width: calc(50vw - 50px);
     text-align: right;
+    background-color: rgba(0,0,0, 0.);
 }
 
-#input-button{
-    align-self: self-end;
-    justify-self: center;
+#profilePage #input-field {
+    align-items: center;
+    display: inline-block;
 }
 
-#results-message {
-    grid-column: span 3;
+#profilePage #input-button {
+    grid-column: span 2;
+    justify-self: right;
+}
+
+#profilePage #results-message {
+    grid-column: span 2;
     text-align: center;
     font-family: 'Gudea-Bold';
     font-weight: 400;
     border-radius: 20px;
     font-size: 18px;
+    color: white
 }
 
-.click-text{
+
+#profilePage .click-text{
     font-family: 'Gudea-Bold';
     font-weight: 350;
     border-radius: 20px;
     font-size: 18px;
-    margin-bottom: 1px;
-    margin-top: 1px;
+    color: white;
 }
 
-.click-text:hover{
+
+#profilePage .click-text:hover{
     opacity: 0.75;
 	cursor: pointer;
-    color:white;
+    color:whitesmoke;
 }
 
-.profile_images {
+#profilePage .profile_images {
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
 }
 
+.horizontal {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
 
-
+.column-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}

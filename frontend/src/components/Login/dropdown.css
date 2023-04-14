@@ -41,6 +41,22 @@
     flex-direction: row;
 }
 
+.column-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#register-box .req-text {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 20px;
+    width: 20em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 
 .field {
     font-size: 24px;

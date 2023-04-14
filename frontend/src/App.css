@@ -183,6 +183,10 @@ ul {
 	top: -40px;
 }
 
+.Listing h2 {
+    padding-left: 30px;
+}
+
 #outer
 {
 	position: relative;
