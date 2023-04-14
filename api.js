@@ -676,14 +676,14 @@ exports.setApp = function ( app, client )
         }
         else 
         {
-          newlist = itemlist.splice(index, 1);
+          itemlist.splice(index, 1);
 
           try
           {
             result = await db.collection('Users').updateOne(
               {_id:id},
               {
-                $set: {listings:newlist} 
+                $set: {listings:itemlist} 
               }
             );
 

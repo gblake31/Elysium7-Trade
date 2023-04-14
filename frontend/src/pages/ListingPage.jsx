@@ -33,15 +33,13 @@ function ListingPage() {
     ];
     const defaultOption = options[0];
 
-
-
     useEffect(() => {
         if (listing != null) 
 		setItemPic(listing.image);
 	}, []);
 
     async function uploadImage() {
-        let imgFile = imageRef.files[0];
+        let imgFile = imageRef.files[0]; 
         const options = {
           maxSizeMB: 0.2,
           maxWidthOrHeight: 800
@@ -94,8 +92,6 @@ function ListingPage() {
     const editListing = async event =>
 	{
 		event.preventDefault();
-        console.log(category);
-	
 		let local = JSON.parse(localStorage.getItem('user_data'));
 		let obj = {itemid: listing._id, sellerid: local.id, itemname: nameRef.value, price: priceRef.value, description: descriptionRef.value, condition: conditionRef.value, image:itemPic, category: category, listedtime: "0"}
 		let js = JSON.stringify(obj);
@@ -105,6 +101,54 @@ function ListingPage() {
 			let res = JSON.parse(await response.text());
 			if (res.error == '') {
 				console.log("updated item successfully!");
+                window.location.href = "/profile";
+			}
+			else {
+				console.log(res.error);
+			}
+		}
+		catch(e) {
+			alert(e.toString());
+			return;
+		}
+	}
+
+    const deleteListing = async event =>
+	{
+		event.preventDefault();
+	
+		let local = JSON.parse(localStorage.getItem('user_data'));
+		let obj = {itemid: listing._id, sellerid: local.id}
+		let js = JSON.stringify(obj);
+		try {
+			const response = await fetch(bp.buildPath('api/deleteItem'),
+			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
+			let res = JSON.parse(await response.text());
+			if (res.error == '') {
+                deleteFromInventory();
+			}
+			else {
+				console.log(res.error);
+			}
+		}
+		catch(e) {
+			alert(e.toString());
+			return;
+		}
+	}
+
+    const deleteFromInventory = async () =>
+	{
+		let local = JSON.parse(localStorage.getItem('user_data'));
+		let obj = {itemid: listing._id, userid: local.id}
+		let js = JSON.stringify(obj);
+		try {
+			const response = await fetch(bp.buildPath('api/deleteItemFromUser'),
+			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
+			let res = JSON.parse(await response.text());
+			if (res.error == '') {
+				console.log("delete item successfully!");
+                window.location.href = "/profile";
 			}
 			else {
 				console.log(res.error);
@@ -171,6 +215,8 @@ function ListingPage() {
                 {listing == null ? 
                     <button onClick = {createListing}>Confirm New Listing</button> :
                     <button onClick = {editListing}>Confirm Changes to Listing</button>}
+                {listing != null ? <button onClick = {deleteListing}>Delete This Listing</button> : <div/>}
+                
                  
             </div>
         </div>

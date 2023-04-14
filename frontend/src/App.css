@@ -22,6 +22,8 @@ main {
 	src: url('./pages/Fonts/Aladin-Regular.ttf') format('truetype');
 }
 
+
+
 h1 {
 	font-size: 3em;
 	font-family: 'Aladin', sans-serif;
