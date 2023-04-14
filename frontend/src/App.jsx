@@ -13,6 +13,7 @@ import LoginDropdown from './components/Login/LoginDropdown';
 import RegisterDropdown from './components/Login/RegisterDropdown';
 import ForgotPassDropdown from './components/Login/ForgotPassDropdown';
 import VerifyEmail from './pages/VerifyEmail';
+import ForgotPassword from './pages/ForgotPassword';
 import ListingPage from './pages/ListingPage';
 
 const UserContext = createContext(false);
@@ -90,6 +91,7 @@ function App() {
 			<Route path="/item" index element={<ItemPage/>}/>
 			<Route path="/listing" index element={<ListingPage/>}/>
 			<Route path={"/verifyemail/:id"} index element={<VerifyEmail/>}/>
+			<Route path={"/forgotpassword/:id"} index element={<ForgotPassword/>}/>
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

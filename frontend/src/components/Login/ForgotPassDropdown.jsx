@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './dropdown.css';
 
 function ForgotPassDropdown(props) {
-
+    
     let css = {};
     // Moves the position of the props (login box), css handles transition
     css.top = props.visible ? "-4%" : "-200%";
@@ -10,58 +10,49 @@ function ForgotPassDropdown(props) {
     let bp = require('../Leinecker/Path.js');
   
     let email;
+    let [userID, setUserID] = useState("");
     let [message, setMessage] = useState("");
     const getID = async () => 
     {
-    //   try
-    //   {
-    //     let temp = JSON.parse(localStorage.getItem('user_data'));
-    //     let obj = {userid: temp.id};
-    //     let js = JSON.stringify(obj); 
+      try
+      {
+        let obj = {email: email.value};
+        let js = JSON.stringify(obj); 
    
-    //     const response = await fetch(bp.buildPath('api/retrieveUserInfo'),
-    //     {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-    //     let res = JSON.parse(await response.text());
-    //     let userInfo = res.result;
-    //     try
-    //     {
-    //       if(res.error.length > 0)
-    //       {
-    //         console.log(res.error);
-    //         return;
-    //       }
-    //       /* result format: 
-    //       id, login, password, firstname, lastname, email, ordered, favorited, listings, profilepicture, verified
-    //       */
-    //       await setUserID(userInfo._id);
-    //       await setOldLogin(userInfo.login);
-    //       await setOldPassword(userInfo.password);
-    //       await setEmail(userInfo.email);
-    //       await setProfilePic(userInfo.profilepicture);
-    //       await fillInventory(userInfo.listings);
-    //       profilePic = userInfo.profilepicture;
-    //     }
-    //     catch(e)
-    //     {
-    //       console.log('Something Went Wrong Trying to get UserInfo');
-    //     }
+        const response = await fetch(bp.buildPath('api/getIDFromEmail'),
+        {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+        let res = JSON.parse(await response.text());
+        try
+        {
+          if(res.error.length > 0)
+          {
+            console.log(res.error);
+            return;
+          }
+          await setUserID(res.userid);
+          console.log("THIS IS USER ID: "+userID);
+        }
+        catch(e)
+        {
+          console.log('Something Went Wrong Trying to get ID from email');
+        }
         
-    //   }
-    //   catch(e)
-    //   {
-    //     alert(e.toString());
-    //     return;
-    //   }  
+      }
+      catch(e)
+      {
+        alert(e.toString());
+        return;
+      }  
     }
 
     const sendEmail = async()  => 
     {   
-        return;
+        getID();
         // CHANGE FOR REAL THING
         let link = "https://paradise-7.herokuapp.com/verifyemail/"; //NEEDS ID
         let testlink = "localhost:3000/forgotpassword/"; //NEEDS ID
         let obj = {receiver: email.value, subject: "Forgot Password for Elysium Account", 
-        text: "Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: "+testlink, html: ""};
+        text: "Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: "+testlink+userID, html: ""};
         let js = JSON.stringify(obj);
         try
         {    
@@ -74,8 +65,7 @@ function ForgotPassDropdown(props) {
             }
             else
             {
-                console.log('Register Successful');
-                setMessage("Register Successful! Please check your email to get verified");
+                setMessage("Please check your email to reset your password");
             }
         }
         catch(e)

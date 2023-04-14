@@ -13,8 +13,8 @@ function ListItem(props) {
         window.location.href = "/listing";
     }
 
-    console.log(props.itemid);
-    console.log(props.sellerid);
+    // console.log(props.itemid);
+    // console.log(props.sellerid);
     return (
         <div id = 'card' onClick = {props.inventory ? editItem : clickItem}>
             <h3 id='name'>{props.item.itemname}</h3>
