@@ -75,7 +75,7 @@ function App() {
 	  }, []);
 
   return (
-    <div>
+    <div style={isDark ? {scrollable: "hidden"} : {}}>
       <UserContext.Provider value={{loggedIn, setLoggedIn}}>
         <TopBar callback = {toggleLogin} logout = {logOut} updateList = {(arr) => setItemList(arr)}/>
         <CategoryBar updateList = {(arr) => setItemList(arr)}/>

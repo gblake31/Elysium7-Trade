@@ -3,6 +3,95 @@
     margin: 20px 10px 10px 0px;
 }
 
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+#itemOuter {
+    border-radius: 25px;
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+}
+#sellerInfo {
+    width:25%;
+    display: inline-block;
+}
+
+#itemInfo {
+    width: 75%;
+    display: inline-block;
+    background-color: gray;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+#itemTop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#itemLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 50%;
+}
+
+#itemName, #itemPrice {
+    background-color: #bcb9b9;
+    border-radius: 15px;
+    display: inline-block;
+    padding: 15px;
+}
+
+#itemSeller {
+    margin: auto;
+    display: inline;
+    align-self: center;
+}
+
+#itemSellerPic {
+    display: inline-block;
+    width: 10vw;
+    height: 10vw;
+    object-fit: cover;
+}
+
+#itemSellerEmail {
+    text-align: center;
+}
+
+#itemPrice {
+    font-size: larger;
+    font-weight: 700;
+}
+
+#descriptionHeader{
+    background-color: #9A7EB3;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 0px;
+}
+
+#itemDesc {
+    background-color: #89964C;
+    opacity: 80%;
+    min-height: 5em;
+    padding: 10px;
+}
+
+
 #itemImage {
     display: block;
+    border-radius: 25px;
+    max-width: 40vw;
+    min-width: 10vw;
+    min-height: 10vw;
+    max-height: 30vw;
+    margin: auto;
+    object-fit: cover;
 }
