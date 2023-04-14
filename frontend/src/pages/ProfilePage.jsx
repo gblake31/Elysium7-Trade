@@ -239,31 +239,47 @@ function ProfilePage()
             <div className='profile_images'>
               <img id = 'profile-pic' src = {profilePic}></img>
               <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
-              <button onClick = {update}>Update Profile Picture</button>
+              <br></br>
+              <h3 className = "click-text" onClick={update}>Update Profile Picture</h3>
             </div>
-            <div id = 'input-fields'> 
-                <div className='input-box'>
-                  <label id = "Text" >Username:</label>
-                  <input className = "account_field" type = "text"  
-                  defaultValue = {oldLogin} ref={(c) => login = c} ></input>
-                  <p>{userMessage}</p>
+            <div className='input-box' id='update-password'>
+                  <div id = "input-text">
+                    <label id = "Text" >Username:</label>
+                  </div>
+                  <div id = 'input-field'>
+                    <input className = "account_field" type = "text"  
+                    defaultValue = {oldLogin} ref={(c) => login = c} ></input>
+                  </div>
+                  <div id = 'input-button'>
                   <h3 className = "click-text" onClick={update}>Change Username</h3>
-                </div>
-                <div className='input-box'>
-                  <label id = "Text" >Current Password:</label>
-                  <input className = "account_field" type = "text" ref={(c) => curPassword = c} 
+                  </div>
+                  <div id = 'results-message'>
+                    <p>{userMessage}</p>
+                  </div>
+                  <div id = "input-text">
+                    <label id = "Text" >Current Password:</label>
+                  </div>
+                  <div id = 'input-field'>
+                    <input className = "account_field" type = "text" ref={(c) => curPassword = c} 
                   placeholder = 'Current Password'></input>
-                </div>
-                <div className='input-box'>
-                  <label id = "Text" >New Password:</label>
-                  <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
-                  placeholder = 'New Password'></input>
-                  <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
-                  placeholder = 'Retype New Password'></input>
-                  <p>{passMessage}</p>
-                  <h3 className = "click-text" onClick={update}>Change Password</h3>
-                </div>
-            </div>
+                  </div>
+                  <div id='emptydiv'></div>
+                  <div id = 'input-text'>
+                    <label id = "Text" >New Password:</label>
+                  </div>
+                  <div id = 'input-fields'>
+                     <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
+                      placeholder = 'New Password'></input>
+                      <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
+                      placeholder = 'Retype New Password'></input>
+                  </div>
+                  <div id = 'input-button'>
+                  <h3 className = "click-text" onClick={update}>Change Password</h3>  
+                  </div>
+                  <div id = 'results-message'>
+                    <p>{passMessage}</p>
+                  </div>
+              </div>
           </div>
           <div className="Header">
 				    <h2>Inventory:</h2>

@@ -34,8 +34,9 @@
 .profile_images {
     display: flex;
     flex-direction: column;
-    margin: 10px;
-    justify-content: center;
+    justify-content: top;
+    align-items: center;
+    width: 35vw;
 }
 
 .profile_images img {
@@ -59,16 +60,50 @@ input[type='radio'] {
     font-size: 24px;
     padding: 5px;
     margin: 10px 0px;
+    
 }
 
 .input-box label {
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
     border-radius: 20px;
-    font-size: 30px;
-    margin:40px;
-    padding: 10px;
+    font-size: 25px;
+    margin: 10px;
+    align-self: center;
+    display: inline-block;
+}
+
+@font-face {
+	font-family: 'Gudea-Bold';
+	src: url('./Fonts/Gudea-Bold.ttf') format('truetype');
+}
+
+#update-password {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 0.75fr;
+    width: 60vw;
+    text-align: right;
+}
+
+#input-button{
+    align-self: self-end;
+    justify-self: center;
+}
+
+#results-message {
+    grid-column: span 3;
+    text-align: center;
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
+    border-radius: 20px;
+    font-size: 18px;
 }
 
 .click-text{
+    font-family: 'Gudea-Bold';
+    font-weight: 350;
+    border-radius: 20px;
+    font-size: 18px;
     margin-bottom: 1px;
     margin-top: 1px;
 }
@@ -78,3 +113,12 @@ input[type='radio'] {
 	cursor: pointer;
     color:white;
 }
+
+.profile_images {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+
+
+
