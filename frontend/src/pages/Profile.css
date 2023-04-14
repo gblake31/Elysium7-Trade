@@ -1,5 +1,8 @@
 
-
+#profilePage {
+    position: relative;
+    top: 100px;
+}
 #profilePage .profile {
 	margin: 0 auto;
 	padding: 20px;
@@ -15,10 +18,10 @@
 }
 
 #profilePage .Header {
-	position:relative;
+	position:absolute;
 	background-image: url(/src/pages/Pictures/woodBackground.png);
 	background-position: left;
-	background-size: 12%;
+	background-size: 100%;
 	background-repeat: no-repeat;
 	padding: 30px;
 	justify-content: center;
@@ -29,12 +32,19 @@
     padding-left: 30px;
 }
 
+#profilePage #Account {
+    top: -160px;
+}
+
+#profilePage #Inventory {
+    top: 250px;
+}
+
 #profilePage .profile_editor {
     position: relative;
-    top: -70px;
+    top: -100px;
     display: flex;
     flex-direction: row;
-    justify-content: center;
 }
 
 #profilePage .profile_images {
@@ -71,13 +81,22 @@ input[type='radio'] {
     
 }
 
+#profilePage #input-text {
+    background-color: #846C96;
+    border-radius: 30px;
+    margin: 10px;
+    margin-left: 30%;
+    text-align: center;
+}
 
 #profilePage .input-box label {
     font-family: 'Gudea-Bold';
     font-weight: 400;
     border-radius: 20px;
     font-size: 22px;
-    margin: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 0%;
     align-self: center;
     display: inline-block;
 }
@@ -100,13 +119,16 @@ input[type='radio'] {
 }
 
 #profilePage .req-text {
+    font-family: 'Gudea-Bold';
     display: flex;
     flex-direction: row;
-    text-align: right;
-    font-size: 20px;
+    text-align: left;
+    font-size: 15px;
     margin-top: 0px;
     margin-bottom: 0px;
+    justify-content: center;
 }
+
 
 #profilePage #hidden {
     visibility: hidden;
@@ -119,15 +141,23 @@ input[type='radio'] {
 
 #profilePage #update-password {
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr;
-    width: calc(50vw - 50px);
+    grid-template-columns: 1fr 1.5fr;
+    width: calc(65vw - 50px);
     text-align: right;
-    background-color: rgba(0,0,0, 0.);
+    background-color: rgba(0,0,0, 0.7);
+    border-radius: 15px;
 }
 
 #profilePage #input-field {
     align-items: center;
     display: inline-block;
+    margin-right: 5%;
+}
+
+#profilePage #input-fields {
+    align-items: center;
+    display: inline-block;
+    margin-right: 5%;
 }
 
 #profilePage #input-button {
