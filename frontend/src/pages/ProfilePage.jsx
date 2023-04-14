@@ -19,7 +19,7 @@ function ProfilePage()
     let curPassword = "";
     let newPassword = "";
     let confirmNewPass = "";
-    let oldProfilePic = "";
+    let [oldProfilePic, setOldProfilePic] = useState("");
     let profilePicRef;
     let [email, setEmail] = useState("");
     let [profilePic, setProfilePic] = useState("");
@@ -109,9 +109,10 @@ function ProfilePage()
           await setOldLogin(userInfo.login);
           await setOldPassword(userInfo.password);
           await setEmail(userInfo.email);
+          await setOldProfilePic(userInfo.profilepicture);
           await setProfilePic(userInfo.profilepicture);
           await fillInventory(userInfo.listings);
-          oldProfilePic = userInfo.profilepicture;
+          
         }
         catch(e)
         {
