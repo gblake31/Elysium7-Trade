@@ -23,7 +23,7 @@
 #itemInfo {
     width: 75%;
     display: inline-block;
-    background-color: gray;
+    background-color: rgb(110, 110, 110);
     padding: 20px;
     border-radius: 15px;
 }

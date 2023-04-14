@@ -240,7 +240,7 @@ function ProfilePage()
     return(        
       <main>
           <div id='profilePage'>
-            <div className="Header">
+            <div className="Header" id='Account'>
               <h2>Account:</h2>
             </div>
             <div className='profile_editor'>
@@ -275,11 +275,9 @@ function ProfilePage()
                     <div id = 'input-text'>
                       <label id = "Text" >New Password:</label>
                       <br></br>
-                      <h3 className="req-text">Password Requirements:</h3>
+                      <h4 id='req_title' className="req-text">Password Requirements:</h4>
                       <ul className='req-text'>
-                        <div className='column-list'>
-                          <li id="hidden">Secret Hidden Thing</li>
-                        </div>
+                        
                         <div className = "column-list"> 
                             <li>Minimum 8 characters</li>
                             <li>At least 1 letter</li>
@@ -305,7 +303,7 @@ function ProfilePage()
             </div>
             </div>
             <div id = 'Inventory_Management'>
-              <div className="Header">
+              <div className="Header" id='Inventory'>
                 <h2>Inventory:</h2>
                 <ItemList arr = {inventory} inventory = {true}/>
               </div>

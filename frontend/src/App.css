@@ -15,6 +15,7 @@ main {
 	width: calc(100vw - 40px);
 	overflow-x: hidden;
 	border-radius: 20px;
+	height: calc(100vh - 180px);
 }
 
 @font-face {
