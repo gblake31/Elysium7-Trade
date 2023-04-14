@@ -239,6 +239,7 @@ function ProfilePage()
           <div className='profile_editor'>
             <div className='profile_images'>
               <img id = 'profile-pic' src = {profilePic}></img>
+              <br></br>
               <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
               <br></br>
               <h3 className = "click-text" onClick={update}>Update Profile Picture</h3>
