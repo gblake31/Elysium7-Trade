@@ -16,8 +16,7 @@ const styles = StyleSheet.create
     {
         backgroundColor: '#fff',
         borderWidth: 2,
-        padding: 5,
-        width: '20%'
+        padding: 5
     },
     price:
     {

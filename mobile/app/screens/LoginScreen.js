@@ -11,21 +11,6 @@ function LoginScreen(props)
     const [password, setPassword] = useState();
     const [isErrorVisible, setErrorVisible] = useState(false);
 
-    const fetchUser = async () => 
-    {
-        const token = await AsyncStorage.getItem('user_data');
-        if (token != null) 
-        {
-            console.log('Logging in ' + token.username);
-            router.replace('./Home');
-        }
-    }
-
-    useEffect(() => 
-    {
-        fetchUser();
-    }, [])
-
     let bp = 'https://paradise-7.herokuapp.com/';
     var errorMsg = '';
 

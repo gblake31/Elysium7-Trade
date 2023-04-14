@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { loadAsync, useFonts } from 'expo-font';
 import RegisterScreen from './RegisterScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const bg = require('./images/map.jpg');
 
 function WelcomeScreen(props) {
+    const router = useRouter();
+    
+    const fetchUser = async () => 
+    {
+        const token = await AsyncStorage.getItem('user_data');
+        if (token != null) 
+        {
+            console.log('Logging in ' + token.username);
+            router.replace('screens/Home');
+        }
+    }
+
+    useEffect(() => 
+    {
+        fetchUser();
+    }, [])
+
     const [fontsLoaded] = useFonts({
         'Abibas': require('../assets/fonts/Abibas.otf')
     });
@@ -14,6 +32,7 @@ function WelcomeScreen(props) {
     console.log("welcome");
 
     if(!fontsLoaded) return null;
+
 
     return (
         <View style={styles.home}>

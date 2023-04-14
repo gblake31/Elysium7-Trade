@@ -3,11 +3,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import WelcomeScreen from './app/screens/WelcomeScreen';
+import { useRouter } from 'expo-router';
 
 // prevents autohiding splash screen during font loading
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+
   // load fonts with expo-font
   const [fontsLoaded] = useFonts({
     'Abibas': require('./assets/fonts/Abibas.otf')
@@ -31,7 +33,8 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: 
+  {
     flex: 1,
     backgroundColor: '#c5825b',
     alignItems: 'center',
