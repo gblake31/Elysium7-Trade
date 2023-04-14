@@ -190,6 +190,12 @@ function ProfilePage()
           setPasswordMessage("Your passwords don't match!");
           return;
         }
+        // Regex for Password
+        if(!(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(newPassword.value)))
+        {
+            setPasswordMessage("Your password does not meet the minimum requirements");
+            return;
+        }
         else
         {
           setPasswordMessage("");
@@ -259,6 +265,18 @@ function ProfilePage()
                   <label id = "Text" >New Password:</label>
                   <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
                   placeholder = 'New Password'></input>
+                <h3 className="req-text" style = {{marginRight:4.5+'em'}}>Password Requirements:</h3>
+                <ul className='req-text'>
+                    <div className = "column-list"> 
+                        <li>Minimum 8 characters</li>
+                        <li>At least 1 letter</li>
+                    </div>
+                    <div className = "column-list"> 
+                        <li>At least 1 symbol</li>
+                        <li>At least 1 number</li>
+                    </div>
+                    
+                </ul>
                   <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
                   placeholder = 'Retype New Password'></input>
                   <p>{passMessage}</p>

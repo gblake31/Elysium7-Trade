@@ -5,7 +5,7 @@ function RegisterDropdown(props) {
 
     let css = {};
     // Moves the position of the props (login box), css handles transition
-    css.top = props.visible ? "-20%" : "-200%";
+    css.top = props.visible ? "-30%" : "-200%";
 
     let bp = require('../Leinecker/Path.js');
   
@@ -50,7 +50,18 @@ function RegisterDropdown(props) {
             setMessage("Your passwords don't match!");
             return;
         }
-
+        // Regex for Password
+        if(!(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(loginPassword.value)))
+        {
+            setMessage("Your password does not meet the minimum requirements");
+            return;
+        }
+        // Regex to check Email
+	    if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(loginEmail.value)))
+        {
+            setMessage("Invalid Email Format");
+            return;
+        }
         event.preventDefault();
         let obj = {login: loginUsername.value, email: loginEmail.value, password: loginPassword.value};
         let js = JSON.stringify(obj);
@@ -92,10 +103,22 @@ function RegisterDropdown(props) {
             {/* <label id = "password">Password</label> */}
             <input className = "field" type = "password" ref={(c) => loginPassword = c} placeholder = "Password"></input>
             {/* <label id = "confirmPassword">Confirm Password</label> */}
+            <h3 className="req-text" style = {{marginRight:4.5+'em'}}>Password Requirements:</h3>
+                <ul className='req-text'>
+                    <div className = "column-list"> 
+                        <li>Minimum 8 characters</li>
+                        <li>At least 1 letter</li>
+                    </div>
+                    <div className = "column-list"> 
+                        <li>At least 1 symbol</li>
+                        <li>At least 1 number</li>
+                    </div>
+                    
+                </ul>
             <input className = "field" type = "password" ref={(c) => loginConfirmPassword = c} placeholder = "Confirm Password"></input>
             <button onClick = {doRegister}>Register</button>
             <p>{message}</p>
-            <div className = "horizontal">
+            <div className = "horizontal"> 
                 <h3 className = "click-text" onClick={props.switchToLogin}>Already have an account?</h3>
             </div>
         </div>

@@ -73,11 +73,38 @@ input[type='radio'] {
     margin-top: 1px;
 }
 
+.req-text {
+    font-size: 20px;
+    width: 20em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    list-style-type: disc;
+}
+
 .click-text:hover{
     opacity: 0.75;
 	cursor: pointer;
     color:white;
 }
 
-.forgot-box{
+.horizontal {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.column-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.req-text {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 20px;
+    width: 20em;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
