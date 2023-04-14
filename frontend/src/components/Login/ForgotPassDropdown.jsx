@@ -27,10 +27,12 @@ function ForgotPassDropdown(props) {
           if(res.error.length > 0)
           {
             console.log(res.error);
-            return;
+            return 0;
           }
           await setUserID(res.userid);
+          console.log("This is resID: "+ res.userid);
           console.log("THIS IS USER ID: "+userID);
+          return res.userid;
         }
         catch(e)
         {
@@ -41,18 +43,19 @@ function ForgotPassDropdown(props) {
       catch(e)
       {
         alert(e.toString());
-        return;
+        return 0;
       }  
     }
 
     const sendEmail = async()  => 
     {   
-        getID();
+        let id = await getID();
+        // await getID();
         // CHANGE FOR REAL THING
         let link = "https://paradise-7.herokuapp.com/verifyemail/"; //NEEDS ID
         let testlink = "localhost:3000/forgotpassword/"; //NEEDS ID
         let obj = {receiver: email.value, subject: "Forgot Password for Elysium Account", 
-        text: "Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: "+testlink+userID, html: ""};
+        text: "Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: "+testlink+id, html: ""};
         let js = JSON.stringify(obj);
         try
         {    

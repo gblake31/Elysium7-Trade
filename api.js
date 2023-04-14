@@ -465,16 +465,32 @@ exports.setApp = function ( app, client )
       });
       */
 
+      // let transporter = nodemailer.createTransport({
+      //   service: "Hotmail",
+      //   auth: {
+      //     user: "elysiumtrade7@outlook.com",
+      //     pass: "DkzMTtfd46enG3M",
+      //   }
+      // })
+
       let transporter = nodemailer.createTransport({
         service: "Hotmail",
         auth: {
-          user: "elysiumtrade7@outlook.com",
-          pass: "DkzMTtfd46enG3M",
+          user: "elysiumtrade8@outlook.com",
+          pass: "Ya?&r9BjSN8n",
         }
       })
 
+      // let mailOptions = {
+      //   from: 'elysiumtrade7@outlook.com',
+      //   to: receiver,
+      //   subject: subject,
+      //   text: text,
+      //   html: html
+      // };
+
       let mailOptions = {
-        from: 'elysiumtrade7@outlook.com',
+        from: 'elysiumtrade8@outlook.com',
         to: receiver,
         subject: subject,
         text: text,
