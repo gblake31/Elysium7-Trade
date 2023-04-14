@@ -239,69 +239,80 @@ function ProfilePage()
     
     return(        
       <main>
-          <div className="Header">
-				    <h2>Account:</h2>
-				  </div>
-          <div className='profile_editor'>
-            <div className='profile_images'>
-              <img id = 'profile-pic' src = {profilePic}></img>
-              <br></br>
-              <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
-              <br></br>
-              <h3 className = "click-text" onClick={update}>Update Profile Picture</h3>
+          <div id='profilePage'>
+            <div className="Header">
+              <h2>Account:</h2>
             </div>
-            <div className='input-box' id='update-password'>
-                  <div id = "input-text">
-                    <label id = "Text" >Username:</label>
-                  </div>
-                  <div id = 'input-field'>
-                    <input className = "account_field" type = "text"  
-                    defaultValue = {oldLogin} ref={(c) => login = c} ></input>
-                  </div>
-                  <div id = 'input-button'>
-                  <h3 className = "click-text" onClick={update}>Change Username</h3>
-                  </div>
-                  <div id = 'results-message'>
-                    <p>{userMessage}</p>
-                  </div>
-                  <div id = "input-text">
-                    <label id = "Text" >Current Password:</label>
-                  </div>
-                  <div id = 'input-field'>
-                    <input className = "account_field" type = "text" ref={(c) => curPassword = c} 
-                  placeholder = 'Current Password'></input>
-                </div>
-                <div className='input-box'>
-                  <label id = "Text" >New Password:</label>
-                  <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
-                  placeholder = 'New Password'></input>
-                <h3 className="req-text" style = {{marginRight:4.5+'em'}}>Password Requirements:</h3>
-                <ul className='req-text'>
-                    <div className = "column-list"> 
-                        <li>Minimum 8 characters</li>
-                        <li>At least 1 letter</li>
+            <div className='profile_editor'>
+              <div className='profile_images'>
+                <img id = 'profile-pic' src = {profilePic}></img>
+                <br></br>
+                <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
+                <br></br>
+                <h3 className = "click-text" onClick={update}>Update Profile Picture</h3>
+              </div>
+              <div className='input-box' id='update-password'>
+                    <div id = "input-text">
+                      <label id = "Text" >Username:</label>
                     </div>
-                    <div className = "column-list"> 
-                        <li>At least 1 symbol</li>
-                        <li>At least 1 number</li>
+                    <div id = 'input-field'>
+                      <input className = "account_field" type = "text"  
+                      defaultValue = {oldLogin} ref={(c) => login = c} ></input>
                     </div>
-                    
-                </ul>
-                  <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
-                  placeholder = 'Retype New Password'></input>
-                  <p>{passMessage}</p>
-                  <h3 className = "click-text" onClick={update}>Change Password</h3>
+                    <div id = 'input-button'>
+                    <h3 className = "click-text" onClick={update}>Change Username</h3>
+                    </div>
+                    <div id = 'results-message'>
+                      <p>{userMessage}</p>
+                    </div>
+                    <div id = "input-text">
+                      <label id = "Text" >Current Password:</label>
+                    </div>
+                    <div id = 'input-field'>
+                      <input className = "account_field" type = "text" ref={(c) => curPassword = c} 
+                    placeholder = 'Current Password'></input>
+                    </div>
+                    <div id = 'input-text'>
+                      <label id = "Text" >New Password:</label>
+                      <br></br>
+                      <h3 className="req-text">Password Requirements:</h3>
+                      <ul className='req-text'>
+                        <div className='column-list'>
+                          <li id="hidden">Secret Hidden Thing</li>
+                        </div>
+                        <div className = "column-list"> 
+                            <li>Minimum 8 characters</li>
+                            <li>At least 1 letter</li>
+                        </div>
+                        <div className = "column-list"> 
+                            <li>At least 1 symbol</li>
+                            <li>At least 1 number</li>
+                        </div>
+                      </ul>
+                    </div>
+                    <div id = 'input-fields'>
+                      <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
+                        placeholder = 'New Password'></input>
+                        <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
+                        placeholder = 'Retype New Password'></input>
+                    </div>
+                    <div id = 'input-button'>
+                    <h3 className = "click-text" onClick={update}>Change Password</h3>  
+                    <div id = 'results-message'>
+                      <p>{passMessage}</p>
+                    </div>
                 </div>
             </div>
-          </div>
-          <div className="Header">
-				    <h2>Inventory:</h2>
-            <ItemList arr = {inventory} inventory = {true}/>
-				  </div>
-          <button onClick = {createListing}>Create a new Listing!</button>
-          <button onClick = {editListing}>Edit a Listing!</button>
-
-            
+            </div>
+            <div id = 'Inventory_Management'>
+              <div className="Header">
+                <h2>Inventory:</h2>
+                <ItemList arr = {inventory} inventory = {true}/>
+              </div>
+                <button onClick = {createListing}>Create a new Listing!</button>
+                <button onClick = {editListing}>Edit a Listing!</button>
+              </div>
+            </div> 
       </main>
     );
     
