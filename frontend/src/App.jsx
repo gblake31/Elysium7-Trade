@@ -88,7 +88,7 @@ function App() {
           <Routes>
             <Route path="/" index element={<LandingPage updateList = {(arr) => setItemList(arr)} itemList = {itemList}/>} />
             <Route path="/profile" index element={<ProfilePage />}/>
-			<Route path="/item" index element={<ItemPage/>}/>
+			<Route path="/item/:id" index element={<ItemPage/>}/>
 			<Route path="/listing" index element={<ListingPage/>}/>
 			<Route path={"/verifyemail/:id"} index element={<VerifyEmail/>}/>
 			<Route path={"/forgotpassword/:id"} index element={<ForgotPassword/>}/>

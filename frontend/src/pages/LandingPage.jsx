@@ -20,13 +20,6 @@ function LandingPage(props){
     let cond;
 	let f;
 
-	const toBase64 = file => new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.readAsDataURL(file);
-		reader.onload = () => resolve(reader.result);
-		reader.onerror = error => reject(error);
-	});
-
 	useEffect(() => {
 		const doSearch = async (str) => {
 		  let obj = {search: str};

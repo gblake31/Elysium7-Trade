@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import './dropdown.css';
+import logostr from '../../pages/Pictures/LogoString.txt';
 
 function ForgotPassDropdown(props) {
     
@@ -50,12 +51,55 @@ function ForgotPassDropdown(props) {
     const sendEmail = async()  => 
     {   
         let id = await getID();
-        // await getID();
+        let logo;
+        await fetch(logostr)
+        .then(r => r.text())
+        .then(text => {
+        logo = text;
+        });
         // CHANGE FOR REAL THING
-        let link = "https://paradise-7.herokuapp.com/verifyemail/"; //NEEDS ID
-        let testlink = "localhost:3000/forgotpassword/"; //NEEDS ID
+        let link = "https://paradise-7.herokuapp.com/forgotpassword/"; // NEEDS ID
+        let testlink = "localhost:3000/forgotpassword/"; // NEEDS ID
         let obj = {receiver: email.value, subject: "Forgot Password for Elysium Account", 
-        text: "Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: "+testlink+id, html: ""};
+        text: "", html: `<head>
+        <style> 
+          #text{
+            color: white;
+          }
+          #logo{
+            align-self: center;
+            width: 60px;
+            height: 70px;
+          }
+          #top-bar{
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background-color: #102610;
+          }
+          #body-bar{
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background-color: #234423;
+          }
+        </style>
+      </head>
+      
+      <body>
+        <div id = "top-bar">
+        <h1 id = "text"> Elysium7 Trade </h1>
+        <a href="https://images.gr-assets.com/hostedimages/1436766894ra/15500460.gif" style = "width: 60 visibility: hidden;">.</a>
+        <img id = "logo" src = "${logo}"> 
+            </div>
+        <div id = "body-bar">
+          <h2 id = "text"> Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: ${testlink+id} </h2>
+        </div>
+      </body>
+      
+      `};
         let js = JSON.stringify(obj);
         try
         {    

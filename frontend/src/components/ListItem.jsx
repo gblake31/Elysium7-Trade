@@ -5,7 +5,7 @@ function ListItem(props) {
     
     function clickItem () {
         localStorage.setItem('item', JSON.stringify(props.item));
-        window.location.href = "/item";
+        window.location.href = "/item/"+props.item._id;
     }
 
     function editItem() {

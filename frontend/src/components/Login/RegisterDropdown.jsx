@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import './dropdown.css'
+import logostr from '../../pages/Pictures/LogoString.txt';
 
 function RegisterDropdown(props) {
 
     let css = {};
     // Moves the position of the props (login box), css handles transition
-    css.top = props.visible ? "-30%" : "-200%";
+    css.top = props.visible ? "-10%" : "-200%";
 
     let bp = require('../Leinecker/Path.js');
   
@@ -18,9 +19,52 @@ function RegisterDropdown(props) {
 
     const sendEmail = async(link)  => 
     {   
-
+        let logo;
+        await fetch(logostr)
+        .then(r => r.text())
+        .then(text => {
+        logo = text;
+        });
         let obj = {receiver: loginEmail.value, subject: "Verify Email for Elysium", 
-        text: "Thanks for Registering to ElysiumTrade! Paste this link in your browser: "+link, html: ""};
+        text: " "+link, html: `<head>
+        <style> 
+          #text{
+            color: white;
+          }
+          #logo{
+            align-self: center;
+            width: 60px;
+            height: 70px;
+          }
+          #top-bar{
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background-color: #102610;
+          }
+          #body-bar{
+            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            background-color: #234423;
+          }
+        </style>
+      </head>
+      
+      <body>
+        <div id = "top-bar">
+        <h1 id = "text"> Elysium7 Trade </h1>
+        <a href="https://images.gr-assets.com/hostedimages/1436766894ra/15500460.gif" style = "width: 60 visibility: hidden;">.</a>
+        <img id = "logo" src = "${logo}"> 
+            </div>
+        <div id = "body-bar">
+          <h2 id = "text"> Thanks for Registering to ElysiumTrade! Paste this link in your browser to verify your account: ${link} </h2>
+        </div>
+      </body>
+      
+      `};
         let js = JSON.stringify(obj);
         try
         {    
@@ -72,8 +116,7 @@ function RegisterDropdown(props) {
             let res = JSON.parse(await response.text());
             if( res.id <= 0 )
             {
-                console.log('User already exists.');
-                setMessage("User already exists in the database");
+                setMessage(res.error);
                 console.log(res.error);
             }
             else
