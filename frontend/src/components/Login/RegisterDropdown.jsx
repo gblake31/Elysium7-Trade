@@ -10,12 +10,13 @@ function RegisterDropdown(props) {
 
     let bp = require('../Leinecker/Path.js');
   
-    let loginEmail;
-    let loginUsername;
-    let loginPassword;
-    let loginConfirmPassword;
+    let [loginEmail, setLoginEmail] = useState("");
+    let [loginUsername, setLoginUsername] = useState("");
+    let [loginPassword, setLoginPassword] = useState("");
+    let [loginConfirmPassword, setLoginConfirmPassword] = useState("");
 
     let [message, setMessage] = useState("");
+    let [logoUseState, setLogoStr] = useState("");
 
     const sendEmail = async(link)  => 
     {   
@@ -113,10 +114,10 @@ function RegisterDropdown(props) {
         await fetch(logostr)
         .then(r => r.text())
         .then(text => {
-        logo = text;
+         logo = text;
         });
-
-        let obj = {login: loginUsername.value, email: loginEmail.value, password: loginPassword.value};
+        
+        let obj = {login: loginUsername.value, email: loginEmail.value, password: loginPassword.value, profilepicture: logo};
         let js = JSON.stringify(obj);
         try
         {    
@@ -133,7 +134,9 @@ function RegisterDropdown(props) {
                 // CHANGE FOR REAL THING
                 let link = "https://paradise-7.herokuapp.com/verifyemail/" + res.id;
                 let testlink = "localhost:3000/verifyemail/" + res.id;
-                sendEmail(testlink);
+                //sendEmail(testlink);
+                console.log(res.id);
+                console.log(logo);
             }
         }
         catch(e)
@@ -149,11 +152,11 @@ function RegisterDropdown(props) {
             <button onClick={()=>{window.location.href = "/"}}>Exit</button>
             <h2>Create an Account</h2>
             {/* <label id = "email">Email</label> */}
-            <input className = "field" type = "text" ref={(c) => loginEmail = c} placeholder = "Email"></input>
+            <input className = "field" type = "text" ref={(c) => setLoginEmail(c)} placeholder = "Email"></input>
             {/* <label id = "username">Username</label> */}
-            <input className = "field" type = "text" ref={(c) => loginUsername = c} placeholder = "Username"></input>
+            <input className = "field" type = "text" ref={(c) => setLoginUsername(c)} placeholder = "Username"></input>
             {/* <label id = "password">Password</label> */}
-            <input className = "field" type = "password" ref={(c) => loginPassword = c} placeholder = "Password"></input>
+            <input className = "field" type = "password" ref={(c) => setLoginPassword(c)} placeholder = "Password"></input>
             {/* <label id = "confirmPassword">Confirm Password</label> */}
             <h3 className="req-text" style = {{marginRight:4.5+'em'}}>Password Requirements:</h3>
                 <ul className='req-text'>
@@ -167,7 +170,7 @@ function RegisterDropdown(props) {
                     </div>
                     
                 </ul>
-            <input className = "field" type = "password" ref={(c) => loginConfirmPassword = c} placeholder = "Confirm Password"></input>
+            <input className = "field" type = "password" ref={(c) => setLoginConfirmPassword(c)} placeholder = "Confirm Password"></input>
             <button onClick = {doRegister}>Register</button>
             <p>{message}</p>
             <div className = "horizontal"> 

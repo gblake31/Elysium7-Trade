@@ -112,7 +112,8 @@ function ProfilePage()
           await setOldProfilePic(userInfo.profilepicture);
           await setProfilePic(userInfo.profilepicture);
           await fillInventory(userInfo.listings);
-          
+          console.log("PROFILE PC:");
+          console.log(userInfo.profilePic);
         }
         catch(e)
         {
