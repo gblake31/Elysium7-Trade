@@ -10,7 +10,7 @@ function ForgotPassDropdown(props) {
 
     let bp = require('../Leinecker/Path.js');
   
-    let email;
+    let [email, setEmail] = useState("");
     let [userID, setUserID] = useState("");
     let [message, setMessage] = useState("");
     const getID = async () => 
@@ -65,6 +65,7 @@ function ForgotPassDropdown(props) {
         <style> 
           #text{
             color: white;
+            margin-left: 10px;
           }
           #logo{
             align-self: center;
@@ -126,7 +127,7 @@ function ForgotPassDropdown(props) {
         <div id = "login-box" style = {css}>
             <button onClick={()=>{window.location.href = "/"}}>Exit</button>
             <h1>Please Enter your email</h1>
-            <input className = "field" type = "text" ref={(c) => email = c}  placeholder = "Email"></input>
+            <input className = "field" type = "text" ref={(c) => setEmail(c)}  placeholder = "Email"></input>
             <button onClick = {sendEmail}>Send Password Reset</button>
             <p>{message}</p>
             <h3 className = "click-text" onClick={props.switchToLogin}>Back to Login</h3>

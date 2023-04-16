@@ -29,6 +29,7 @@ function RegisterDropdown(props) {
         text: " "+link, html: `<head>
         <style> 
           #text{
+            margin-left: 10px;
             color: white;
           }
           #logo{
@@ -107,6 +108,14 @@ function RegisterDropdown(props) {
             return;
         }
         event.preventDefault();
+        // Set default profile picture WIP when API finishes
+        let logo;
+        await fetch(logostr)
+        .then(r => r.text())
+        .then(text => {
+        logo = text;
+        });
+
         let obj = {login: loginUsername.value, email: loginEmail.value, password: loginPassword.value};
         let js = JSON.stringify(obj);
         try
