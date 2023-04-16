@@ -36,13 +36,13 @@ exports.setApp = function ( app, client )
 
     app.post('/api/register', async (req, res, next) => 
     {
-      // incoming: login, password, email
+      // incoming: login, password, email, profilepicture
       // outgoing: id, error
     
       let er = '';
       let result;
     
-      const { login, password, email } = req.body;
+      const { login, password, email, profilepicture } = req.body;
     
       const db = client.db('COP4331');
       const results = await db.collection('Users').find({login:login}).toArray();
@@ -63,8 +63,7 @@ exports.setApp = function ( app, client )
       {
         try {
           result = await db.collection('Users').insertOne({login:login, password:password, 
-            email:email, ordered:[], favorited:[], listings:[], 
-            profilepicture:0, verified:false});
+            email:email, listings:[], profilepicture:profilepicture, verified:false});
         } catch (e) {
           console.log(e);
         }
