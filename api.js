@@ -110,6 +110,71 @@ exports.setApp = function ( app, client )
       let ret = { result:result, error:er};
       res.status(200).json(ret);
     });
+
+    
+    app.post('/api/deleteItemFromUser', async(req, res, next) => {
+      // incoming: userid, itemid
+      // outoging: result, error
+
+      let result;
+      let er = '';
+
+      const {userid, itemid} = req.body;
+
+      const db = client.db('COP4331');
+      const id = new ObjectId(userid);
+
+      const results = await db.collection('Users').find({_id:id}).toArray();
+
+      // If there was a find
+      if (results.length > 0) 
+      {
+        itemlist = results[0].listings;
+
+        const index = itemlist.indexOf(itemid);
+
+        if (index == -1)
+        {
+          er = "Item ID was not found";
+
+        }
+        else 
+        {
+          itemlist.splice(index, 1);
+
+          try
+          {
+            result = await db.collection('Users').updateOne(
+              {_id:id},
+              {
+                $set: {listings:itemlist} 
+              }
+            );
+
+            if( result.matchedCount == 0)
+            {
+              er = "User could not be found";
+            }
+
+            if( result.modifiedCount <= 0)
+            {
+              er = "Listings was not changed";
+            }
+          }
+          catch(e)
+          {
+            er = e.toString();
+          }
+      }
+      }
+      else {
+        er = 'User not found';
+      }
+
+      // Return a JSON object
+      let ret = {result:result, error:er}
+      res.status(200).json(ret);
+    });
     
     app.post('/api/searchItems', async (req, res, next) => 
     {

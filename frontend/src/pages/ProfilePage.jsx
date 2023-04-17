@@ -65,10 +65,6 @@ function ProfilePage()
       window.location.href = "/listing";
     }
 
-    function editListing() {
-      window.location.href = "/listing";
-    }
-
     // incoming: userid
     // outgoing: result, error
     // Get userID
@@ -240,74 +236,72 @@ function ProfilePage()
     
     return(        
       <main>
-          <div id='profilePage'>
-            <div className="Header" id='Account'>
-              <h2>Account:</h2>
+        <div id='profilePage'>
+          <div className="Header" id='Account'>
+            <h2>Account:</h2>
+          </div>
+          <div className='profile_editor'>
+            <div className='profile_images'>
+              <img id = 'profile-pic' src = {profilePic}></img>
+              <br></br>
+              <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
+              <br></br>
+              <h3 className = "click-text" onClick={update}>Update Profile Picture</h3>
             </div>
-            <div className='profile_editor'>
-              <div className='profile_images'>
-                <img id = 'profile-pic' src = {profilePic}></img>
+            <div className='input-box' id='update-password'>
+              <div id = "input-text">
+                <label id = "Text" >Username:</label>
+              </div>
+              <div id = 'input-field'>
+                <input className = "account_field" type = "text"  
+                defaultValue = {oldLogin} ref={(c) => login = c} ></input>
+                <h3 className = "click-text" onClick={update}>Change Username</h3>
+              </div>
+              <div id = 'results-message'>
+                <p>{userMessage}</p>
+              </div>
+              <div id = "input-text">
+                <label id = "Text" >Current Password:</label>
+              </div>
+              <div id = 'input-field'>
+                <input className = "account_field" type = "text" ref={(c) => curPassword = c} 
+              placeholder = 'Current Password'></input>
+              </div>
+              <div id = 'input-text'>
+                <label id = "Text" >New Password:</label>
                 <br></br>
-                <input type = "file" onChange = {uploadImage} ref={(c) => profilePicRef = c}></input>
-                <br></br>
-                <h3 className = "click-text" onClick={update}>Update Profile Picture</h3>
+                <h4 id='req_title' className="req-text">Password Requirements:</h4>
+                <ul className='req-text'>
+                  <div className = "column-list"> 
+                      <li> &bull; Minimum 8 characters.</li>
+                      <li> &bull; At least 1 letter.</li>
+                  </div>
+                  <div className = "column-list"> 
+                      <li> &bull; At least 1 symbol.</li>
+                      <li> &bull; At least 1 number.</li>
+                  </div>
+                </ul>
               </div>
-              <div className='input-box' id='update-password'>
-                    <div id = "input-text">
-                      <label id = "Text" >Username:</label>
-                    </div>
-                    <div id = 'input-field'>
-                      <input className = "account_field" type = "text"  
-                      defaultValue = {oldLogin} ref={(c) => login = c} ></input>
-                      <h3 className = "click-text" onClick={update}>Change Username</h3>
-                    </div>
-                    <div id = 'results-message'>
-                      <p>{userMessage}</p>
-                    </div>
-                    <div id = "input-text">
-                      <label id = "Text" >Current Password:</label>
-                    </div>
-                    <div id = 'input-field'>
-                      <input className = "account_field" type = "text" ref={(c) => curPassword = c} 
-                    placeholder = 'Current Password'></input>
-                    </div>
-                    <div id = 'input-text'>
-                      <label id = "Text" >New Password:</label>
-                      <br></br>
-                      <h4 id='req_title' className="req-text">Password Requirements:</h4>
-                      <ul className='req-text'>
-                        
-                        <div className = "column-list"> 
-                            <li> &bull; Minimum 8 characters.</li>
-                            <li> &bull; At least 1 letter.</li>
-                        </div>
-                        <div className = "column-list"> 
-                            <li> &bull; At least 1 symbol.</li>
-                            <li> &bull; At least 1 number.</li>
-                        </div>
-                      </ul>
-                    </div>
-                    <div id = 'input-fields'>
-                      <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
-                        placeholder = 'New Password'></input>
-                        <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
-                        placeholder = 'Retype New Password'></input>
-                        <h3 className = "click-text" onClick={update}>Change Password</h3> 
-                    </div>
-                    <div id = 'results-message'>
-                      <p>{passMessage}</p>
-                    </div>
+              <div id = 'input-fields'>
+                <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
+                  placeholder = 'New Password'></input>
+                  <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
+                  placeholder = 'Retype New Password'></input>
+                  <h3 className = "click-text" onClick={update}>Change Password</h3> 
+              </div>
+              <div id = 'results-message'>
+                <p>{passMessage}</p>
+              </div>
             </div>
+          </div>
+          <div id = 'Inventory_Management'>
+            <div className="Header" id='Inventory'>
+              <h2>Inventory:</h2>
+              <button onClick = {createListing}>Create a new Listing!</button>
+              <ItemList arr = {inventory} inventory = {true}/>
             </div>
-            <div id = 'Inventory_Management'>
-              <div className="Header" id='Inventory'>
-                <h2>Inventory:</h2>
-                <ItemList arr = {inventory} inventory = {true}/>
-              </div>
-                <button onClick = {createListing}>Create a new Listing!</button>
-                <button onClick = {editListing}>Edit a Listing!</button>
-              </div>
-            </div> 
+          </div>
+        </div> 
       </main>
     );
     
