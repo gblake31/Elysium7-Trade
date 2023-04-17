@@ -200,13 +200,13 @@ function ListingPage() {
 						<label id = "Text" >Item Name:</label>
 						<input defaultValue = {listing == null ? "" : listing.itemname} className = "field" type = "text"  ref={(c) => nameRef = c}></input>
 					</div>
-					<div className='input-box'>
+					<div className='input-box' id='textareaField'>
 						<label id = "Text" >Description:</label>
 						<textarea className = "field" rows = '5' ref={(c) => descriptionRef = c} 
 						placeholder = 'Description' defaultValue={listing == null ? "" : listing.description}></textarea>
 					</div>
 					<div className='input-box'>
-						<label id = "Text" >Price: &#36;</label>
+						<label id = "Text" >Price: &#36; </label>
 						<input className = "field" type = "text" ref={(c) => priceRef = c} 
 						placeholder = 'Price' defaultValue={listing == null ? "" : listing.price}></input>
 					</div>
@@ -217,12 +217,12 @@ function ListingPage() {
 					</div>
 					<div className='input-box' id = "categorySelect">
 						<label id = "Text" >Select a Category:</label>
-						<Dropdown options={options} onChange={_onSelect} placeholder="Select a Category"/>
+						<Dropdown id = 'categoryDropdown' options={options} onChange={_onSelect} placeholder="Select a Category"/>
 					</div>
-					{listing == null ? 
-						<button onClick = {createListing}>Confirm New Listing</button> :
-						<button onClick = {editListing}>Confirm Changes to Listing</button>}
-					{listing != null ? <button onClick = {deleteListing}>Delete This Listing</button> : <div/>}
+					{listing == null ?
+						<h3 className = "click-text" onClick={createListing}>Confirm New Listing</h3> :
+						<h3 className = "click-text" onClick={editListing}>Confirm Changes to Listing</h3>}
+					{listing != null ? <h3 className = "click-text" onClick={deleteListing}>Delete This Listing</h3> : <div/>}
 				</div>
 			</div>
 		</main>

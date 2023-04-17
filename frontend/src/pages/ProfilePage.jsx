@@ -259,9 +259,7 @@ function ProfilePage()
                     <div id = 'input-field'>
                       <input className = "account_field" type = "text"  
                       defaultValue = {oldLogin} ref={(c) => login = c} ></input>
-                    </div>
-                    <div id = 'input-button'>
-                    <h3 className = "click-text" onClick={update}>Change Username</h3>
+                      <h3 className = "click-text" onClick={update}>Change Username</h3>
                     </div>
                     <div id = 'results-message'>
                       <p>{userMessage}</p>
@@ -294,13 +292,11 @@ function ProfilePage()
                         placeholder = 'New Password'></input>
                         <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
                         placeholder = 'Retype New Password'></input>
+                        <h3 className = "click-text" onClick={update}>Change Password</h3> 
                     </div>
-                    <div id = 'input-button'>
-                    <h3 className = "click-text" onClick={update}>Change Password</h3>  
                     <div id = 'results-message'>
                       <p>{passMessage}</p>
                     </div>
-                </div>
             </div>
             </div>
             <div id = 'Inventory_Management'>
