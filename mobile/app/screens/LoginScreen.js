@@ -11,26 +11,27 @@ function LoginScreen(props)
     const [password, setPassword] = useState();
     const [isErrorVisible, setErrorVisible] = useState(false);
 
-    let bp = 'https://paradise-7.herokuapp.com/';
+    const LOGIN_ENDPOINT = 'https://paradise-7.herokuapp.com/api/login';
     var errorMsg = '';
 
     const handleLogin = async event =>
     {
-        event.preventDefault();
+        //event.preventDefault();
         let obj = {login:username, password:password};
         let js = JSON.stringify(obj);
         try
         {
             console.log(username + ' ' + password + '\n');
-            const response = await fetch(bp + 'api/login',
+            const response = await fetch(LOGIN_ENDPOINT,
             {
                 method:'POST', 
                 body:js, 
                 headers:{'Content-Type':'application/json'}
-            }
-            );
+            });
+            console.log('sending data')
             let res = JSON.parse(await response.text());
-            if (res.id <= 0)
+            console.log(res.id)
+            if (res.id == -1)
             {
                 errorMsg = 'User/Password combination incorrect';
                 console.log(errorMsg);
@@ -38,25 +39,20 @@ function LoginScreen(props)
             }
             else
             {
-                var user = {id:res.id,username: res.login, email: res.email}
-                try 
-                {
-                    await AsyncStorage.setItem('user_data', JSON.stringify(user));
-                    console.log('Login Successful');
-                    router.replace('./Home');
-                } catch (e)
-                {
-                    console.log(e)
-                }
+                await AsyncStorage.setItem('user_data', JSON.stringify(res));
+                console.log('Login Successful');
+                router.replace('./Home');
+                console.log('seeya');
             }
         }
         catch(e)
         {
             alert(e.toString());
             console.log(e);
-            return;
+            //return;
         }
-    }    
+    }
+
 
     return (
         <View style={styles.home}>

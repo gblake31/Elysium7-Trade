@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import Product from '../components/Product';
+import Item from '../components/Item';
+import ItemList from '../components/ItemList';
 import { Link, useRouter } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Home(props) {
     const router = useRouter();
     const [username, setUsername] = useState();
+    const [search, setSearch] = useState("");
+    const [condition, setCondition] = useState("");
+    const [category, setCategory] = useState("");
     let userData;
+    
 
     const fetchUser = async () => 
     {
@@ -27,8 +32,7 @@ function Home(props) {
     return (
         <View style={styles.home}>
             <Text style={styles.title}>Welcome {username}!</Text>
-            <Product itemName={'Keyboard'} price={5} />
-            <Product itemName={'Mouse'} price={10} />
+            <ItemList search={search} condition={condition} category={category}/>
             <Link href='./AccountManagement'>
                 <Text>MANAGE ACCOUNT</Text>
             </Link>

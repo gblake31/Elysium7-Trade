@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import { ImageBackground, StyleSheet, Text, View, Image } from 'react-native';
 import { Link, useRouter } from "expo-router";
 import { loadAsync, useFonts } from 'expo-font';
-import RegisterScreen from './RegisterScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const bg = require('./images/map.jpg');
 
-function WelcomeScreen(props) {
+function WelcomeScreen() {
     const router = useRouter();
     
     const fetchUser = async () => 
@@ -15,7 +14,8 @@ function WelcomeScreen(props) {
         const token = await AsyncStorage.getItem('user_data');
         if (token != null) 
         {
-            console.log('Logging in ' + token.username);
+            console.log(token);
+            console.log('Logging in ' + JSON.parse(token).login);
             router.replace('screens/Home');
         }
     }

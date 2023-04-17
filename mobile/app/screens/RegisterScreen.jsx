@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, TextInput, KeyboardAvoidingView, Image, ImageBackground } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, KeyboardAvoidingView, Image, ImageBackground, View } from 'react-native';
 import { useRouter, Link } from "expo-router";
 
 
@@ -13,11 +13,6 @@ const RegisterScreen = (props) => {
     const [emailValid, setEmailValid] = useState(true);
     const [login, setLogin] = useState("");
     const [loginValid, setLoginValid] = useState(true);
-    ///DEPRECIATED: No longer using first or last names
-    //const [first, setFirst] = useState("");
-    //const [firstValid, setFirstValid] = useState(true);
-    //const [last, setLast] = useState("");
-    //const [lastValid, setLastValid] = useState(true);
     const [password, setPassword] = useState("");
     const [passwordValid, setPasswordValid] = useState(true);
     const [repassword, setRepassword] = useState("");
@@ -99,12 +94,12 @@ const RegisterScreen = (props) => {
 
 
     return (
-        <KeyboardAvoidingView contentContainerStyle={styles.home}>
+        <KeyboardAvoidingView behavior='position' contentContainerStyle={styles.home}>
             <ImageBackground
                 source={require('./images/loginreg-wooden-sign.png')}
                 style={styles.sign}
             >
-                <Text id='emailCorrection' style={emailValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                <Text id='emailCorrection' style={emailValid ? styles.hidden : styles.errorText}>
                     {`Please enter a valid email address`}
                 </Text>
                 <TextInput
@@ -118,7 +113,7 @@ const RegisterScreen = (props) => {
                     onChangeText={setEmail}
                 />
 
-                <Text style={loginValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                <Text style={loginValid ? styles.hidden : styles.errorText}>
                     {`Please enter a valid display name`}
                 </Text>
                 <TextInput
@@ -131,7 +126,7 @@ const RegisterScreen = (props) => {
                     onChangeText={setLogin}
                 />
 
-                <Text style={passwordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                <Text style={passwordValid ? styles.hidden : styles.errorText}>
                     {
                         `Passwords must contain between 8 and 14 characters.\n` +
                         `Password must contain at least one uppercase letter.\n` +
@@ -151,7 +146,7 @@ const RegisterScreen = (props) => {
                     onEndEditing={validatePassword}
                     onChangeText={setPassword}
                 />
-                <Text style={repasswordValid ? styles.inputCorrectionHidden : styles.inputCorrection}>
+                <Text style={repasswordValid ? styles.hidden : styles.errorText}>
                     {`Passwords must match.`}
                 </Text>
                 <TextInput
@@ -190,7 +185,7 @@ const styles = StyleSheet.create
             flex: 1,
             backgroundColor: '#51684a',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'flex-start',
             fontWeight: 'bold'
         },
         sign:
@@ -202,21 +197,23 @@ const styles = StyleSheet.create
         },
         input:
         {
-            width: '60%',
-            height: 50,
+            width: '80%',
+            height: 65,
             backgroundColor: 'white',
-            textAlign: 'center',
+            textAlign: 'left',
             padding: 10,
             borderWidth: 2,
-            borderRadius: 30,
-            borderColor: 'darkgray'
+            borderRadius: 25,
+            borderColor: 'darkgray',
+            marginVertical: 3,
+            fontSize: 18
         },
-        inputCorrectionHidden:
+        hidden:
         {
             height: 0,
             width: 0
         },
-        inputCorrection:
+        errorText:
         {
             fontSize: 15,
             color: 'white',
