@@ -38,7 +38,7 @@ function LandingPage(props){
 			  console.log(res.error);
 			}
 		  } catch(e) {
-			alert(e.toString());
+			console.log(e.toString());
 			return;
 		  }
 		}

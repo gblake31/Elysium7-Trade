@@ -85,7 +85,7 @@ function RegisterDropdown(props) {
         }
         catch(e)
         {
-            alert(e.toString());
+            console.log(e.toString());
             return;
         }    
   };
@@ -134,14 +134,14 @@ function RegisterDropdown(props) {
                 // CHANGE FOR REAL THING
                 let link = "https://paradise-7.herokuapp.com/verifyemail/" + res.id;
                 let testlink = "localhost:3000/verifyemail/" + res.id;
-                //sendEmail(testlink);
+                sendEmail(testlink);
                 console.log(res.id);
                 console.log(logo);
             }
         }
         catch(e)
         {
-            alert(e.toString());
+            console.log(e.toString());
             return;
         }    
   };

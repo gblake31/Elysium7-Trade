@@ -43,7 +43,7 @@ function ForgotPassDropdown(props) {
       }
       catch(e)
       {
-        alert(e.toString());
+        console.log(e.toString());
         return 0;
       }  
     }
@@ -118,7 +118,7 @@ function ForgotPassDropdown(props) {
         }
         catch(e)
         {
-            alert(e.toString());
+            console.log(e.toString());
             return;
         }    
   };

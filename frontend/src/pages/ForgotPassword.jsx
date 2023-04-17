@@ -60,7 +60,7 @@ function ForgotPassword() {
 
         }
         catch (e) {
-            alert(e.toString());
+            console.log(e.toString());
             return;
         }
     }
@@ -130,7 +130,7 @@ function ForgotPassword() {
         }
         catch(e)
         {
-            alert(e.toString());
+            console.log(e.toString());
             return;
         }    
     };
@@ -177,7 +177,7 @@ function ForgotPassword() {
             }
         }
         catch (e) {
-            alert(e.toString());
+            console.log(e.toString());
             return;
         }
     }

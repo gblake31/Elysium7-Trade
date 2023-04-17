@@ -61,7 +61,7 @@ function ProfilePage()
       }
       catch(e)
       {
-        alert(e.toString());
+        console.log(e.toString());
         return;
       }  
     }
@@ -104,7 +104,7 @@ function ProfilePage()
       }
       catch(e)
       {
-        alert(e.toString());
+        console.log(e.toString());
         return;
       }  
     }
@@ -225,7 +225,7 @@ function ProfilePage()
         }
         catch(e)
         {
-            alert(e.toString());
+          console.log(e.toString());
             return;
         }    
 
