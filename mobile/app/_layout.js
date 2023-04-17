@@ -7,7 +7,7 @@ const Layout = () =>
       screenOptions={{
         title: "",
         headerStyle: {
-          backgroundColor: "#51684a",
+          backgroundColor: "#234423",
         },
         headerTintColor: "#fff",
         headerTitleStyle: {

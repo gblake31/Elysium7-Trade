@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, SafeAreaView } from 'react-native';
 import Item from '../components/Item';
 import ItemList from '../components/ItemList';
 import { Link, useRouter } from "expo-router";
@@ -29,10 +29,15 @@ function Home(props) {
         fetchUser();
     }, [])
 
+    // TODO: <Link>s to inventory and acct mgmt will be replaced by a bottom navigation bar.
+
     return (
-        <View style={styles.home}>
+        <SafeAreaView style={styles.home}>
             <Text style={styles.title}>Welcome {username}!</Text>
             <ItemList search={search} condition={condition} category={category}/>
+            <Link href='./Inventory'>
+                <Text>INVENTORY</Text>
+            </Link>
             <Link href='./AccountManagement'>
                 <Text>MANAGE ACCOUNT</Text>
             </Link>
@@ -54,7 +59,7 @@ function Home(props) {
                         }
                     }} 
             />
-        </View>
+        </SafeAreaView>
     );
 }
 

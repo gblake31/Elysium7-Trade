@@ -26,7 +26,8 @@ function WelcomeScreen() {
     }, [])
 
     const [fontsLoaded] = useFonts({
-        'Abibas': require('../assets/fonts/Abibas.otf')
+        'Abibas': require('../assets/fonts/Abibas.otf'),
+        'Habibi': require('../assets/fonts/Habibi-Regular.ttf')
     });
 
     console.log("welcome");

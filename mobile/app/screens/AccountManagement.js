@@ -18,7 +18,7 @@ function AccountManagement(props) {
     let [newPassword, setNewPassword] = useState("");
     let [confirmNewPass, setConfirmNewPass] = useState("");
     let [email, setEmail] = useState("");
-    let [profilepic, setProfilePic] = useState(0);
+    let [profilepic, setProfilePic] = useState("https://cdn.discordapp.com/attachments/301091812120985601/1096258949755457556/test100px.png");
 
     let bp = 'https://paradise-7.herokuapp.com/';
 
@@ -64,8 +64,7 @@ function AccountManagement(props) {
             catch (e) {
                 console.log('Something Went Wrong Trying to get UserInfo');
             }
-            console.log(profilepic[0]);
-            if (profilepic == 0) 
+            if (profilepic == "" || profilepic == 0) 
             {
                 await setProfilePic('https://cdn.discordapp.com/attachments/301091812120985601/1096258949755457556/test100px.png');
             }
@@ -140,7 +139,9 @@ function AccountManagement(props) {
             />
             <Text style={styles.title}>change profile</Text>
             <View style={styles.row}>
-                <Text style={styles.label}>Username:</Text>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Username:</Text>
+                </View>
                 <Text>{userMessage}</Text>
                 <TextInput
                     style={styles.input}
@@ -151,7 +152,9 @@ function AccountManagement(props) {
                 />
             </View>
             <View style={styles.row}>
-                <Text style={styles.label}>Current Password:</Text>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Current Password:</Text>
+                </View>
                 <TextInput
                     style={styles.input}
                     placeholder='current password'
@@ -160,7 +163,9 @@ function AccountManagement(props) {
                 />
             </View>
             <View style={styles.row}>
-                <Text style={styles.label}>New Password:</Text>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>New Password:</Text>
+                </View>
                 <TextInput
                     style={styles.input}
                     placeholder='new password'
@@ -169,7 +174,9 @@ function AccountManagement(props) {
                 />
             </View>
             <View style={styles.row}>
-                <Text style={styles.label}>Confirm New Password:</Text>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Confirm New Password:</Text>
+                </View>
                 <Text>{passMessage}</Text>
                 <TextInput
                     style={styles.input}
@@ -179,7 +186,9 @@ function AccountManagement(props) {
                 />
             </View>
             <View style={styles.row}>
-                <Text style={styles.label}>Email:</Text>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Email:</Text>
+                </View>
                 <TextInput
                     style={styles.input}
                     placeholder='email'
@@ -190,6 +199,27 @@ function AccountManagement(props) {
             <Pressable title='UPDATE' onPress={update} style={styles.button}>
                 <Text style={styles.buttonText}>update</Text>
             </Pressable>
+            <Pressable 
+                title='SIGN OUT'
+                style={styles.buttonRed}
+                onPress={async () => 
+                    {
+                        const token = await AsyncStorage.getItem('user_data');
+                        if (token != null)
+                        {
+                            await AsyncStorage.removeItem('user_data');
+                            console.log("sign out success");
+                            router.replace('./WelcomeScreen');
+                            return true;
+                        }
+                        else
+                        {
+                            console.log("sign out error");
+                        }
+                    }} 
+            >
+                <Text style={styles.buttonText}>sign out</Text>
+            </Pressable>
         </View>
     );
 }
@@ -198,11 +228,24 @@ const styles = StyleSheet.create({
     button:
     {
         height: 65,
+        width: 128,
         padding: 10,
-        backgroundColor: '#89964C',
+        backgroundColor: '#cc8f38',
         borderRadius: 25,
         marginVertical: 3,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonRed:
+    {
+        height: 65,
+        width: 128,
+        padding: 10,
+        backgroundColor: '#aa0000',
+        borderRadius: 25,
+        marginVertical: 3,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     buttonText:
     {
@@ -214,7 +257,7 @@ const styles = StyleSheet.create({
     home:
     {
         flex: 1,
-        backgroundColor: '#c2a583',
+        backgroundColor: '#947354',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'flex-start',
@@ -224,23 +267,29 @@ const styles = StyleSheet.create({
     {
         flex: 4,
         height: 65,
-        backgroundColor: '#fff',
+        backgroundColor: '#c8c0b8',
         textAlign: 'left',
         padding: 10,
-        borderWidth: 2,
         borderRadius: 25,
-        borderColor: 'darkgray',
         fontSize: 18
     },
     label:
     {
-        flex: 2,
-        height: 65,
-        backgroundColor: '#89964C',
         textAlign: 'center',
         padding: 10,
         borderRadius: 25,
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: 'Habibi'
+    },
+    labelContainer:
+    {
+        flex: 2,
+        height: 65,
+        backgroundColor: '#8c8f4e',
+        textAlign: 'center',
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 25
     },
     profilepic:
     {
@@ -253,7 +302,7 @@ const styles = StyleSheet.create({
     {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginVertical: 3
+        marginVertical: 3,
     },
     title:
     {
