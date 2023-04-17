@@ -96,7 +96,7 @@ function ForgotPassDropdown(props) {
         <img id = "logo" src = "${logo}"> 
             </div>
         <div id = "body-bar">
-          <h2 id = "text"> Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: ${testlink+id} </h2>
+          <h2 id = "text"> Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: ${link+id} </h2>
         </div>
       </body>
       
