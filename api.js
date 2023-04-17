@@ -8,7 +8,7 @@ exports.setApp = function ( app, client )
     app.post('/api/login', async (req, res, next) => 
     {
       // incoming: login, password
-      // outgoing: id, email, error
+      // outgoing: id, email, verified, error
     
       let er = '';
     
@@ -19,45 +19,51 @@ exports.setApp = function ( app, client )
     
       let id = -1;
       let email = '';
-    
+      let verified = false;
       if( results.length > 0 )
       {
         id = results[0]._id;
         email = results[0].email;
+        verified = results[0].verified;
       }
       else {
         er = 'User not found'
       }
     
-      let ret = { id:id, login:login, email:email, error:er};
+      let ret = { id:id, login:login, email:email, verified:verified, error:er};
       res.status(200).json(ret);
     });
 
     app.post('/api/register', async (req, res, next) => 
     {
-      // incoming: login, password, email
+      // incoming: login, password, email, profilepicture
       // outgoing: id, error
     
       let er = '';
       let result;
     
-      const { login, password, email } = req.body;
+      const { login, password, email, profilepicture } = req.body;
     
       const db = client.db('COP4331');
       const results = await db.collection('Users').find({login:login}).toArray();
-    
+      const results2 = await db.collection('Users').find({email:email}).toArray();
       let id;
     
       if( results.length > 0 )
       {
         id = '-1';
-        er = 'Login is taken';
+        er = 'Username belongs to another user';
       }
-      else {
+      else if( results2.length > 0)
+      {
+        id = '-1';
+        er = 'Email is already in use';
+      }
+      else 
+      {
         try {
           result = await db.collection('Users').insertOne({login:login, password:password, 
-            email:email, ordered:[], favorited:[], listings:[], 
-            profilepicture:0, verified:false});
+            email:email, listings:[], profilepicture:profilepicture, verified:false});
         } catch (e) {
           console.log(e);
         }
@@ -102,6 +108,71 @@ exports.setApp = function ( app, client )
       }
       
       let ret = { result:result, error:er};
+      res.status(200).json(ret);
+    });
+
+    
+    app.post('/api/deleteItemFromUser', async(req, res, next) => {
+      // incoming: userid, itemid
+      // outoging: result, error
+
+      let result;
+      let er = '';
+
+      const {userid, itemid} = req.body;
+
+      const db = client.db('COP4331');
+      const id = new ObjectId(userid);
+
+      const results = await db.collection('Users').find({_id:id}).toArray();
+
+      // If there was a find
+      if (results.length > 0) 
+      {
+        itemlist = results[0].listings;
+
+        const index = itemlist.indexOf(itemid);
+
+        if (index == -1)
+        {
+          er = "Item ID was not found";
+
+        }
+        else 
+        {
+          itemlist.splice(index, 1);
+
+          try
+          {
+            result = await db.collection('Users').updateOne(
+              {_id:id},
+              {
+                $set: {listings:itemlist} 
+              }
+            );
+
+            if( result.matchedCount == 0)
+            {
+              er = "User could not be found";
+            }
+
+            if( result.modifiedCount <= 0)
+            {
+              er = "Listings was not changed";
+            }
+          }
+          catch(e)
+          {
+            er = e.toString();
+          }
+      }
+      }
+      else {
+        er = 'User not found';
+      }
+
+      // Return a JSON object
+      let ret = {result:result, error:er}
       res.status(200).json(ret);
     });
     
@@ -566,6 +637,78 @@ exports.setApp = function ( app, client )
 
       // Return a JSON object
       let ret = {result:result, error:er}
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/changePassword', async(req, res, next) => {
+      // incoming: userid, login, newpassword
+      // outoging: result, error
+      
+      let result;
+      let er = '';
+
+      const {userid, login, newpassword} = req.body;
+
+      const db = client.db('COP4331');
+      const id = new ObjectId(userid);
+
+      const results = await db.collection('Users').find({login:login,_id:id}).toArray();
+
+      if ( results.length > 0 )
+      {
+        try
+        {
+          result = await db.collection('Users').updateOne(
+          {_id:id},
+          {
+            $set: {password:newpassword} 
+          }
+          );
+
+          if( result.matchedCount == 0)
+          {
+            er = "User could not be found";
+          }
+        }
+        catch(e)
+        {
+          er = e.toString();
+        }
+      }
+      else
+      {
+        er = "Username does not match UserID"
+      }
+
+      let ret = {result:result, error:er}
+      res.status(200).json(ret);
+    });
+
+    app.post('/api/getIDFromEmail', async(req, res, next) => {
+      // incoming: email
+      // outoging: email, userid, error
+      
+      let result;
+      let er = '';
+      let userid;
+
+      const {email} = req.body;
+
+      const db = client.db('COP4331');
+
+      const results = await db.collection('Users').find({email:email}).toArray();
+
+      if ( results.length > 0 )
+      {
+        userid = results[0]._id;
+      }
+      else
+      {
+        er = "Could not find email in database"
+        userid = -1;
+      }
+
+      let ret = {email:email,userid:userid,error:er};
       res.status(200).json(ret);
     });
 }

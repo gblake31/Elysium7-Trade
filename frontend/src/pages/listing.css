@@ -1,0 +1,96 @@
+#listingPage {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    top: -80px;
+}
+
+#listingHeader {
+	position:relative;
+	background-image: url(/src/pages/Pictures/woodBackground.png);
+	background-position: left;
+	background-size: 15%;
+	background-repeat: no-repeat;
+	padding: 30px;
+    margin-bottom: 20px;
+    top: -45px
+}
+
+#listingPage #listing-image {
+    display: flex;
+    flex-direction: column;
+    width: 35vw;
+    align-items: center;
+}
+
+#listingPage #listing-image img 
+{
+    max-width: 300px;
+    max-height: 300px;
+    padding-bottom: 10px;
+}
+
+#listingPage #input-fields {
+    width: calc(65vw - 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;   
+    text-align: center;
+}
+
+#listingPage #input-fields .field {
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
+    border-radius: 20px;
+    padding: 5px;
+    margin: 10px 0px;
+    font-size: 24px;
+    text-align: center;
+}
+
+#listingPage #input-fields label {
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
+    border-radius: 20px;
+    font-size: 22px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 0%;
+    align-self: center;
+    display: inline-block;
+}
+
+#listingPage .input-box {
+    display: flex;
+    align-items: center;
+}
+
+#listingPage #input-fields .Dropdown-root {
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
+    border-radius: 20px;
+    font-size: 24px;
+    padding: 5px;
+    margin: 10px 0px;
+    text-align: center;
+}  
+
+
+#listingPage .click-text{
+    font-family: 'Gudea-Bold';
+    font-weight: 350;
+    border-radius: 20px;
+    font-size: 18px;
+    color: white;
+    padding-bottom: 10px;
+}
+
+
+#listingPage .click-text:hover{
+    opacity: 0.75;
+	cursor: pointer;
+    color:whitesmoke;
+}

@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 import jsonData from './data'
 import ListItem from './ListItem';
 
-function createCard(obj) {
-    return <ListItem item = {obj}/>
-}
-
 function ItemList(props) {
-    // This data will eventually come from the API, not a json file.
+
+    function createCard(obj) {
+        return <ListItem item = {obj} inventory = {props.inventory}/>
+    }
+
     let items = props.arr;
     console.log(items);
     return (

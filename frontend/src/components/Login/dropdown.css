@@ -41,14 +41,52 @@
     flex-direction: row;
 }
 
+#register-box .column-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
 
-.field {
+#register-box .req-text {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 20px;
+    width: 20em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#register-box .field {
     font-size: 24px;
     width: 20em;
     padding: 5px;
-    margin: 10px 0px
-    
+    margin: 10px 0px;
 }
+
+#login-box .column-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#login-box .req-text {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 20px;
+    width: 20em;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#login-box .field {
+    font-size: 24px;
+    width: 20em;
+    padding: 5px;
+    margin: 10px 0px;
+}
+
 
 .horizontal > .field{
     width: 9.4em; 
@@ -56,7 +94,25 @@
     margin-right: 10px;
 }
 
-label {
+.login-box label {
     align-self: flex-start;
     font-size: 20px;
+}
+
+.register-box label {
+    align-self: flex-start;
+    font-size: 20px;
+}
+
+
+
+.click-text{
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
+
+.click-text:hover{
+    opacity: 0.75;
+	cursor: pointer;
+    color:white;
 }

@@ -1,6 +1,6 @@
 body {
 	background-color: #a08377;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 main {
@@ -15,12 +15,15 @@ main {
 	width: calc(100vw - 40px);
 	overflow-x: hidden;
 	border-radius: 20px;
+	height: calc(100vh - 180px);
 }
 
 @font-face {
 	font-family: 'Aladin';
 	src: url('./pages/Fonts/Aladin-Regular.ttf') format('truetype');
 }
+
+
 
 h1 {
 	font-size: 3em;
@@ -40,15 +43,21 @@ ul {
 }
 
 #darkScreen {
-	opacity: 0%;
-	transition: opacity 0.5s;
-	transition-timing-function: ease-out;
+	opacity: 70%;
 	background-color: black;
-	width: 100%; height: 100%;
+	width: 100%; height: 10000px;
 	position: absolute;
 	top: 0; left: 0;
 	z-index: 8;
-	pointer-events: none;
+	pointer-events:all;
+	animation-name: example;
+  	animation-duration: 1s;
+	overflow-y: hidden;
+}
+
+@keyframes example {
+	from {opacity: 0%}
+	to {opacity: 70%}
 }
 
 #searchImg{
@@ -95,12 +104,19 @@ ul {
 	background-size: cover;
 	background-position: center;
 	height: 80px;
-	width: 150px;
+	width: 140px;
 	border: none;
 	background-color: transparent;
-	font-size: 1.1em;
-	padding-top:30px;
+	font-size: 1.25em;
+	padding-top: 25px;
+	font-family: 'Aladin', sans-serif;
+	font-weight: 450;
 	
+}
+
+.topBar button:hover {
+	opacity: 0.75;
+	cursor: pointer;
 }
 
 .searchBox {
@@ -156,6 +172,7 @@ ul {
 	height: 300px;
 	background-color:blanchedalmond; 
 }
+
 .Listing {
 	position: relative;
 	background-image: url(/src/pages/Pictures/woodBackground.png);
@@ -164,7 +181,11 @@ ul {
 	background-repeat: no-repeat;
 	padding: 30px;
 	justify-content: center;
-	top: -40px;
+	top: -35px;
+}
+
+.Listing h2 {
+    padding-left: 30px;
 }
 
 #outer

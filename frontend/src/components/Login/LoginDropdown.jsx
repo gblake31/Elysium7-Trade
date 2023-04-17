@@ -31,7 +31,13 @@ function LoginDropdown(props) {
             else
             {
                 var user = {id:res.id,username: loginName.value, email: res.email};
+                if(!res.verified)
+                {
+                    setMessage("Your account needs to be verified. Check your email");
+                    return;
+                }
                 localStorage.setItem('user_data', JSON.stringify(user));
+
                 console.log('Login Successful');
                 props.onLogin();
                 loginName.value = "";
@@ -41,13 +47,14 @@ function LoginDropdown(props) {
         }
         catch(e)
         {
-            alert(e.toString());
+            console.log(e.toString());
             return;
         }    
   };
 
     return (
         <div id = "login-box" style = {css}>
+            <button onClick={()=>{window.location.href = "/"}}>Exit</button>
             <h1>Welcome back</h1>
             {/* <label id = "username" >Username</label> */}
             <input className = "field" type = "text" ref={(c) => loginName = c}  placeholder = "Username"></input>
@@ -55,10 +62,14 @@ function LoginDropdown(props) {
             <input className = "field" type = "password" ref={(c) => loginPassword = c} placeholder = "Password"></input>
             <button onClick = {doLogin}>Login</button>
             <p>{message}</p>
-            <div className = "horizontal">
-                <h3>Don't have an account?</h3>
+            <h3 className = "click-text" onClick={props.switchToRegister}>Don't have an account?</h3>
+            <h3 className = "click-text" onClick={props.switchToForgot}>Forgot Password?</h3>
+            
+            {/* <div className = "horizontal">
+                <h3>Forgot Password?</h3>
                 <button onClick={props.switchToRegister}>Register</button>
-            </div>
+            </div> */}
+            
         </div>
     )
 }

@@ -35,7 +35,7 @@
     padding: 1%;
 }
 
-img {
+.listItemImg {
     max-width: 200px;
     max-height: 200px;
 }

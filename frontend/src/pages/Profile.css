@@ -1,17 +1,208 @@
-.input-box{
+
+#profilePage {
+    position: relative;
+    top: 100px;
+}
+#profilePage .profile {
+	margin: 0 auto;
+	padding: 20px;
+	position: absolute;
+	z-index: 0;
+	background-image: url(/src/pages/Pictures/market-place-background.png);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+	width: calc(100vw - 40px);
+	overflow-x: hidden;
+	border-radius: 20px;
 }
 
-#profile-pic{
-    height: 200px;
-    width: 200px;
+#profilePage .Header {
+	position:absolute;
+	background-image: url(/src/pages/Pictures/woodBackground.png);
+	background-position: left;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	padding: 30px;
+    margin-bottom: 20px;
 }
 
-#input-fields{
+#profilePage .Header h2 {
+    padding-left: 30px;
+}
+
+#profilePage #Account {
+    top: -160px;
+}
+
+#profilePage #Inventory {
+    top: 290px;
+}
+
+#profilePage .profile_editor {
+    position: relative;
+    top: -100px;
+    display: flex;
+    flex-direction: row;
+}
+
+#profilePage .profile_images {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 35vw;
 }
 
-.field
-{
-    align-self: flex-start;
+#profilePage .profile_images img {
+    margin-top: 55px;
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+input[type='radio'] { 
+    transform: scale(2); 
+    margin: 0px;
+}
+
+#categorySelect > label {
+    margin: 10px;
+}
+
+#profilePage .account_field {
+    opacity: 0.8;
+    border-radius: 20px;
+    font-size: 24px;
+    padding: 5px;
+    margin: 10px 0px;
+    width: 100%;
+    text-align: center;
+    
+}
+
+#profilePage #input-text {
+    background-color: #846C96;
+    border-radius: 30px;
+    margin: 10px;
+    margin-left: 30%;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#profilePage .input-box label {
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
+    border-radius: 20px;
+    font-size: 22px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 0%;
+    align-self: center;
+    display: inline-block;
+}
+
+#profilePage .input-box h3 {
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
+    border-radius: 18px;
+    font-size: 18px;
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#profilePage .input-box li {
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
+    font-size: 15px;
+    margin: 3px;
+}
+
+#profilePage .req-text {
+    font-family: 'Gudea-Bold';
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-bottom: 0px;
+    justify-content: center;
+}
+
+
+#profilePage #hidden {
+    visibility: hidden;
+}
+
+@font-face {
+	font-family: 'Gudea-Bold';
+	src: url('./Fonts/Gudea-Bold.ttf') format('truetype');
+}
+
+#profilePage #update-password {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    width: calc(65vw - 20px);
+    text-align: right;
+    background-color: rgba(0,0,0, 0.7);
+    border-radius: 10px;
+    margin-top: 50px;
+}
+
+#profilePage #input-field {
+    align-items: center;
+    display: inline-block;
+    margin-right: 5%;
+}
+
+#profilePage #input-fields {
+    align-items: center;
+    display: inline-block;
+    margin-right: 5%;
+}
+
+#profilePage #input-button {
+    grid-column: span 2;
+    justify-self: right;
+    margin-top: -10px;
+}
+
+#profilePage #results-message {
+    grid-column: span 2;
+    text-align: center;
+    font-family: 'Gudea-Bold';
+    font-weight: 400;
+    border-radius: 20px;
+    font-size: 18px;
+    color: white;
+    margin-right: 10px;
+}
+
+
+#profilePage .click-text{
+    font-family: 'Gudea-Bold';
+    font-weight: 350;
+    border-radius: 20px;
+    font-size: 18px;
+    color: white;
+}
+
+
+#profilePage .click-text:hover{
+    opacity: 0.75;
+	cursor: pointer;
+    color:whitesmoke;
+}
+
+.horizontal {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+#profilePage .column-list {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
 }
