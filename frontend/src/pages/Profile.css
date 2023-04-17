@@ -24,8 +24,7 @@
 	background-size: 100%;
 	background-repeat: no-repeat;
 	padding: 30px;
-	justify-content: center;
-	top: -40px;
+    margin-bottom: 20px;
 }
 
 #profilePage .Header h2 {
@@ -37,7 +36,7 @@
 }
 
 #profilePage #Inventory {
-    top: 250px;
+    top: 290px;
 }
 
 #profilePage .profile_editor {
@@ -50,12 +49,12 @@
 #profilePage .profile_images {
     display: flex;
     flex-direction: column;
-    justify-content: top;
     align-items: center;
     width: 35vw;
 }
 
 #profilePage .profile_images img {
+    margin-top: 55px;
     max-width: 300px;
     max-height: 300px;
     object-fit: cover;
@@ -106,7 +105,7 @@ input[type='radio'] {
     font-weight: 400;
     border-radius: 18px;
     font-size: 18px;
-    align-self: center;
+    position: relative;
     display: inline-block;
     margin-right: 10px;
 }
@@ -115,17 +114,17 @@ input[type='radio'] {
     font-family: 'Gudea-Bold';
     font-weight: 400;
     font-size: 15px;
-    margin: 8px;
-    list-style-type: disc;
+    margin: 3px;
 }
 
 #profilePage .req-text {
     font-family: 'Gudea-Bold';
     display: flex;
     flex-direction: row;
-    text-align: left;
+    text-align: center;
     font-size: 15px;
     margin-top: 0px;
+    margin-left: 20px;
     margin-bottom: 0px;
     justify-content: center;
 }
@@ -147,6 +146,7 @@ input[type='radio'] {
     text-align: right;
     background-color: rgba(0,0,0, 0.7);
     border-radius: 10px;
+    margin-top: 50px;
 }
 
 #profilePage #input-field {
@@ -164,6 +164,7 @@ input[type='radio'] {
 #profilePage #input-button {
     grid-column: span 2;
     justify-self: right;
+    margin-top: -10px;
 }
 
 #profilePage #results-message {
@@ -193,20 +194,14 @@ input[type='radio'] {
     color:whitesmoke;
 }
 
-#profilePage .profile_images {
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-}
-
 .horizontal {
     display: flex;
     justify-content: space-between;
     flex-direction: row;
 }
 
-.column-list {
+#profilePage .column-list {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-direction: column;
 }

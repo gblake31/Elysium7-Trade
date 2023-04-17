@@ -280,12 +280,12 @@ function ProfilePage()
                       <ul className='req-text'>
                         
                         <div className = "column-list"> 
-                            <li>Minimum 8 characters</li>
-                            <li>At least 1 letter</li>
+                            <li> &bull; Minimum 8 characters.</li>
+                            <li> &bull; At least 1 letter.</li>
                         </div>
                         <div className = "column-list"> 
-                            <li>At least 1 symbol</li>
-                            <li>At least 1 number</li>
+                            <li> &bull; At least 1 symbol.</li>
+                            <li> &bull; At least 1 number.</li>
                         </div>
                       </ul>
                     </div>

@@ -3,6 +3,8 @@ import imageCompression from 'browser-image-compression';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
+import './listing.css'
+
 function ListingPage() {
 
     let storageStr = localStorage.getItem('item');
@@ -184,42 +186,46 @@ function ListingPage() {
     }
 
     return (
-        <div>
-            <h1>{listing == null ? "Create New Listing" : "Edit Listing"}</h1>
-            <img id = 'profile-pic' src = {itemPic}></img>
-            <input type = "file" onChange = {uploadImage} ref={(c) => imageRef = c}></input>
-            <div id = 'input-fields'> 
-                <div className='input-box'>
-                    <label id = "Text" >Item Name:</label>
-                    <input defaultValue = {listing == null ? "" : listing.itemname} className = "field" type = "text"  ref={(c) => nameRef = c}></input>
-                </div>
-                <div className='input-box'>
-                    <label id = "Text" >Description:</label>
-                    <textarea className = "field" rows = '5' ref={(c) => descriptionRef = c} 
-                    placeholder = 'Description' defaultValue={listing == null ? "" : listing.description}></textarea>
-                </div>
-                <div className='input-box'>
-                    <label id = "Text" >Price:</label>
-                    <input className = "field" type = "text" ref={(c) => priceRef = c} 
-                    placeholder = 'Price' defaultValue={listing == null ? "" : listing.price}></input>
-                </div>
-                <div className='input-box'>
-                    <label id = "Text" >Condition:</label>
-                    <input className = "field" type = "text" ref={(c) => conditionRef = c} 
-                    placeholder = 'Condition' defaultValue={listing == null ? "" : listing.condition}></input>
-                </div>
-                <div className='input-box' id = "categorySelect">
-                    <label id = "Text" >Select a Category:</label>
-                    <Dropdown options={options} onChange={_onSelect} placeholder="Select a Category"/>
-                </div>
-                {listing == null ? 
-                    <button onClick = {createListing}>Confirm New Listing</button> :
-                    <button onClick = {editListing}>Confirm Changes to Listing</button>}
-                {listing != null ? <button onClick = {deleteListing}>Delete This Listing</button> : <div/>}
-                
-                 
-            </div>
-        </div>
+		<main>
+			<div id='listingHeader'>
+				<h2>{listing == null ? "Create New Listing" : "Edit Listing"}</h2>
+			</div>			
+			<div id='listingPage'>
+				<div id='listing-image'>
+					<img id = 'profile-pic' src = {itemPic}></img>
+					<input type = "file" onChange = {uploadImage} ref={(c) => imageRef = c}></input>
+				</div>
+				<div id = 'input-fields'> 
+					<div className='input-box'>
+						<label id = "Text" >Item Name:</label>
+						<input defaultValue = {listing == null ? "" : listing.itemname} className = "field" type = "text"  ref={(c) => nameRef = c}></input>
+					</div>
+					<div className='input-box'>
+						<label id = "Text" >Description:</label>
+						<textarea className = "field" rows = '5' ref={(c) => descriptionRef = c} 
+						placeholder = 'Description' defaultValue={listing == null ? "" : listing.description}></textarea>
+					</div>
+					<div className='input-box'>
+						<label id = "Text" >Price: &#36;</label>
+						<input className = "field" type = "text" ref={(c) => priceRef = c} 
+						placeholder = 'Price' defaultValue={listing == null ? "" : listing.price}></input>
+					</div>
+					<div className='input-box'>
+						<label id = "Text" >Condition:</label>
+						<input className = "field" type = "text" ref={(c) => conditionRef = c} 
+						placeholder = 'Condition' defaultValue={listing == null ? "" : listing.condition}></input>
+					</div>
+					<div className='input-box' id = "categorySelect">
+						<label id = "Text" >Select a Category:</label>
+						<Dropdown options={options} onChange={_onSelect} placeholder="Select a Category"/>
+					</div>
+					{listing == null ? 
+						<button onClick = {createListing}>Confirm New Listing</button> :
+						<button onClick = {editListing}>Confirm Changes to Listing</button>}
+					{listing != null ? <button onClick = {deleteListing}>Delete This Listing</button> : <div/>}
+				</div>
+			</div>
+		</main>
     ) 
 }
 

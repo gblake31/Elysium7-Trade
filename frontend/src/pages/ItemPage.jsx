@@ -231,6 +231,7 @@ function ProfilePage()
 
     }
     return (
+      <main>
         <div id="itemOuter">
             <div id = "sellerInfo">
                 <div className = "flex">
@@ -255,6 +256,7 @@ function ProfilePage()
                 <p>{message}</p>
             </div>
         </div>
+      </main>
     );
 }
 

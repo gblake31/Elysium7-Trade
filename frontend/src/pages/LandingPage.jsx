@@ -49,7 +49,7 @@ function LandingPage(props){
 		<div id = "page">
 			<main>
 				<div className="Listing">
-					<h2>Listings:</h2>
+					<h1>Listings:</h1>
 				</div>
 				<ItemList arr = {props.itemList} inventory = {false}/>
 			</main>

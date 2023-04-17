@@ -41,7 +41,7 @@
     flex-direction: row;
 }
 
-.column-list {
+#register-box .column-list {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -58,7 +58,7 @@
 }
 
 
-.field {
+#register-box .field {
     font-size: 24px;
     width: 20em;
     padding: 5px;
