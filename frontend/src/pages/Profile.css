@@ -25,6 +25,7 @@
 	background-repeat: no-repeat;
 	padding: 30px;
     margin-bottom: 20px;
+    z-index: -1;
 }
 
 #profilePage .Header h2 {

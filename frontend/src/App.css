@@ -182,6 +182,7 @@ ul {
 	padding: 30px;
 	justify-content: center;
 	top: -35px;
+	z-index: -1;
 }
 
 .Listing h2 {
