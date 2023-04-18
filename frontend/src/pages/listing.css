@@ -13,6 +13,7 @@
 	background-repeat: no-repeat;
 	padding: 30px;
     margin-bottom: 20px;
+    margin-top: 20px;
     top: -45px
 }
 
@@ -21,12 +22,13 @@
     flex-direction: column;
     width: 35vw;
     align-items: center;
+    margin-top: 50px;
 }
 
 #listingPage #listing-image img 
 {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 500px;
+    max-height: 500px;
     padding-bottom: 10px;
 }
 

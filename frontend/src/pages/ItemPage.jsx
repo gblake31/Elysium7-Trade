@@ -15,7 +15,7 @@ function ProfilePage()
     let [itemImage, setItemImage] = useState("");
     let [itemDesc, setItemDesc] = useState("");
     let [message, setMessage] = useState("");
-    let [userPic, setUserPic] = useState("");
+    let userPic;
     let [sellerID, setSellerID] = useState("");
     let bp = require('../components/Leinecker/Path.js');
     let itemID;
@@ -92,7 +92,7 @@ function ProfilePage()
           }
           else
           {
-            setUserPic(userInfo.profilepicture);
+            userPic = userInfo.profilepicture;
           }
           
         }
@@ -118,12 +118,12 @@ function ProfilePage()
         return;
       }
       user = JSON.parse(user);
-      // False means get user not seller
+      // False means get buyer not seller
       await getUserInfo(user.id, false);
       if(user.id == sellerID)
       {
         setMessage("This is your item!");
-        //return;
+        return;
       }
       let logo;
         await fetch(logostr)

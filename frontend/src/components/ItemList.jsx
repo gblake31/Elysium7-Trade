@@ -18,6 +18,7 @@ function ItemList(props) {
                         display: flex;
                         flex-direction: row;
                         flex-wrap: wrap;
+                        column-gap: 2vw;
                     }
                 `}
             </style>

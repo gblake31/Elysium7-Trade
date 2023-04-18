@@ -297,7 +297,11 @@ function ProfilePage()
           <div id = 'Inventory_Management'>
             <div className="Header" id='Inventory'>
               <h2>Inventory:</h2>
-              <button onClick = {createListing}>Create a new Listing!</button>
+            </div>
+            <div id ='Inventory_create'>
+              <h3 id = "create-new-listing" className = "click-text" onClick={createListing}>Create a new Listing!</h3> 
+            </div>
+            <div id = 'Inventory_items'>
               <ItemList arr = {inventory} inventory = {true}/>
             </div>
           </div>

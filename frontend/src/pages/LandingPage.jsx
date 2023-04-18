@@ -46,7 +46,7 @@ function LandingPage(props){
 	}, []);
 
 	return (
-		<div id = "page">
+		<div id = "landingPage">
 			<main>
 				<div className="Listing">
 					<h1>Listings:</h1>

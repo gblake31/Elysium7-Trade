@@ -36,8 +36,9 @@ function ListingPage() {
     const defaultOption = options[0];
 
     useEffect(() => {
-        if (listing != null) 
-		setItemPic(listing.image);
+        if (listing != null) {
+			setItemPic(listing.image);
+		}
 	}, []);
 
     async function uploadImage() {
@@ -184,7 +185,7 @@ function ListingPage() {
 			return;
 		}
     }
-
+	
     return (
 		<main>
 			<div id='listingHeader'>
@@ -217,7 +218,7 @@ function ListingPage() {
 					</div>
 					<div className='input-box' id = "categorySelect">
 						<label id = "Text" >Select a Category:</label>
-						<Dropdown id = 'categoryDropdown' options={options} onChange={_onSelect} placeholder="Select a Category"/>
+						<Dropdown id = 'categoryDropdown' options={options} value = {listing == null ? null : options[listing.category]} onChange={_onSelect}/>
 					</div>
 					{listing == null ?
 						<h3 className = "click-text" onClick={createListing}>Confirm New Listing</h3> :
