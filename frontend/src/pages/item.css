@@ -38,7 +38,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 50%;
+    width: 100%;
 }
 
 #itemName, #itemPrice {
@@ -46,6 +46,10 @@
     border-radius: 15px;
     display: inline-block;
     padding: 15px;
+}
+
+#itemName {
+    margin-right: 25px;
 }
 
 #itemSeller {
@@ -66,8 +70,9 @@
 }
 
 #itemPrice {
-    font-size: larger;
+    font-size: 28px;
     font-weight: 700;
+    margin: 0px;
 }
 
 #descriptionHeader{
@@ -82,6 +87,9 @@
     opacity: 80%;
     min-height: 5em;
     padding: 10px;
+    font-size: 24px;
+    font-weight: 600;
+    width: 90%;
 }
 
 
@@ -89,9 +97,9 @@
     display: block;
     border-radius: 25px;
     max-width: 40vw;
-    min-width: 10vw;
+    min-width: 20vw;
     min-height: 10vw;
-    max-height: 30vw;
+    max-height: 32vw;
     margin: auto;
     object-fit: cover;
 }
