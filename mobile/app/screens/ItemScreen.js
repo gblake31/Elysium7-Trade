@@ -35,15 +35,16 @@ function ItemScreen(props) {
 
     const fetchItem = async () => 
     {
+        // fetch stored item token. taken from the link used to acces this page
         const token = await AsyncStorage.getItem('item_id');
         if (token != null) 
         {
             await loadItem(token);
         }
-        // await AsyncStorage.removeItem('item_id');
     }
 
     const loadItem = async (id) => {
+        // API Call - retrieve data by item id
         let js = JSON.stringify({ itemid: id });
         try 
         {
@@ -64,23 +65,29 @@ function ItemScreen(props) {
             else
             {
                 item = res.result;
-                setItemName(item.itemname);
-                
+
+
+                await setItemName(item.itemname);
                 await setItemPrice(item.price);
                 await setItemDesc(item.description);
                 await setItemCond(item.condition);
                 await setItemImage(item.image);
 
+                // db listing only stores seller id.
+                // fetch more data on the user to fill out the page.
                 await fetchSeller(item.sellerid);
+                // stow item data to send to the edit page if requested.
                 await setStoredItem(item);
             }
         } catch (e) 
         {
             console.error(e);
         }
-
+        
+        // fetch user data from saved token
         let user = await AsyncStorage.getItem('user_data');
         user = JSON.parse(user);
+        // show edit button if user id matches the item's seller
         if (user.id == item.sellerid) 
         {
             setEditable(true);
@@ -88,28 +95,38 @@ function ItemScreen(props) {
         }
         else
         {
-            console.log("NOT, " + user.id + " != " + item.sellerid);
+            // console.log("NOT, " + user.id + " != " + item.sellerid);
         }
     }
 
     const fetchSeller = async (id) => {
+        // server crashes if ObjectId gets an empty input. 
+        // catch and return null and empty inputs.
         if (id == null || id == "") 
         {
+            console.error("seller id empty, returning...");
             return;
         }
+        // API Call - retrieve user (seller) by user id
         try {
             let obj = { userid: id };
             let js = JSON.stringify(obj);
 
-            const response = await fetch(RETRIEVE_USER_INFO_ENDPOINT,
-                { method: 'POST', body: js, headers: { 'Content-Type': 'application/json' } });
+            const response = await fetch(RETRIEVE_USER_INFO_ENDPOINT,{ 
+                method: 'POST', 
+                body: js, 
+                headers: { 'Content-Type': 'application/json' } 
+            });
+
             let res = JSON.parse(await response.text());
-            let userInfo = res.result;
+            
             try {
                 if (res.error.length > 0) {
                     console.log(res.error);
                     return;
                 }
+                let userInfo = res.result;
+
                 // set seller info
                 await setSeller(userInfo.login);
                 await setSellerPic(userInfo.profilepicture);
@@ -129,24 +146,23 @@ function ItemScreen(props) {
     const editItem = async (item_data) => 
     {
         if (item_data == null) {
+            console.error("error getting item data");
             return;
         }
         try {
             let item_data_str = JSON.stringify(item_data);
+            // stores item token. retrieved on edit page.
             await AsyncStorage.setItem('item_data', item_data_str);
+            // redirect to edit page
             router.push('./EditItemScreen');
         } catch (e) {
             console.error(e);
         }
     }
 
-    const eItem = (item_data) => 
-    {
-        console.log(item_data.itemname);
-    }
-
     useEffect(() => 
     {
+        // get and display item data when screen is loaded
         fetchItem();
     }, [])
 
@@ -161,6 +177,7 @@ function ItemScreen(props) {
                     style={styles.profilepic}
                 />
                 <Text>Price: {itemPrice}</Text>
+                <Text>Condition: {itemCond}</Text>
                 <Text>Description: {itemDesc}</Text>
                 <Image 
                     source={{uri: sellerPic}}
