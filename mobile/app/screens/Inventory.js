@@ -25,12 +25,10 @@ function Inventory(props) {
             let userInfo = res.result;
             try {
                 if (res.error.length > 0) {
-                    console.log(res.error);
+                    console.error(res.error);
                     return;
                 }
-                //console.log(userInfo.listings);
                 await loadInventory(userInfo.listings);
-                //console.log(inventoryList);
             }
             catch (e) {
                 console.error(e);
@@ -53,9 +51,7 @@ function Inventory(props) {
     }
 
     async function loadItem(id) {
-        console.log("posting id: " + id);
         let js = JSON.stringify({ itemid: id });
-        console.log(js);
         try 
         {
             const response = await fetch(RETRIEVE_ITEM_INFO_ENDPOINT, {
@@ -70,7 +66,7 @@ function Inventory(props) {
 
             if (res.error) 
             {
-                console.log(res.error);
+                console.error(res.error);
             }
             else
             {

@@ -21,6 +21,7 @@ function EditItemScreen(props) {
 
     const UPDATE_ITEM_ENDPOINT = "http://paradise-7.herokuapp.com/api/updateItem";
     const DELETE_ITEM_ENDPOINT = "http://paradise-7.herokuapp.com/api/deleteItem";
+    const DELETE_FROM_USER_ENDPOINT = "http://paradise-7.herokuapp.com/api/deleteItemFromUser"
     
     const [refreshing, setRefreshing] = React.useState(false);
     
@@ -77,7 +78,30 @@ function EditItemScreen(props) {
 			let res = JSON.parse(await response.text());
 			if (res.error == '') {
                 console.log("deleted successfully");
+                await deleteFromUser();
                 router.push('./Inventory');
+			}
+			else {
+				console.error(res.error);
+			}
+		}
+		catch(e) {
+			console.error(e.toString());
+			return;
+		}
+    }
+
+    const deleteFromUser = async () =>
+    {
+        console.log("delete");
+		let obj = {userid: storedItem.sellerid, itemid: storedItem._id}
+		let js = JSON.stringify(obj);
+		try {
+			const response = await fetch(DELETE_FROM_USER_ENDPOINT,
+			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
+			let res = JSON.parse(await response.text());
+			if (res.error == '') {
+                console.log("removed from inventory");
 			}
 			else {
 				console.error(res.error);
