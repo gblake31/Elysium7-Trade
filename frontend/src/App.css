@@ -174,25 +174,17 @@ ul {
 }
 
 .Listing {
-	position: relative;
 	background-image: url(/src/pages/Pictures/woodBackground.png);
 	background-position: left;
 	background-size: 15%;
 	background-repeat: no-repeat;
 	padding: 30px;
 	justify-content: center;
-	top: -35px;
 	z-index: -1;
 }
 
 .Listing h2 {
     padding-left: 30px;
-}
-
-#landingPage #outer
-{
-	position: relative;
-	top: -40px;
 }
 
 

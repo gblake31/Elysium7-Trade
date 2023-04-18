@@ -1,8 +1,4 @@
 
-#profilePage {
-    position: relative;
-    top: 100px;
-}
 #profilePage .profile {
 	margin: 0 auto;
 	padding: 20px;
@@ -26,6 +22,7 @@
 	background-repeat: no-repeat;
 	padding: 30px;
     margin-bottom: 0px;
+    margin-top: 0px;
     z-index: -1;
 }
 
