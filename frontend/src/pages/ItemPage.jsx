@@ -243,15 +243,18 @@ function ProfilePage()
             <div id = "itemInfo">
                 <div id = "itemTop">
                     <div id = "itemLeft">
-                        <h1 id = "itemName">{itemName}</h1>
-                        <h5 id = "itemPrice">${itemPrice}</h5>
+                        <div id = "name-and-price">
+                          <h1 id = "itemName">{itemName}</h1>
+                          <h5 id = "itemPrice">${itemPrice}</h5>
+                        </div>
+                        <h2 id = "descriptionHeader">Description</h2>
+                        <p id = "itemDesc">{itemDesc}</p>
                     </div>
                     <div id = "itemRight">
                         <img id = "itemImage" src = {itemImage}></img>
                     </div>
                 </div>
-                <h2 id = "descriptionHeader">Description</h2>
-                <p id = "itemDesc">{itemDesc}</p>
+                
                 <button className='button' onClick={contactOwner}>I'm Interested!</button>
                 <p>{message}</p>
             </div>
