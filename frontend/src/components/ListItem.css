@@ -1,21 +1,16 @@
 #card {
     display: flex;
     flex-direction: column;
-    border-style: solid;
     border-width: medium;
     cursor: pointer;
     width: 300px;
     border-radius: 10px;
 	align-items: center;
-	justify-content: center;
+	justify-content: baseline;
 }
 
 #card:hover {
     background-color: #a78f85;
-}
-
-#card > * {
-    margin: 10px;
 }
 
 #top > * {
@@ -23,19 +18,25 @@
 }
 
 #name {
-    border-style: solid;
-    border-width: medium;
+    font-size: 32px;
+    text-shadow: 0 0 1px white;
     padding: 1%;
+    margin: 0px 20px 0px 20px;
 }
 
 
 #price {
-    border-style: solid;
-    border-width: medium;
+    border-top: medium solid black;
+    text-shadow: 0 0 1px white;
     padding: 1%;
+    margin: 0px 20px 20px 20px;
+    font-size: 32px;
 }
 
 .listItemImg {
-    max-width: 200px;
-    max-height: 200px;
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-top: 20px;
 }
