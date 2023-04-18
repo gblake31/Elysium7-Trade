@@ -18,14 +18,20 @@
 }
 
 #profilePage .Header {
-	position:absolute;
+	display: inline-block;
+    width: 250px;
 	background-image: url(/src/pages/Pictures/woodBackground.png);
 	background-position: left;
 	background-size: 100%;
 	background-repeat: no-repeat;
 	padding: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     z-index: -1;
+}
+
+#profilePage #create-new-listing {
+    font-size: 35px;
+    margin-bottom: 20px;
 }
 
 #profilePage .Header h2 {
@@ -41,7 +47,6 @@
 }
 
 #profilePage .profile_editor {
-    position: relative;
     top: -100px;
     display: flex;
     flex-direction: row;
