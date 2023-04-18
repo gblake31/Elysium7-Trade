@@ -176,7 +176,7 @@ ul {
 .Listing {
 	background-image: url(/src/pages/Pictures/woodBackground.png);
 	background-position: left;
-	background-size: 15%;
+	background-size: 300px;
 	background-repeat: no-repeat;
 	padding: 30px;
 	justify-content: center;
