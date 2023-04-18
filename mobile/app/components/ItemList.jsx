@@ -44,7 +44,7 @@ function ItemList(props) {
 
     function renderItem({ item }) {
         return (
-            <Item id={item.id} name={item.itemname} description={item.description} condition={item.condition} image={item.image} />
+            <Item id={item._id} name={item.itemname} description={item.description} condition={item.condition} image={item.image} />
         );
     }
 

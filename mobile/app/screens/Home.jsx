@@ -24,9 +24,20 @@ function Home(props) {
         }
     }
 
+    const resetItemData = async () => 
+    {
+        const token = await AsyncStorage.getItem('item_id');
+        if (token != null)
+        {
+            AsyncStorage.removeItem('item_id');
+            console.log("clearing item data");
+        }
+    }
+
     useEffect(() => 
     {
         fetchUser();
+        resetItemData();
     }, [])
 
     // TODO: <Link>s to inventory and acct mgmt will be replaced by a bottom navigation bar.

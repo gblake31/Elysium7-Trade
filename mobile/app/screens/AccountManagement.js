@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     },
     title:
     {
-        fontFamily: 'Abibas',
+        fontFamily: 'Habibi',
         fontSize: 24,
         marginBottom: 18
     }

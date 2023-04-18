@@ -91,7 +91,7 @@ function LoginScreen(props)
                 <Text style={styles.registerText}>
                     Don't have an account?
                 </Text>
-                <Pressable style={styles.registerButton} onPress={() => router.replace('./RegisterScreen')}>
+                <Pressable style={styles.registerButton} onPress={() => router.push('./RegisterScreen')}>
                     <Text style={styles.buttonTextSmall}>Register</Text>
                 </Pressable>
             </ImageBackground>

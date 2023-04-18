@@ -14,7 +14,7 @@ function InventoryList(props) {
     return (
         <ScrollView style={styles.container}>
             {listings.map(item => (
-                <Item id={item.id} name={item.itemname} price={item.price} image={item.image} />
+                <Item id={item._id} name={item.itemname} price={item.price} image={item.image} />
             ))}
         </ScrollView>
     );
