@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 import ItemList from '../components/ItemList';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,7 +45,6 @@ function Inventory(props) {
     async function loadInventory(idArray) {
         for (i = 0; i < idArray.length; i++) 
         {
-            console.log("Loading item [id:" + idArray[i] + "]");
             await loadItem(idArray[i]);
         };
     }
@@ -86,13 +85,30 @@ function Inventory(props) {
 
     return (
         <View style={styles.home}>
-            <Text>Inentory</Text>
+            <Text>INVENTORY (TITLE. FIX CSS)</Text>
+            <Pressable style={styles.button} onPress={() => {router.push("./CreateItemScreen")}}>
+                <Text style={styles.buttonText}>Create New Listing</Text>
+            </Pressable>
             <InventoryList itemList={inventoryList} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    button:
+    {
+        height: 50,
+        width: 300, 
+        borderRadius: 10,
+        backgroundColor: '#fff',
+        justifyContent: 'center'
+    },
+    buttonText:
+    {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
     home:
     {
         flex: 1,

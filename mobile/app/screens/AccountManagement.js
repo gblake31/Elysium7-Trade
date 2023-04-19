@@ -2,15 +2,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ImageManipulator } from 'expo';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, Image, KeyboardAvoidingView, Button } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable, Image, KeyboardAvoidingView, Button, ScrollView } from 'react-native';
 import { useState, useEffect } from 'react';
-import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 function AccountManagement(props) {
     const router = useRouter();
 
     let [userMessage, setUserMessage] = useState("");
     let [passMessage, setPasswordMessage] = useState("");
+    let [alertMessage, setAlertMessage] = useState("");
 
     let [login, setLogin] = useState("");
     let [oldPassword, setOldPassword] = useState("");
@@ -29,14 +30,7 @@ function AccountManagement(props) {
     useEffect(() => {
         getUserInfo();
     }, []);
-
-    const toBase64 = file => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-    });
-
+    
     const getUserInfo = async () => {
         try {
             let token = await AsyncStorage.getItem('user_data');
@@ -72,7 +66,7 @@ function AccountManagement(props) {
 
         }
         catch (e) {
-            alert(e.toString());
+            console.error(e.toString());
             return;
         }
     }
@@ -123,7 +117,7 @@ function AccountManagement(props) {
             else {
                 var user = { id: userID, username: login, email: email };
                 await AsyncStorage.setItem('user_data', JSON.stringify(user));
-                alert("PROFILE UPDATED");
+                setAlertMessage("PROFILE UPDATED");
             }
         }
         catch (e) {
@@ -132,20 +126,44 @@ function AccountManagement(props) {
         }
     }
 
-    uploadPhoto = () => 
+    const uploadPhoto = async () => 
     {
         const options = 
         {
-            includeBase64: true
+            base64: true,
+            quality: 0.1
         };
-        launchImageLibrary(options, response => {
-            console.log("imgup response: ", response);
-            if (response.uri)
-            {
-                //setProfilePic();
-            }
-        })
+        let newPic = await ImagePicker.launchImageLibraryAsync(options);
+        if (newPic != null) 
+        {
+            console.log("fileSize: ", newPic.fileSize);
+            setProfilePic("data:image/jpeg;base64," + newPic.base64);
+        }
     }
+    const takePhoto = async () => 
+    {
+        const cameraAccess = await ImagePicker.requestCameraPermissionsAsync();
+        if (cameraAccess)
+        {
+            const options = 
+            {
+                base64: true,
+                quality: 0.1
+            };
+            let newPic = await ImagePicker.launchCameraAsync(options);
+            if (newPic != null) 
+            {
+                console.log("fileSize: ", newPic.fileSize);
+                setProfilePic("data:image/jpeg;base64," + newPic.base64);
+            }
+        }
+        else 
+        {
+            setAlertMessage("Camera Permissions Denied. Check Device Settings.");
+        }
+    }
+
+    
 
     return (
         <KeyboardAvoidingView style={styles.home}>
@@ -153,9 +171,10 @@ function AccountManagement(props) {
                     source={{uri: profilepic}}
                     style={styles.profilepic}
             />
+            <Text>{alertMessage}</Text>
             <View style={styles.row}>
-                <Button title="Upload Photo" onPress={this.uploadPhoto}/>
-                <Button title="Take Photo" onPress={this.takePhoto}/>
+                <Button title="Upload Photo" onPress={() => uploadPhoto()}/>
+                <Button title="Take Photo" onPress={() => takePhoto()}/>
             </View>
             <Text style={styles.title}>change profile</Text>
             <View style={styles.row}>
@@ -216,30 +235,32 @@ function AccountManagement(props) {
                     onChangeText={text => setEmail(text)}
                 />
             </View>
-            <Pressable title='UPDATE' onPress={update} style={styles.button}>
-                <Text style={styles.buttonText}>update</Text>
-            </Pressable>
-            <Pressable 
-                title='SIGN OUT'
-                style={styles.buttonRed}
-                onPress={async () => 
-                    {
-                        const token = await AsyncStorage.getItem('user_data');
-                        if (token != null)
+            <View style={styles.row}>
+                <Pressable title='UPDATE' onPress={update} style={styles.button}>
+                    <Text style={styles.buttonText}>update</Text>
+                </Pressable>
+                <Pressable 
+                    title='SIGN OUT'
+                    style={styles.buttonRed}
+                    onPress={async () => 
                         {
-                            await AsyncStorage.removeItem('user_data');
-                            console.log("sign out success");
-                            router.replace('./WelcomeScreen');
-                            return true;
-                        }
-                        else
-                        {
-                            console.log("sign out error");
-                        }
-                    }} 
-            >
-                <Text style={styles.buttonText}>sign out</Text>
-            </Pressable>
+                            const token = await AsyncStorage.getItem('user_data');
+                            if (token != null)
+                            {
+                                await AsyncStorage.removeItem('user_data');
+                                console.log("sign out success");
+                                router.replace('./WelcomeScreen');
+                                return true;
+                            }
+                            else
+                            {
+                                console.log("sign out error");
+                            }
+                        }} 
+                >
+                    <Text style={styles.buttonText}>sign out</Text>
+                </Pressable>
+            </View>
         </KeyboardAvoidingView>
     );
 }

@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, Image, SafeAreaView, ScrollView, RefreshControl, Button } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable, Image, SafeAreaView, ScrollView, RefreshControl, Button, KeyboardAvoidingView } from 'react-native';
 import { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
-function EditItemScreen(props) {
+function CreateItemScreen(props) {
     const router = useRouter();
 
     let [itemName, setItemName] = useState("");
@@ -14,48 +14,45 @@ function EditItemScreen(props) {
     let [itemDesc, setItemDesc] = useState("");
     let [itemCond, setItemCond] = useState("");
     let [message, setMessage] = useState("");
-    let [isEditable, setEditable] = useState(false);
     let [itemCategory, setCategory] = useState(0);
-    let [storedItem, setStoredItem] = useState({});
+    let [userId, setUserId] = useState();
     
     let item;
 
-    const UPDATE_ITEM_ENDPOINT = "http://paradise-7.herokuapp.com/api/updateItem";
-    const DELETE_ITEM_ENDPOINT = "http://paradise-7.herokuapp.com/api/deleteItem";
-    const DELETE_FROM_USER_ENDPOINT = "http://paradise-7.herokuapp.com/api/deleteItemFromUser";
-    
-    const [refreshing, setRefreshing] = React.useState(false);
-    
-    const onRefresh = React.useCallback(() => {
-        setRefreshing(true);
-        setTimeout(() => {
-        setRefreshing(false);
-        }, 2000);
-    }, []);
+    const CREATE_ITEM_ENDPOINT = "http://paradise-7.herokuapp.com/api/createItem";
+    const ADD_TO_USER_ENDPOINT = "http://paradise-7.herokuapp.com/api/addItemToUser";
 
-
-    const updateItem = async () =>
+    const fetchUser = async () => 
     {
-        console.log("update");
+        let token = await AsyncStorage.getItem('user_data');
+        let temp = JSON.parse(token);
+        setUserId(temp.id);
+    }
+
+    const createItem = async () =>
+    {
+        // incoming: sellerid, itemname, price, description, condition, image, category, listedtime
+        console.log("create");
         let obj = {
-            itemid: storedItem._id,
-            sellerid: storedItem.sellerid,
+            sellerid: userId,
             itemname: itemName, 
             price: itemPrice, 
             description: itemDesc,  
             condition: itemCond, 
             image: itemImage, 
-            category: itemCategory, 
+            category: 0, 
             listedtime: "0"
         }
 
         try {
             let js = JSON.stringify(obj);
-			const response = await fetch(UPDATE_ITEM_ENDPOINT,
+			const response = await fetch(CREATE_ITEM_ENDPOINT,
 			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
 			let res = JSON.parse(await response.text());
 			if (res.error == '') {
-				console.log("updated item successfully!");
+				console.log("created item successfully!");
+                console.log(res);
+                await addToUser(res.itemid);
                 router.back();
 			}
 			else {
@@ -68,19 +65,16 @@ function EditItemScreen(props) {
 		}
     }
 
-    const deleteItem = async () =>
+    const addToUser = async (itemId) =>
     {
-        console.log("delete");
-		let obj = {itemid: storedItem._id, sellerid: storedItem.sellerid}
+		let obj = {userid: userId, itemid: itemId}
 		let js = JSON.stringify(obj);
 		try {
-			const response = await fetch(DELETE_ITEM_ENDPOINT,
+			const response = await fetch(ADD_TO_USER_ENDPOINT,
 			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
 			let res = JSON.parse(await response.text());
 			if (res.error == '') {
-                console.log("deleted successfully");
-                await deleteFromUser();
-                router.push('./Inventory');
+                console.log("added to inventory");
 			}
 			else {
 				console.error(res.error);
@@ -90,42 +84,6 @@ function EditItemScreen(props) {
 			console.error(e.toString());
 			return;
 		}
-    }
-
-    const deleteFromUser = async () =>
-    {
-        console.log("delete");
-		let obj = {userid: storedItem.sellerid, itemid: storedItem._id}
-		let js = JSON.stringify(obj);
-		try {
-			const response = await fetch(DELETE_FROM_USER_ENDPOINT,
-			{method: 'POST', body:js, headers:{'Content-Type': 'application/json'}});
-			let res = JSON.parse(await response.text());
-			if (res.error == '') {
-                console.log("removed from inventory");
-			}
-			else {
-				console.error(res.error);
-			}
-		}
-		catch(e) {
-			console.error(e.toString());
-			return;
-		}
-    }
-
-    const fetchItem = async () => 
-    {
-        item = await AsyncStorage.getItem('item_data');
-        item = JSON.parse(item);
-
-        await setItemName(item.itemname);
-        await setItemPrice(item.price);
-        await setItemDesc(item.description);
-        await setItemCond(item.condition);
-        await setItemImage(item.image);
-
-        await setStoredItem(item);
     }
 
     const uploadPhoto = async () => 
@@ -167,14 +125,12 @@ function EditItemScreen(props) {
 
     useEffect(() => 
     {
-        fetchItem();
+        fetchUser();
     }, [])
 
     return (
         <SafeAreaView style={styles.home}>
-            <ScrollView refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
+            <KeyboardAvoidingView>
                 <Text style={styles.title}>Name: </Text>
                 <TextInput 
                     style={styles.input}
@@ -213,17 +169,11 @@ function EditItemScreen(props) {
                 />
                 <Pressable 
                     style={styles.button}
-                    onPress={() => updateItem()}
+                    onPress={() => createItem()}
                 >
                     <Text>Submit</Text>
                 </Pressable>
-                <Pressable 
-                    style={styles.button}
-                    onPress={() => deleteItem()}
-                >
-                    <Text>Delete</Text>
-                </Pressable>
-            </ScrollView>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     );
 }
@@ -321,4 +271,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default EditItemScreen;
+export default CreateItemScreen;
