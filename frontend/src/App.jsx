@@ -54,10 +54,11 @@ function App() {
 		const mainElement = document.querySelector('main');
 		const remainingScrollHeight = mainElement.scrollHeight - (mainElement.scrollTop + mainElement.clientHeight);
 		
-		if (remainingScrollHeight <= 300) {
-			console.log("trying to load more with loading as: ", loading, " and allowSearch as: ", allowSearch);
+		if (remainingScrollHeight <= 800) {
+			console.log("trying to load more with loading as: ", loading, " and allowSearch as: ", allowSearch, " and curindex as: ", curindex);
 			try {
 				if(!loading && allowSearch) {
+					//console.log("inside of if statement");
 					if (debounceTimeoutId) {
 						clearTimeout(debounceTimeoutId);
 				  	}
@@ -88,34 +89,29 @@ function App() {
 	  useEffect(() => {
 		if (allowSearch) {
 			const doSearch = async () => {
-			console.log("Searching str: ", searchStr, " cat: ", categoryInt);
-			let obj = { search: searchStr, startindex: curindex, numitems: 10, category: categoryInt };
-			let js = JSON.stringify(obj);
-			if (curindex == 0)
-			{
-				setItemList([]);
-				//setAllowSearch(true);
-			}
+				console.log("Searching str: ", searchStr, " cat: ", categoryInt, " start index: ", curindex);
+				let obj = { search: searchStr, startindex: curindex, numitems: 5, category: categoryInt };
+				let js = JSON.stringify(obj);
 				try {
-				const response = await fetch(bp.buildPath('api/loadKItems'), {
-					method: 'POST',
-					body: js,
-					headers: { 'Content-Type': 'application/json' },
-				});
-				let res = JSON.parse(await response.text());
-				if (res.error === '') {
-					console.log('success');
-					setItemList(prevItemList => [...prevItemList, ...res.results]);
-					setCurIndex(prevIndex => prevIndex + 10);
-					setEnableSearch(false);
-				} else {
-					setAllowSearch(false);
-					console.log(res.error);
-				}
+					const response = await fetch(bp.buildPath('api/loadKItems'), {
+						method: 'POST',
+						body: js,
+						headers: { 'Content-Type': 'application/json' },
+					});
+					let res = JSON.parse(await response.text());
+					if (res.error === '') {
+						console.log('success');
+						setItemList(prevItemList => [...prevItemList, ...res.results]);
+						setCurIndex(prevIndex => prevIndex + 5);
+						setEnableSearch(false);
+					} else {
+						setAllowSearch(false);
+						console.log(res.error);
+					}
 				} catch (e) {
-					setAllowSearch(false);
-					console.log(e.toString());
-				return;
+						setAllowSearch(false);
+						console.log(e.toString());
+					return;
 				}
 			};
 			doSearch();
