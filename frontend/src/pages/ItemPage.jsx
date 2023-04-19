@@ -5,7 +5,7 @@ import logostr from './Pictures/LogoString.txt';
 
 import './item.css'
 
-function ProfilePage()
+function ItemPage()
 {
     let [seller, setSeller] = useState("");
     let [sellerPic, setSellerPic] = useState("");
@@ -14,12 +14,16 @@ function ProfilePage()
     let [itemPrice, setItemPrice] = useState("");
     let [itemImage, setItemImage] = useState("");
     let [itemDesc, setItemDesc] = useState("");
+    let [itemCond, setItemCond] = useState("");
+    let [itemCat, setItemCat] = useState("");
     let [message, setMessage] = useState("");
     let userPic;
     let [sellerID, setSellerID] = useState("");
     let bp = require('../components/Leinecker/Path.js');
     let itemID;
     //let item = JSON.parse(localStorage.getItem('item'));
+
+    let categories = ["None", "Games", "Consoles", "Controllers", "Keyboards/Mice", "Audio", "Other"];
 
     useEffect(() => {
         getItemInfo();
@@ -49,6 +53,8 @@ function ProfilePage()
           setItemPrice(item.price);
           setItemImage(item.image);
           setItemDesc(item.description);
+          setItemCond(item.condition);
+          setItemCat(item.category);
           setSellerID(item.sellerid);
           // boolean is to tell getuser that we need to store sellerinfo
           getUserInfo(item.sellerid, true);
@@ -248,7 +254,15 @@ function ProfilePage()
                           <h5 id = "itemPrice">${itemPrice}</h5>
                         </div>
                         <h2 id = "descriptionHeader">Description</h2>
-                        <p id = "itemDesc">{itemDesc}</p>
+                        <div id = "lolflex"><p id = "itemDesc">{itemDesc}</p></div>
+                        <div id = "condition">
+                          <h2 id = "conditionHeader">Condition</h2>
+                          <p id = "conditionDesc">{itemCond}</p>
+                        </div>
+                        <div id = "condition">
+                          <h2 id = "conditionHeader">Category</h2>
+                          <p id = "conditionDesc">{categories[itemCat]}</p>
+                        </div> 
                     </div>
                     <div id = "itemRight">
                         <img id = "itemImage" src = {itemImage}></img>
@@ -263,4 +277,4 @@ function ProfilePage()
     );
 }
 
-export default ProfilePage;
+export default ItemPage;
