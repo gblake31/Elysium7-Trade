@@ -201,7 +201,8 @@ function ListingPage() {
 				<div id = 'input-fields'> 
 					<div className='input-box'>
 						<label id = "Text" >Item Name:</label>
-						<input defaultValue = {listing == null ? "" : listing.itemname} className = "field" type = "text"  ref={(c) => nameRef = c}></input>
+						<input defaultValue = {listing == null ? "" : listing.itemname} className = "field" type = "text"  ref={(c) => nameRef = c}
+						placeholder='Item Name'></input>
 					</div>
 					<div className='input-box' id='textareaField'>
 						<label id = "Text" >Description:</label>

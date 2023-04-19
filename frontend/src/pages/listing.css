@@ -22,7 +22,8 @@
 #listingPage #listing-image {
     display: flex;
     flex-direction: column;
-    width: 35vw;
+    padding-left: 50px;
+    width: 30vw;
     align-items: center;
     margin-top: 75px;
 }
@@ -41,7 +42,10 @@
     justify-content: center;
     align-items: center;   
     text-align: center;
+    background-color: rgba(76, 79, 76, 0.9);
+    border-radius: 10px;
 }
+
 
 #listingPage #input-fields .field {
     display: flex;
@@ -58,13 +62,14 @@
 #listingPage #input-fields label {
     font-family: 'Gudea-Bold';
     font-weight: 400;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 22px;
     margin-right: 10px;
     margin-top: 10px;
     margin-bottom: 0%;
     align-self: center;
     display: inline-block;
+    background-color: #846C96;
 }
 
 #listingPage .input-box {
