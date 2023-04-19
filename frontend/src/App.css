@@ -174,9 +174,11 @@ ul {
 }
 
 .Listing {
+	display: inline-block;
+	width: 250px;
 	background-image: url(/src/pages/Pictures/woodBackground.png);
 	background-position: left;
-	background-size: 300px;
+	background-size: 100%;
 	background-repeat: no-repeat;
 	padding: 30px;
 	justify-content: center;

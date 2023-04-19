@@ -236,9 +236,10 @@ function ProfilePage()
     
     return(        
       <main>
+      <div id ='big-box'>
         <div id='profilePage'>
           <div className="Header" id='Account'>
-            <h2>Account:</h2>
+            <h1>Account:</h1>
           </div>
           <div className='profile_editor'>
             <div className='profile_images'>
@@ -264,7 +265,7 @@ function ProfilePage()
                 <label id = "Text" >Current Password:</label>
               </div>
               <div id = 'input-field'>
-                <input className = "account_field" type = "text" ref={(c) => curPassword = c} 
+                <input className = "account_field" type = "password" ref={(c) => curPassword = c} 
               placeholder = 'Current Password'></input>
               </div>
               <div id = 'input-text'>
@@ -273,19 +274,19 @@ function ProfilePage()
                 <h4 id='req_title' className="req-text">Password Requirements:</h4>
                 <ul className='req-text'>
                   <div className = "column-list"> 
-                      <li> &bull; Minimum 8 characters.</li>
-                      <li> &bull; At least 1 letter.</li>
+                      <li> &bull; Minimum 8 characters</li>
+                      <li> &bull; At least 1 letter</li>
                   </div>
                   <div className = "column-list"> 
-                      <li> &bull; At least 1 symbol.</li>
-                      <li> &bull; At least 1 number.</li>
+                      <li> &bull; At least 1 symbol</li>
+                      <li> &bull; At least 1 number</li>
                   </div>
                 </ul>
               </div>
               <div id = 'input-fields'>
-                <input className = "account_field" type = "text" ref={(c) => newPassword = c} 
+                <input className = "account_field" type = "password" ref={(c) => newPassword = c} 
                   placeholder = 'New Password'></input>
-                  <input className = "account_field" type = "text" ref={(c) => confirmNewPass = c} 
+                  <input className = "account_field" type = "password" ref={(c) => confirmNewPass = c} 
                   placeholder = 'Retype New Password'></input>
                   <h3 className = "click-text" onClick={update}>Change Password</h3> 
               </div>
@@ -294,18 +295,17 @@ function ProfilePage()
               </div>
             </div>
           </div>
-          <div id = 'Inventory_Management'>
-            <div className="Header" id='Inventory'>
-              <h2>Inventory:</h2>
-            </div>
-            <div id ='Inventory_create'>
+          <h2 className="Header">Inventory:</h2>
+          <div id ='Inventory_create'>
               <h3 id = "create-new-listing" className = "click-text" onClick={createListing}>Create a new Listing!</h3> 
-            </div>
+          </div>
+          <div id = 'Inventory_Management'>
             <div id = 'Inventory_items'>
               <ItemList arr = {inventory} inventory = {true}/>
             </div>
           </div>
         </div> 
+        </div>
       </main>
     );
     

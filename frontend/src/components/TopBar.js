@@ -31,7 +31,7 @@ function TopBar(props){
 	}
 
 
-	const doSearch = async (str) =>
+	/*const doSearch = async (str) =>
 	{
 		let local = JSON.parse(localStorage.getItem('user_data'));
 		let obj = {search: str}
@@ -52,6 +52,10 @@ function TopBar(props){
 			alert(e.toString());
 			return;
 		}
+	}*/
+
+	const createCall = async(str) => {
+		await props.updateList(str, 0);
 	}
 
 	return(
@@ -63,7 +67,7 @@ function TopBar(props){
 			<div id = "right">
 				<div className="searchBox">
 					<input type="text" placeholder="Search for products" ref={(c) => searchInput = c}/>
-					<img id = "searchImg" src = {searchImage} onClick = {() => doSearch(searchInput.value)}></img>
+					<img id = "searchImg" src = {searchImage} onClick = {() => createCall(searchInput.value)}></img>
 				</div>
 				{renderUserData()}
 			</div>

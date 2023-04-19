@@ -54,13 +54,13 @@ function LoginDropdown(props) {
 
     return (
         <div id = "login-box" style = {css}>
-            <button onClick={()=>{window.location.href = "/"}}>Exit</button>
+            <button className = "button" onClick={()=>{window.location.href = "/"}}>Exit</button>
             <h1>Welcome back</h1>
             {/* <label id = "username" >Username</label> */}
             <input className = "field" type = "text" ref={(c) => loginName = c}  placeholder = "Username"></input>
             {/* <label id = "password">Password</label> */}
             <input className = "field" type = "password" ref={(c) => loginPassword = c} placeholder = "Password"></input>
-            <button onClick = {doLogin}>Login</button>
+            <button className = "button" onClick = {doLogin}>Login</button>
             <p>{message}</p>
             <h3 className = "click-text" onClick={props.switchToRegister}>Don't have an account?</h3>
             <h3 className = "click-text" onClick={props.switchToForgot}>Forgot Password?</h3>
