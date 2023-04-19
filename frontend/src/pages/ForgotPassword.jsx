@@ -183,45 +183,49 @@ function ForgotPassword() {
     }
 
     return (
-        <div>
+    <main>
+        <div id='profilePage'>
             <div className='input-box'>
-                  <label id = "Text" >Please enter your username:</label>
-                  <input className = "account_field" type = "text"  
-                  defaultValue = {login.value} ref={(c) => login = c} ></input> 
-            </div>
-            <p>{userMessage}</p>
-            <div className = "horizontal">
-                <h3 className="click-text" onClick={sendUsername}>Forgot Username?</h3>
-            </div>
-            
+                <div className='input-box'>
+                    <label id = "Text" >Please enter your username:</label>
+                    <input className = "account_field" type = "text"  
+                    defaultValue = {login.value} ref={(c) => login = c} ></input> 
+                </div>
+                <p>{userMessage}</p>
+                <div className = "horizontal">
+                    <h3 className="click-text" onClick={sendUsername}>Forgot Username?</h3>
+                </div>
+                
 
-            <div className='input-box'>
-            <label id="Text" >New Password:</label>
-            <input className="account_field" type="text" ref={(c) => newPassword = c}
-                placeholder='New Password'></input>
-            <h3 className="req-text" style = {{marginRight:4.5+'em'}}>Password Requirements:</h3>
+                <div className='input-box'>
+                <label id="Text" >New Password:</label>
+                <input className="account_field" type="text" ref={(c) => newPassword = c}
+                    placeholder='New Password'></input>
+                <div>
+                <h3 className="req-text" >Password Requirements:</h3>
                 <ul className='req-text'>
                     <div className = "column-list"> 
-                        <li>Minimum 8 characters</li>
-                        <li>At least 1 letter</li>
+                        <li> &bull; Minimum 8 characters.</li>
+                        <li> &bull; At least 1 letter.</li>
                     </div>
                     <div className = "column-list"> 
-                        <li>At least 1 symbol</li>
-                        <li>At least 1 number</li>
+                        <li> &bull; At least 1 symbol.</li>
+                        <li> &bull; At least 1 number.</li>
                     </div>
-                    
-                </ul>
-            <input className="account_field" type="text" ref={(c) => confirmNewPass = c}
-                placeholder='Retype New Password'></input>
-            
+                    </ul>
+                </div>
+                <input className="account_field" type="text" ref={(c) => confirmNewPass = c}
+                    placeholder='Retype New Password'></input>
+                
+                </div>
+                <p>{passMessage}</p>
+                <div className = "horizontal">
+                    <h3 className="click-text" onClick={update}>Change Password</h3>
+                </div>
+                
             </div>
-            <p>{passMessage}</p>
-            <div className = "horizontal">
-                <h3 className="click-text" onClick={update}>Change Password</h3>
-            </div>
-            
         </div>
-        
+    </main>    
     );
 
 }

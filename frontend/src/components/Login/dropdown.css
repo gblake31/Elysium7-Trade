@@ -109,10 +109,28 @@
 .click-text{
     margin-bottom: 1px;
     margin-top: 1px;
+    font-family: 'Aladin';
+    font-size: x-large;
 }
 
 .click-text:hover{
     opacity: 0.75;
 	cursor: pointer;
     color:white;
+}
+
+.button {
+	height: 40px;
+	background-color: #ffc370;
+	color: black;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+    font-family: 'Aladin';
+	src: url('../../pages/Fonts/Aladin-Regular.ttf') format('truetype');
+}
+
+.button:hover {
+	background-color: #89964c;
+	transition: 0.5s;
 }

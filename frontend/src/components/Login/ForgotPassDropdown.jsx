@@ -63,9 +63,21 @@ function ForgotPassDropdown(props) {
         let obj = {receiver: email.value, subject: "Forgot Password for Elysium Account", 
         text: "", html: `<head>
         <style> 
-          #text{
+          button {
+            display: inline-block;
+            background-color: #4d08a1;
+            padding: 10px;
+            width: 200px;
             color: white;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 4px double #000000; /* add this line */
+            border-radius: 10px; /* add this line */
+            font-size: 20px; /* add this line */
+          }
+          #text{
             margin-left: 10px;
+            color: white;
           }
           #logo{
             align-self: center;
@@ -96,8 +108,14 @@ function ForgotPassDropdown(props) {
         <img id = "logo" src = "${logo}"> 
             </div>
         <div id = "body-bar">
-          <h2 id = "text"> Looks like you forgot your password. Please ignore if you did not request this. Paste this link in your browser: ${link+id} </h2>
+          <h2 id = "text"> Looks like you forgot your password. Please ignore if you did not request this.</h2>
         </div>
+        <div id = "body-bar">
+          <a href="${link+id}" style = "width: 60 visibility: hidden;">
+            <button>
+            Click Here To Reset Your Password
+            </button>
+          </a>
       </body>
       
       `};
@@ -125,10 +143,10 @@ function ForgotPassDropdown(props) {
 
     return (
         <div id = "login-box" style = {css}>
-            <button onClick={()=>{window.location.href = "/"}}>Exit</button>
+            <button className = "button" onClick={()=>{window.location.href = "/"}}>Exit</button>
             <h1>Please Enter your email</h1>
             <input className = "field" type = "text" ref={(c) => setEmail(c)}  placeholder = "Email"></input>
-            <button onClick = {sendEmail}>Send Password Reset</button>
+            <button className = "button" onClick = {sendEmail}>Send Password Reset</button>
             <p>{message}</p>
             <h3 className = "click-text" onClick={props.switchToLogin}>Back to Login</h3>
             

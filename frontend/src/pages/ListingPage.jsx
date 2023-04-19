@@ -118,8 +118,10 @@ function ListingPage() {
 
     const deleteListing = async event =>
 	{
+		let yes = await window.confirm("Are you sure you want to delete?");
+		if(!yes) return;
 		event.preventDefault();
-	
+		
 		let local = JSON.parse(localStorage.getItem('user_data'));
 		let obj = {itemid: listing._id, sellerid: local.id}
 		let js = JSON.stringify(obj);

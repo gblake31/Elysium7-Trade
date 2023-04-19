@@ -29,6 +29,18 @@ function RegisterDropdown(props) {
         let obj = {receiver: loginEmail.value, subject: "Verify Email for Elysium", 
         text: " "+link, html: `<head>
         <style> 
+          button {
+            display: inline-block;
+            background-color: #4d08a1;
+            padding: 10px;
+            width: 200px;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 4px double #000000; /* add this line */
+            border-radius: 10px; /* add this line */
+            font-size: 20px; /* add this line */
+          }
           #text{
             margin-left: 10px;
             color: white;
@@ -62,8 +74,14 @@ function RegisterDropdown(props) {
         <img id = "logo" src = "${logo}"> 
             </div>
         <div id = "body-bar">
-          <h2 id = "text"> Thanks for Registering to ElysiumTrade! Paste this link in your browser to verify your account: ${link} </h2>
+          <h2 id = "text"> Thanks for Registering with Elysium Trade!</h2>
         </div>
+        <div id = "body-bar">
+          <a href="${link}" style = "width: 60 visibility: hidden;">
+            <button>
+            Click Here to Verify Your Email!
+            </button>
+          </a>
       </body>
       
       `};
@@ -149,7 +167,7 @@ function RegisterDropdown(props) {
     return (
         <div id = "register-box" style = {css}>
             {/* <button onClick={()=>{window.location.href = "/"}}>Exit</button> */}
-            <button onClick={()=>{window.location.href = "/"}}>Exit</button>
+            <button className = "button" onClick={()=>{window.location.href = "/"}}>Exit</button>
             <h2>Create an Account</h2>
             {/* <label id = "email">Email</label> */}
             <input className = "field" type = "text" ref={(c) => setLoginEmail(c)} placeholder = "Email"></input>
@@ -171,7 +189,7 @@ function RegisterDropdown(props) {
                     
                 </ul>
             <input className = "field" type = "password" ref={(c) => setLoginConfirmPassword(c)} placeholder = "Confirm Password"></input>
-            <button onClick = {doRegister}>Register</button>
+            <button className = "button" onClick = {doRegister}>Register</button>
             <p>{message}</p>
             <div className = "horizontal"> 
                 <h3 className = "click-text" onClick={props.switchToLogin}>Already have an account?</h3>
