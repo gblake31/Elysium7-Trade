@@ -6,15 +6,17 @@
 }
 
 #listingHeader {
-	position:relative;
+    display: inline-block;
+    width: 250px;
 	background-image: url(/src/pages/Pictures/woodBackground.png);
 	background-position: left;
-	background-size: 15%;
+	background-size: 100%;
 	background-repeat: no-repeat;
+    justify-content: center;
 	padding: 30px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    top: -45px
+    margin-bottom: 0px;
+    margin-top: 0px;
+    z-index: -1;
 }
 
 #listingPage #listing-image {
@@ -22,7 +24,7 @@
     flex-direction: column;
     width: 35vw;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 75px;
 }
 
 #listingPage #listing-image img 
@@ -33,7 +35,7 @@
 }
 
 #listingPage #input-fields {
-    width: calc(65vw - 20px);
+    width: calc(60vw - 20px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,6 +52,7 @@
     margin: 10px 0px;
     font-size: 24px;
     text-align: center;
+    width: 50%;
 }
 
 #listingPage #input-fields label {
@@ -67,6 +70,8 @@
 #listingPage .input-box {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 #listingPage #input-fields .Dropdown-root {

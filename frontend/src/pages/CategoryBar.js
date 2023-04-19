@@ -4,7 +4,7 @@ function CategoryBar(props){
 
 	let bp = require('../components/Leinecker/Path.js');
 
-	const doSearch = async (cat) =>
+	/*const doSearch = async (cat) =>
 	{
 		let local = JSON.parse(localStorage.getItem('user_data'));
 		let obj = {search: "", category: cat}
@@ -25,16 +25,20 @@ function CategoryBar(props){
 			alert(e.toString());
 			return;
 		}
+	}*/
+
+	const createCall = async(cat) => {
+		await props.updateList("", cat);
 	}
 
 	return(
 		<div className="categoryBar">
-			<button onClick = {() => doSearch(1)}>Games</button>
-			<button onClick = {() => doSearch(2)}>Consoles</button>
-			<button onClick = {() => doSearch(3)}>Controllers</button>
-			<button onClick = {() => doSearch(4)}>Keyboards/Mice</button>
-			<button onClick = {() => doSearch(5)}>Audio</button>
-			<button onClick = {() => doSearch(6)}>Other</button>
+			<button onClick = {() => createCall(1)}>Games</button>
+			<button onClick = {() => createCall(2)}>Consoles</button>
+			<button onClick = {() => createCall(3)}>Controllers</button>
+			<button onClick = {() => createCall(4)}>Keyboards/Mice</button>
+			<button onClick = {() => createCall(5)}>Audio</button>
+			<button onClick = {() => createCall(6)}>Other</button>
 		</div>
 	);
 }

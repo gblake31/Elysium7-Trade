@@ -239,7 +239,7 @@ function ProfilePage()
       <div id ='big-box'>
         <div id='profilePage'>
           <div className="Header" id='Account'>
-            <h2>Account:</h2>
+            <h1>Account:</h1>
           </div>
           <div className='profile_editor'>
             <div className='profile_images'>
