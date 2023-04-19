@@ -2,8 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ImageManipulator } from 'expo';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, Image } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Pressable, Image, KeyboardAvoidingView, Button } from 'react-native';
 import { useState, useEffect } from 'react';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 
 function AccountManagement(props) {
     const router = useRouter();
@@ -131,12 +132,31 @@ function AccountManagement(props) {
         }
     }
 
+    uploadPhoto = () => 
+    {
+        const options = 
+        {
+            includeBase64: true
+        };
+        launchImageLibrary(options, response => {
+            console.log("imgup response: ", response);
+            if (response.uri)
+            {
+                //setProfilePic();
+            }
+        })
+    }
+
     return (
-        <View style={styles.home}>
+        <KeyboardAvoidingView style={styles.home}>
             <Image 
                     source={{uri: profilepic}}
                     style={styles.profilepic}
             />
+            <View style={styles.row}>
+                <Button title="Upload Photo" onPress={this.uploadPhoto}/>
+                <Button title="Take Photo" onPress={this.takePhoto}/>
+            </View>
             <Text style={styles.title}>change profile</Text>
             <View style={styles.row}>
                 <View style={styles.labelContainer}>
@@ -220,7 +240,7 @@ function AccountManagement(props) {
             >
                 <Text style={styles.buttonText}>sign out</Text>
             </Pressable>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
 
