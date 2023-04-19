@@ -41,7 +41,9 @@ function VerifyEmail()
     }  
         
     return(
-        <h1 id = "verified-text">You're verified. You can close this page</h1>
+        <main>
+          <h1 id = "verified-text">You're verified. You can close this page</h1>
+        </main>
     );
     
 }
