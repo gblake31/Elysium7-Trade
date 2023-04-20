@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import WelcomeScreen from './app/screens/WelcomeScreen';
@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router';
 
 // prevents autohiding splash screen during font loading
 SplashScreen.preventAutoHideAsync();
+LogBox.ignoreAllLogs();
 
 export default function App() {
 
