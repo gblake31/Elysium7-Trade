@@ -53,7 +53,7 @@ function CreateItemScreen(props) {
 				console.log("created item successfully!");
                 console.log(res);
                 await addToUser(res.itemid);
-                router.back();
+                router.replace('screens/Home');
 			}
 			else {
 				console.error(res.error);
