@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Button, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Button, SafeAreaView, Pressable } from 'react-native';
 import Item from '../components/Item';
 import ItemList from '../components/ItemList';
 import { Link, useRouter } from "expo-router";
@@ -44,16 +44,23 @@ function Home(props) {
 
     return (
         <SafeAreaView style={styles.home}>
-            <Text style={styles.title}>Welcome {username}!</Text>
             <ItemList search={search} condition={condition} category={category}/>
-            <Link href='./Inventory'>
-                <Text>INVENTORY</Text>
-            </Link>
-            <Link href='./AccountManagement'>
-                <Text>MANAGE ACCOUNT</Text>
-            </Link>
-            <Button 
-                title='SIGN OUT'
+            <View style={styles.row}>
+                <Pressable
+                    style={styles.button}
+                    onPress={() => router.push('./Inventory')}
+                >
+                    <Text style={styles.buttonText}>INVENTORY</Text>
+                </Pressable>
+                <Pressable 
+                    style={styles.button}
+                    onPress={() => router.push('./AccountManagement')}
+                >
+                    <Text style={styles.buttonText}>MANAGE ACCOUNT</Text>
+                </Pressable>
+            </View>
+            <Pressable
+                style={styles.buttonRed}
                 onPress={async () => 
                     {
                         const token = await AsyncStorage.getItem('user_data');
@@ -69,20 +76,59 @@ function Home(props) {
                             console.log("sign out error");
                         }
                     }} 
-            />
+            >
+                <Text style={styles.buttonText}>Sign Out</Text>
+            </Pressable>
+
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create
 ({
+    button:
+    {
+        height: 65,
+        width: 128,
+        padding: 10,
+        backgroundColor: '#cc8f38',
+        borderRadius: 25,
+        marginVertical: 3,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonRed:
+    {
+        height: 65,
+        width: 128,
+        padding: 10,
+        backgroundColor: '#aa0000',
+        borderRadius: 25,
+        marginVertical: 3,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    buttonText:
+    {
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
+        alignItems: 'center'
+    },
     home:
     {
         flex: 1,
-        backgroundColor: '#c2a583',
+        backgroundColor: '#947354',
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 'bold'
+    },
+    row: 
+    {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginVertical: 3,
+        columnGap: 5
     },
     title: 
     {

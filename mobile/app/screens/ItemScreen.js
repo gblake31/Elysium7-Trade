@@ -176,16 +176,17 @@ function ItemScreen(props) {
                     source={{uri: itemImage}}
                     style={styles.profilepic}
                 />
-                <Text>Price: {itemPrice}</Text>
-                <Text>Condition: {itemCond}</Text>
-                <Text>Description: {itemDesc}</Text>
+                
+                <Text style={styles.label}>Price: ${itemPrice}</Text>
+                <Text style={styles.label}>Condition: {itemCond}</Text>
+                <Text style={styles.label}>Description: {itemDesc}</Text>
                 <Image 
                     source={{uri: sellerPic}}
                     style={styles.profilepic}
                 />
-                <Text>Seller:</Text>
-                <Text>{seller}</Text>
-                <Text>{sellerEmail}</Text>
+                <Text style={styles.label}>Seller:</Text>
+                <Text style={styles.label}>{seller}</Text>
+                <Text style={styles.label}>{sellerEmail}</Text>
                 <Pressable 
                     style={isEditable ? styles.button : styles.hidden}
                     // prevents the function from triggering on page load
@@ -228,6 +229,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         alignItems: 'center'
     },
+    fieldText:
+    {
+        flex: 4,
+        height: 65,
+        textAlign: 'left',
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 25,
+        fontSize: 18
+    },
     hidden:
     {
         width: 0
@@ -241,19 +252,9 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         fontWeight: 'bold'
     },
-    input:
-    {
-        flex: 4,
-        height: 65,
-        backgroundColor: '#c8c0b8',
-        textAlign: 'left',
-        padding: 10,
-        borderRadius: 25,
-        fontSize: 18
-    },
     label:
     {
-        textAlign: 'center',
+        textAlign: 'left',
         padding: 10,
         borderRadius: 25,
         fontSize: 18,
@@ -263,18 +264,19 @@ const styles = StyleSheet.create({
     {
         flex: 2,
         height: 65,
-        backgroundColor: '#8c8f4e',
         textAlign: 'center',
         alignItems: 'center',
         padding: 10,
-        borderRadius: 25
+        borderRadius: 15,
+        marginLeft: 5
     },
     profilepic:
     {
         width: 200,
         height: 200,
         borderRadius: 25,
-        margin: 18
+        margin: 18,
+        backgroundColor: '#c8c0b8'
     },
     row: 
     {

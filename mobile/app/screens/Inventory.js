@@ -85,7 +85,7 @@ function Inventory(props) {
 
     return (
         <View style={styles.home}>
-            <Text>INVENTORY (TITLE. FIX CSS)</Text>
+            <Text style={styles.title}>Inventory</Text>
             <Pressable style={styles.button} onPress={() => {router.push("./CreateItemScreen")}}>
                 <Text style={styles.buttonText}>Create New Listing</Text>
             </Pressable>
@@ -112,11 +112,17 @@ const styles = StyleSheet.create({
     home:
     {
         flex: 1,
-        backgroundColor: '#c2a583',
+        backgroundColor: '#947354',
         alignItems: 'center',
         justifyContent: 'center',
         fontWeight: 'bold'
     },
+    title: 
+    {
+        fontSize: 36,
+        fontFamily: 'Aladin',
+        marginVertical: 10
+    }
 })
 
 export default Inventory;

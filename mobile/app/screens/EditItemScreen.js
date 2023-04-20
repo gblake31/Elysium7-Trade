@@ -171,83 +171,103 @@ function EditItemScreen(props) {
     }, [])
 
     return (
-        <SafeAreaView style={styles.home}>
-            <ScrollView refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-                <Text style={styles.title}>Name: </Text>
+        <View style={styles.home}>
+            <Image 
+                source={{uri: itemImage}}
+                style={styles.profilepic}
+            />
+            <View style={styles.row}>
+                <Button title="Upload Photo" onPress={() => uploadPhoto()}/>
+                <Button title="Take Photo" onPress={() => takePhoto()}/>
+            </View>
+            <View style={styles.row}>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Item Name: </Text>
+                </View>
                 <TextInput 
                     style={styles.input}
                     placeholder='item name'
                     value={itemName}
                     onChangeText={text => setItemName(text)}
                 />
-                <Image 
-                    source={{uri: itemImage}}
-                    style={styles.profilepic}
-                />
-                <View style={styles.row}>
-                    <Button title="Upload Photo" onPress={() => uploadPhoto()}/>
-                    <Button title="Take Photo" onPress={() => takePhoto()}/>
+            </View>
+            <View style={styles.row}>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Description:</Text>
                 </View>
-                <Text>Price:</Text>
+                <TextInput 
+                    style={styles.inputDesc}
+                    placeholder='description'
+                    value={itemDesc}
+                    onChangeText={text => setItemDesc(text)}
+                />
+            </View>
+            <View style={styles.row}>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Price ($):</Text>
+                </View>
                 <TextInput 
                     style={styles.input}
                     placeholder='price'
                     value={itemPrice}
                     onChangeText={text => setItemPrice(text)}
                 />
-                <Text>Condition:</Text>
+            </View>
+            <View style={styles.row}>
+                <View style={styles.labelContainer}>
+                    <Text style={styles.label}>Condition:</Text>
+                </View>
                 <TextInput 
                     style={styles.input}
                     placeholder='condition'
                     value={itemCond}
                     onChangeText={text => setItemCond(text)}
                 />
-                <Text>Description:</Text>
-                <TextInput 
-                    style={styles.input}
-                    placeholder='description'
-                    value={itemDesc}
-                    onChangeText={text => setItemDesc(text)}
-                />
+            </View>
+            <View style={styles.row}>
+                <Pressable 
+                    style={styles.buttonRed}
+                    onPress={() => deleteItem()}
+                    
+                >
+                   <Text style={styles.buttonText}>Delete</Text>
+                </Pressable>
                 <Pressable 
                     style={styles.button}
                     onPress={() => updateItem()}
                 >
-                    <Text>Submit</Text>
+                    <Text style={styles.buttonText}>Submit</Text>
                 </Pressable>
-                <Pressable 
-                    style={styles.button}
-                    onPress={() => deleteItem()}
-                >
-                    <Text>Delete</Text>
-                </Pressable>
-            </ScrollView>
-        </SafeAreaView>
+            </View>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     button:
     {
+        flex: 4,
         height: 65,
         width: 128,
         padding: 10,
-        backgroundColor: '#cc8f38',
-        borderRadius: 25,
+        backgroundColor: '#8c8f4e',
         marginVertical: 3,
+        marginLeft: 20,
+        marginRight: 5,
+        borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center'
     },
     buttonRed:
     {
+        flex: 4,
         height: 65,
         width: 128,
         padding: 10,
         backgroundColor: '#aa0000',
-        borderRadius: 25,
         marginVertical: 3,
+        marginHorizontal: 5,
+        borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -279,8 +299,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#c8c0b8',
         textAlign: 'left',
         padding: 10,
-        borderRadius: 25,
-        fontSize: 18
+        borderRadius: 15,
+        fontSize: 18,
+        marginRight: 5
+    },
+    inputDesc:
+    {
+        flex: 4,
+        height: 200,
+        width: 150,
+        backgroundColor: '#c8c0b8',
+        textAlign: 'left',
+        padding: 10,
+        borderRadius: 15,
+        fontSize: 18,
+        alignItems: 'flex-start',
+        marginRight: 5
     },
     label:
     {
@@ -294,24 +328,27 @@ const styles = StyleSheet.create({
     {
         flex: 2,
         height: 65,
-        backgroundColor: '#8c8f4e',
+        backgroundColor: '#EFBB62',
         textAlign: 'center',
         alignItems: 'center',
         padding: 10,
-        borderRadius: 25
+        borderRadius: 15,
+        marginLeft: 5
     },
     profilepic:
     {
         width: 200,
         height: 200,
         borderRadius: 25,
-        margin: 18
+        margin: 18,
+        backgroundColor: '#c8c0b8'
     },
     row: 
     {
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginVertical: 3,
+        columnGap: 5
     },
     title:
     {

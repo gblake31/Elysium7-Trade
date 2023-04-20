@@ -20,7 +20,7 @@ function AccountManagement(props) {
     let [newPassword, setNewPassword] = useState("");
     let [confirmNewPass, setConfirmNewPass] = useState("");
     let [email, setEmail] = useState("");
-    let [profilepic, setProfilePic] = useState("https://cdn.discordapp.com/attachments/301091812120985601/1096258949755457556/test100px.png");
+    let [profilepic, setProfilePic] = useState("");
 
     let bp = 'https://paradise-7.herokuapp.com/';
 
@@ -59,11 +59,6 @@ function AccountManagement(props) {
             catch (e) {
                 console.log('Something Went Wrong Trying to get UserInfo');
             }
-            if (profilepic == "" || profilepic == 0) 
-            {
-                await setProfilePic('https://cdn.discordapp.com/attachments/301091812120985601/1096258949755457556/test100px.png');
-            }
-
         }
         catch (e) {
             console.error(e.toString());
@@ -203,7 +198,7 @@ function AccountManagement(props) {
             </View>
             <View style={styles.row}>
                 <View style={styles.labelContainer}>
-                    <Text style={styles.label}>New Password:</Text>
+                    <Text style={styles.labelNewPassword}>New Password:</Text>
                 </View>
                 <TextInput
                     style={styles.input}
@@ -214,7 +209,7 @@ function AccountManagement(props) {
             </View>
             <View style={styles.row}>
                 <View style={styles.labelContainer}>
-                    <Text style={styles.label}>Confirm New Password:</Text>
+                    <Text style={styles.labelRepeatPassword}>Confirm New Password:</Text>
                 </View>
                 <Text>{passMessage}</Text>
                 <TextInput
@@ -332,18 +327,36 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 25
     },
+    labelNewPassword:
+    {
+        textAlign: 'center',
+        padding: 10,
+        borderRadius: 25,
+        fontSize: 15,
+        fontFamily: 'Habibi'
+    },
+    labelRepeatPassword:
+    {
+        textAlign: 'center',
+        padding: 10,
+        borderRadius: 25,
+        fontSize: 12,
+        fontFamily: 'Habibi'
+    },
     profilepic:
     {
         width: 200,
         height: 200,
         borderRadius: 25,
-        margin: 18
+        margin: 18,
+        backgroundColor: '#c8c0b8'
     },
     row: 
     {
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginVertical: 3,
+        columnGap: 5
     },
     title:
     {
