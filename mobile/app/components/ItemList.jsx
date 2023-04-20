@@ -44,7 +44,7 @@ function ItemList(props) {
 
     function renderItem({ item }) {
         return (
-            <Item id={item._id} name={item.itemname} description={item.description} condition={item.condition} image={item.image} />
+            <Item id={item._id} name={item.itemname} description={item.description} condition={item.condition} image={item.image} price={item.price} />
         );
     }
 
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         height: 500,
         width: 300,
         borderWidth: 5,
-        overflow: 'hidden',
+        //overflow: 'hidden',
         backgroundColor: '#fff',
     },
     image: {
